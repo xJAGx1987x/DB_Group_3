@@ -1,0 +1,25 @@
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<Pane fx:id="loginPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="286.0" prefWidth="400.0" style="-fx-background-color: #860038; -fx-border-color: #ffffff; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.db_group_three.www.demo.LoginController">
+    <children>
+        <Label fx:id="loginLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="39.0" prefHeight="55.0" prefWidth="400.0" text="Falcon Sports Cars" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="Times New Roman" size="36.0" />
+            </font>
+        </Label>
+        <TextField fx:id="loginField" alignment="CENTER" layoutX="61.0" layoutY="118.0" prefHeight="27.0" prefWidth="278.0" promptText="Enter Employee Number" style="-fx-background-color: #860038; -fx-border-color: #ffffff; -fx-border-width: 2;" focusTraversable="false">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </TextField>
+        <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="182.0" mnemonicParsing="false" onAction="#handleLoginAction" prefHeight="33.0" prefWidth="101.0" style="-fx-background-color: #860038; -fx-border-style: solid; -fx-border-width: 2; -fx-border-color: lightgray darkgray darkgray lightgray;" text="Login" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Button>
+    </children>
+</Pane>
