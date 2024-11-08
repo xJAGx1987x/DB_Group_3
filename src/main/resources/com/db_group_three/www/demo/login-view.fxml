@@ -14,7 +14,7 @@
                 <Font name="Times New Roman" size="36.0" />
             </font>
         </Label>
-        <TextField fx:id="usernameField" alignment="CENTER" layoutX="61.0" layoutY="114.0" prefHeight="27.0" prefWidth="278.0" promptText="Enter Employee Username" style="-fx-background-color: #860038; -fx-border-color: #ffffff; -fx-border-width: 2;" focusTraversable="false">
+        <TextField fx:id="usernameField" alignment="CENTER" layoutX="61.0" layoutY="114.0" prefHeight="27.0" prefWidth="278.0" promptText="Enter Employee Username" style="-fx-background-color: #860038; -fx-border-color: #ffffff; -fx-border-width: 2; -fx-text-fill: white;" focusTraversable="false">
             <font>
                 <Font name="Times New Roman Bold" size="14.0" />
             </font>
