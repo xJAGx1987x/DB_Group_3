@@ -22,10 +22,13 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
-    private static final String DB_URL = "jdbc:mysql://your-database-url:3306/your-database";
-    private static final String DB_USER = "your-username";
-    private static final String DB_PASSWORD = "your-password";
+    private static final String DB_URL = "jdbc:mysql://database-2.cns6g8eseo17.us-east-2.rds.amazonaws.com:3306/database-2";
+    private static final String DB_USER = "admin";
+    private static final String DB_PASSWORD = "password";
 
+
+    // We should consider making this a boolean, or int return
+    // to confirm a successful login.
     @FXML
     private void handleLoginAction() {
         String employeeID = loginField.getText().trim();
