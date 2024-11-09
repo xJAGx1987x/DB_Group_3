@@ -1,25 +1,26 @@
 package com.db_group_three.www.demo;
 
+// Base class representing a person
 public class Person {
     private int personID;
     private String name;
     private String email;
-    private int phoneNumber;
+    private int phoneNum;
     private String address;
     private String city;
     private String state;
-    private int zipCode;
+    private int zipcode;
 
     // Constructor
-    public Person(int personID, String name, String email, int phoneNumber, String address, String city, String state, int zipCode) {
+    public Person(int personID, String name, String email, int phoneNum, String address, String city, String state, int zipcode) {
         this.personID = personID;
         this.name = name;
         this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.phoneNum = phoneNum;
         this.address = address;
         this.city = city;
         this.state = state;
-        this.zipCode = zipCode;
+        this.zipcode = zipcode;
     }
 
     // Getters and setters
@@ -47,12 +48,12 @@ public class Person {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
-        return phoneNumber;
+    public int getPhoneNum() {
+        return phoneNum;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNum(int phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
     public String getAddress() {
@@ -79,12 +80,11 @@ public class Person {
         this.state = state;
     }
 
-    public int getZipCode() {
-        return zipCode;
+    public int getZipcode() {
+        return zipcode;
     }
 
-    public void setZipCode(int zipCode) {
-        this.zipCode = zipCode;
+    public void setZipcode(int zipcode) {
+        this.zipcode = zipcode;
     }
 }
-
