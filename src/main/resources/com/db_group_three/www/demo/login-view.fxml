@@ -14,14 +14,14 @@
                 <Font name="Times New Roman" size="36.0" />
             </font>
         </Label>
-        <TextField fx:id="usernameField" alignment="CENTER" layoutX="61.0" layoutY="114.0" prefHeight="30.0" prefWidth="278.0" promptText="Enter Employee Username" style="-fx-background-color: #860038; -fx-border-color: #ffffff; -fx-border-width: 2; -fx-font-family: 'Times New Roman'; -fx-font-size: 14pt; -fx-text-fill: white;" focusTraversable="false">
+        <TextField fx:id="usernameField" alignment="CENTER" layoutX="61.0" layoutY="114.0" prefHeight="30.0" prefWidth="278.0" promptText="Enter Employee Username" style="-fx-background-color: #860038; -fx-border-color: #ffffff; -fx-border-width: 2; -fx-font-family: 'Times New Roman'; -fx-font-size: 12pt; -fx-text-fill: white;" focusTraversable="false">
             <font>
-                <Font name="Times New Roman Bold" size="14.0" />
+                <Font name="Times New Roman Bold" size="12.0" />
             </font>
         </TextField>
-        <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="61.0" layoutY="153.0" prefHeight="30.0" prefWidth="278.0" promptText="Enter Employee Password" style="-fx-background-color: #860038; -fx-text-fill: #ffffff; -fx-border-color: #ffffff; -fx-border-width: 2; -fx-font-family: 'Times New Roman'; -fx-font-size: 14pt; -fx-font-weight: bold;" focusTraversable="false">
+        <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="61.0" layoutY="153.0" prefHeight="30.0" prefWidth="278.0" promptText="Enter Employee Password" style="-fx-background-color: #860038; -fx-text-fill: #ffffff; -fx-border-color: #ffffff; -fx-border-width: 2; -fx-font-family: 'Times New Roman'; -fx-font-size: 12pt; -fx-font-weight: bold;" focusTraversable="false">
             <font>
-                <Font name="Times New Roman Bold" size="14.0" />
+                <Font name="Times New Roman Bold" size="12.0" />
             </font>
         </PasswordField>
         <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="214.0" mnemonicParsing="false" onAction="#handleLoginAction" prefHeight="33.0" prefWidth="101.0" style="-fx-background-color: #860038; -fx-border-style: solid; -fx-border-width: 2; -fx-border-color: lightgray darkgray darkgray lightgray;" text="Login" textFill="WHITE">
