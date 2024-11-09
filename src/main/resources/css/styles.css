@@ -1,0 +1,20 @@
+/* Style the header area background */
+.tab-pane .tab-header-area {
+    -fx-background-color: #D4AF37; /* Gold color for the header bar */
+}
+
+/* Style the individual tabs */
+.tab-pane .tab-header-area .tab {
+    -fx-background-color: #800000; /* Dark maroon color for tabs */
+}
+
+/* Style the tab text */
+.tab-pane .tab-header-area .tab .tab-label {
+    -fx-text-fill: white; /* White text for tab labels */
+}
+
+/* Style selected tab */
+.tab-pane .tab-header-area .tab:selected {
+    -fx-background-color: #B22222; /* Lighter maroon color for selected tab */
+}
+
