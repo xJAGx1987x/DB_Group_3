@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="dbPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #860038;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="dbLabel" alignment="CENTER" layoutX="4.0" layoutY="6.0" prefHeight="40.0" prefWidth="792.0" text="Falcon Sports Cars Database" textFill="WHITE">
+         <font>
+            <Font name="Times New Roman Bold" size="36.0" />
+         </font>
+      </Label>
+      <TabPane fx:id="dbTabPane" layoutX="8.0" layoutY="57.0" prefHeight="536.0" prefWidth="785.0" stylesheets="@../../../../css/styles.css" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="vehicleTab" text="Vehicles">
+            <content>
+              <AnchorPane fx:id="vehiclePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="783.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;">
+                     <children>
+                        <TextField fx:id="makeField" layoutX="89.0" layoutY="16.0" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 2; -fx-border-color: #FFFFFF; -fx-text-fill: #FFFFFFF;">
+                           <font>
+                              <Font name="Times New Roman Bold" size="12.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="vSearchButton" layoutX="675.0" layoutY="161.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="87.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF; -fx-background-color: #860038;" text="Search" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Label fx:id="makeLabel" layoutX="14.0" layoutY="16.0" prefHeight="27.0" prefWidth="66.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: &quot;Times New Roman bold&quot;; -fx-font-size: 12pt; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-alignment: center;" text="Make:" textAlignment="JUSTIFY" />
+                        <Label fx:id="modelLabel" layoutX="14.0" layoutY="51.0" prefHeight="27.0" prefWidth="66.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: &quot;Times New Roman bold&quot;; -fx-font-size: 12pt; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-alignment: center;" text="Model" textAlignment="JUSTIFY" />
+                        <TextField fx:id="modelField" layoutX="89.0" layoutY="51.0" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 2; -fx-border-color: #FFFFFF;">
+                           <font>
+                              <Font name="Times New Roman Bold" size="12.0" />
+                           </font>
+                        </TextField>
+                        <Label fx:id="yearLabel" layoutX="440.0" layoutY="16.0" prefHeight="27.0" prefWidth="66.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: &quot;Times New Roman bold&quot;; -fx-font-size: 12pt; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-alignment: center;" text="Year:" textAlignment="JUSTIFY" />
+                        <TextField fx:id="yearField" layoutX="514.0" layoutY="16.0" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 2; -fx-border-color: #FFFFFF;">
+                           <font>
+                              <Font name="Times New Roman Bold" size="12.0" />
+                           </font>
+                        </TextField>
+                         <ChoiceBox fx:id="colorChoiceBox" layoutX="514.0" layoutY="51.0" minHeight="-Infinity" prefHeight="27.0" prefWidth="255.0">
+                             <items>
+                                 <FXCollections fx:factory="observableArrayList">
+                                     <String fx:value="Red" />
+                                     <String fx:value="Blue" />
+                                     <String fx:value="Green" />
+                                     <String fx:value="Black" />
+                                     <String fx:value="White" />
+                                     <String fx:value="Silver" />
+                                     <String fx:value="Yellow" />
+                                 </FXCollections>
+                             </items>
+                         </ChoiceBox>
+                        <Label fx:id="colorLabel" layoutX="440.0" layoutY="51.0" prefHeight="27.0" prefWidth="66.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: &quot;Times New Roman bold&quot;; -fx-font-size: 12pt; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-alignment: center;" text="Color: " textAlignment="JUSTIFY" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="locationTab" text="Locations">
+               <content>
+                  <AnchorPane fx:id="locationPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
+               </content>
+            </Tab>
+          <Tab fx:id="customerTab" text="Customers">
+            <content>
+              <AnchorPane fx:id="customerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
+            </content>
+          </Tab>
+            <Tab fx:id="employeeTab" text="Employees">
+               <content>
+                  <AnchorPane fx:id="customerPane1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
+               </content>
+            </Tab>
+            <Tab fx:id="salesTab" text="Sales">
+               <content>
+                  <AnchorPane fx:id="salesPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
+               </content>
+            </Tab>
+            <Tab fx:id="recordsTab" text="Records">
+               <content>
+                  <AnchorPane fx:id="recordsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</Pane>

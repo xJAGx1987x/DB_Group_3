@@ -34,36 +34,37 @@
     -fx-font-size: 14pt; /* Set font size to 14pt */
 }
 
-/* Style the ChoiceBox itself */
 .choice-box {
-    -fx-background-color: #860038; /* Background color */
+    -fx-background-color: #860038; /* Background color for the ChoiceBox */
     -fx-border-color: #FFFFFF; /* Border color */
-    -fx-border-width: 2px;
+    -fx-border-width: 1px; /* Border width */
+    -fx-font-family: 'Times New Roman'; /* Font */
+    -fx-font-size: 12pt; /* Font size */
     -fx-text-fill: #FFFFFF; /* Text color */
-    -fx-font-family: "Times New Roman";
-    -fx-font-size: 12pt;
-    -fx-font-weight: bold;
 }
 
-/* Style the itemized list inside the ChoiceBox */
-.choice-box .list-cell {
-    -fx-background-color: #860038; /* Background color for list items */
-    -fx-text-fill: #FFFFFF; /* Text color for list items */
-    -fx-font-family: "Times New Roman";
-    -fx-font-size: 12pt;
-    -fx-font-weight: bold;
+/* Styling for the selected item label */
+.choice-box .label {
+    -fx-text-fill: #FFFFFF; /* Text color for the selected item */
+    -fx-background-color: #860038;
 }
 
-/* Add hover effect for list items */
-.choice-box .list-cell:hover {
-    -fx-background-color: #B22222; /* Lighter maroon for hover */
-    -fx-text-fill: #FFFFFF;
+/* Styling for the dropdown list */
+.list-view {
+    -fx-background-color: #860038; /* Background color for dropdown container */
 }
 
-/* Style for selected item in the ChoiceBox's list */
-.choice-box .list-cell:selected {
-    -fx-background-color: #800000; /* Darker maroon for selected item */
-    -fx-text-fill: #FFFFFF;
+/* Styling for the individual items in the dropdown */
+.list-view .list-cell {
+    -fx-background-color: #860038; /* Background color for dropdown items */
+    -fx-text-fill: #FFFFFF; /* Text color for dropdown items */
+    -fx-font-family: 'Times New Roman'; /* Font */
+    -fx-font-size: 12pt; /* Font size */
+}
+
+/* Styling when a dropdown item is hovered */
+.list-view .list-cell:hover {
+    -fx-background-color: #800000; /* Slightly darker color on hover */
 }
 
 
