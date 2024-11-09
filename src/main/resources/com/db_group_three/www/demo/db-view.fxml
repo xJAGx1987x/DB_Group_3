@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -15,69 +13,54 @@
         </Label>
         <TabPane fx:id="dbTabPane" layoutX="8.0" layoutY="57.0" prefHeight="536.0" prefWidth="785.0" stylesheets="@../../../../css/styles.css" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab fx:id="vehicleTab" text="Vehicles">
+                <Tab fx:id="vehicleTab" text="Vehicle Trends">
                     <content>
                         <AnchorPane fx:id="vehiclePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="783.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-color: #FFFFFF;">
                             <children>
-                                <Button fx:id="vSearchButton" layoutX="393.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="87.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF; -fx-background-color: #860038;" text="Search" textFill="WHITE">
+                                <Button fx:id="vSearchButton" layoutX="393.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSearchButtonAction" prefHeight="26.0" prefWidth="87.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF; -fx-background-color: #860038;" text="Search" textFill="WHITE">
                                     <font>
                                         <Font name="Times New Roman Bold" size="12.0" />
                                     </font>
                                 </Button>
-                        <GridPane layoutX="14.0" layoutY="14.0" prefHeight="140.0" prefWidth="356.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF;">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="74.2" />
-                            <ColumnConstraints fx:id="vehicleGridPane" hgrow="SOMETIMES" maxWidth="279.6" minWidth="10.0" prefWidth="278.6" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                                      <Label fx:id="makeLabel" prefHeight="27.0" prefWidth="66.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 1px; -fx-border-color: #FFFFFF; -fx-alignment: center;" text="Make:" textAlignment="JUSTIFY" />
-                                      <Label fx:id="modelLabel" prefHeight="27.0" prefWidth="66.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-alignment: center;" text="Model:" textAlignment="JUSTIFY" GridPane.rowIndex="1" />
-                                      <TextField fx:id="makeField" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 1; -fx-border-color: #FFFFFF;" GridPane.columnIndex="1">
-                                          <font>
-                                              <Font name="Times New Roman Bold" size="12.0" />
-                                          </font>
-                                      </TextField>
-                                      <TextField fx:id="modelField" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 1; -fx-border-color: #FFFFFF;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                          <font>
-                                              <Font name="Times New Roman Bold" size="12.0" />
-                                          </font>
-                                      </TextField>
-                                      <Label fx:id="yearLabel" prefHeight="27.0" prefWidth="66.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-alignment: center;" text="Year:" textAlignment="JUSTIFY" GridPane.rowIndex="2" />
-                                      <TextField fx:id="yearField" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 1; -fx-border-color: #FFFFFF;" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                          <font>
-                                              <Font name="Times New Roman Bold" size="12.0" />
-                                          </font>
-                                      </TextField>
-                              <Label fx:id="colorLabel" prefHeight="27.0" prefWidth="66.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-alignment: center;" text="Color:" textAlignment="JUSTIFY" GridPane.rowIndex="3" />
-                                      <ChoiceBox fx:id="colorChoiceBox" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="27.0" prefWidth="283.0" style="-fx-background-color: #860038; -fx-border-color: #FFFFFF; -fx-border-width: 1; -fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman'; -fx-font-size: 12pt; -fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                          <items>
-                                              <FXCollections fx:factory="observableArrayList">
-                                                  <String fx:value="Red" />
-                                                  <String fx:value="Blue" />
-                                                  <String fx:value="Green" />
-                                                  <String fx:value="Black" />
-                                                  <String fx:value="White" />
-                                                  <String fx:value="Silver" />
-                                                  <String fx:value="Yellow" />
-                                              </FXCollections>
-                                          </items>
-                                      </ChoiceBox>
-                              <Label fx:id="priceLabel" prefHeight="27.0" prefWidth="66.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-alignment: center;" text="Price:" textAlignment="JUSTIFY" GridPane.rowIndex="4" />
-                              <TextField fx:id="priceField" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 1; -fx-border-color: #FFFFFF;" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font name="Times New Roman Bold" size="12.0" />
-                                 </font>
-                              </TextField>
-                           </children>
-                        </GridPane>
-                        <ListView fx:id="vehicleListView" layoutX="14.0" layoutY="175.0" prefHeight="304.0" prefWidth="757.0" style="-fx-background-color: #FFFFFF;" />
+                                <GridPane layoutX="14.0" layoutY="14.0" prefHeight="140.0" prefWidth="356.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF;">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="113.8" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.6" minWidth="10.0" prefWidth="238.2" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label fx:id="makeLabel" prefHeight="27.0" prefWidth="103.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 1px; -fx-border-color: #FFFFFF; -fx-alignment: center; -fx-padding: 5;" text="Make:" textAlignment="JUSTIFY" />
+                                        <Label fx:id="modelLabel" prefHeight="27.0" prefWidth="104.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 1px; -fx-border-color: #FFFFFF; -fx-alignment: center; -fx-padding: 5;" text="Model:" textAlignment="JUSTIFY" GridPane.rowIndex="1" />
+                                        <TextField fx:id="makeField" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 1; -fx-border-color: #FFFFFF; -fx-text-fill: #FFFFFF;" GridPane.columnIndex="1">
+                                            <font>
+                                                <Font name="Times New Roman Bold" size="12.0" />
+                                            </font>
+                                        </TextField>
+                                        <TextField fx:id="modelField" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 1; -fx-border-color: #FFFFFF; -fx-text-fill: #FFFFFF;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <font>
+                                                <Font name="Times New Roman Bold" size="12.0" />
+                                            </font>
+                                        </TextField>
+                                        <Label fx:id="yearLabel" prefHeight="27.0" prefWidth="105.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 1px; -fx-border-color: #FFFFFF; -fx-alignment: center; -fx-padding: 5;" text="Year/Month" textAlignment="JUSTIFY" GridPane.rowIndex="2" />
+                                        <HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <children>
+                                                <RadioButton fx:id="yearRadioButton" text="Year" textFill="WHITE">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="12.0" />
+                                       </font></RadioButton>
+                                                <RadioButton fx:id="monthRadioButton" text="Month" textFill="WHITE">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="12.0" />
+                                       </font></RadioButton>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </GridPane>
+                                <ListView fx:id="vehicleListView" layoutX="14.0" layoutY="175.0" prefHeight="304.0" prefWidth="757.0" style="-fx-background-color: #FFFFFF;" />
                             </children>
                         </AnchorPane>
                     </content>
