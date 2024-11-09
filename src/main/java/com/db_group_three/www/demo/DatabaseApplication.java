@@ -11,7 +11,7 @@ public class DatabaseApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("src/main/resources/com/db_group_three/www/demo/db-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("db-view.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
 
