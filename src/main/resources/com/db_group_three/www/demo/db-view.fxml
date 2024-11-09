@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="dbPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #860038;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="dbPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #860038;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.db_group_three.www.demo.DatabaseController">
     <children>
         <Label fx:id="dbLabel" alignment="CENTER" layoutX="4.0" layoutY="6.0" prefHeight="40.0" prefWidth="792.0" text="Falcon Sports Cars Database" textFill="WHITE">
             <font>
