@@ -1,20 +1,35 @@
 /* Style the header area background */
-.tab-pane .tab-header-area {
-    -fx-background-color: #D4AF37; /* Gold color for the header bar */
+.tab-pane .tab-header-background {
+    -fx-background-color: #860038; /* Maroon color */
 }
 
-/* Style the individual tabs */
+/* Add margin between tabs without affecting their size */
 .tab-pane .tab-header-area .tab {
-    -fx-background-color: #800000; /* Dark maroon color for tabs */
+    -fx-background-color: #FFFFFF; /* White background for tabs */
+    -fx-margin: 0 4px 0 0; /* Add a few pixels of space on the right side */
+    -fx-padding: 5px; /* Internal padding to keep tabs comfortable */
 }
 
 /* Style the tab text */
 .tab-pane .tab-header-area .tab .tab-label {
-    -fx-text-fill: white; /* White text for tab labels */
+    -fx-text-fill: #860038; /* Maroon text color for tab labels */
+    -fx-font-weight: bold;
+    -fx-font-family: "Times New Roman"; /* Replace with your desired font */
+    -fx-font-size: 14pt; /* Set font size to 14pt */
 }
 
-/* Style selected tab */
+/* Style the selected tab background and border */
 .tab-pane .tab-header-area .tab:selected {
-    -fx-background-color: #B22222; /* Lighter maroon color for selected tab */
+    -fx-background-color: #800000; /* Darker maroon color for the selected tab */
+    -fx-border-color: #FFFFFF; /* White border */
+    -fx-border-width: 2px; /* Border width */
+    -fx-margin: 0 4px 0 0; /* Add a few pixels of space on the right side */
+    -fx-padding: 5px; /* Internal padding to keep tabs comfortable */
 }
 
+/* Style the text within the selected tab */
+.tab-pane .tab-header-area .tab:selected .tab-label {
+    -fx-text-fill: #FFFFFF; /* White text color */
+    -fx-font-family: "Times New Roman"; /* Ensure consistent font for selected tab */
+    -fx-font-size: 14pt; /* Set font size to 14pt */
+}
