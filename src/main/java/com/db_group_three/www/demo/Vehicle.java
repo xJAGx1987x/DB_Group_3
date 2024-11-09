@@ -6,21 +6,21 @@ public class Vehicle {
     private String model;
     private int year;
     private String color;
-    private byte[] image; // For storing the image as a byte array
-    private String condition;
+    private byte[] image; // Storing the image as a byte array
+    private String carCondition;
     private int netSalePrice;
     private String status;
     private int locationID;
 
     // Constructor
-    public Vehicle(int stockNumber, String make, String model, int year, String color, byte[] image, String condition, int netSalePrice, String status, int locationID) {
+    public Vehicle(int stockNumber, String make, String model, int year, String color, byte[] image, String carCondition, int netSalePrice, String status, int locationID) {
         this.stockNumber = stockNumber;
         this.make = make;
         this.model = model;
         this.year = year;
         this.color = color;
         this.image = image;
-        this.condition = condition;
+        this.carCondition = carCondition;
         this.netSalePrice = netSalePrice;
         this.status = status;
         this.locationID = locationID;
@@ -75,12 +75,12 @@ public class Vehicle {
         this.image = image;
     }
 
-    public String getCondition() {
-        return condition;
+    public String getCarCondition() {
+        return carCondition;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setCarCondition(String carCondition) {
+        this.carCondition = carCondition;
     }
 
     public int getNetSalePrice() {
@@ -116,11 +116,10 @@ public class Vehicle {
                 ", model='" + model + '\'' +
                 ", year=" + year +
                 ", color='" + color + '\'' +
-                ", condition='" + condition + '\'' +
+                ", carCondition='" + carCondition + '\'' +
                 ", netSalePrice=" + netSalePrice +
                 ", status='" + status + '\'' +
                 ", locationID=" + locationID +
                 '}';
     }
 }
-
