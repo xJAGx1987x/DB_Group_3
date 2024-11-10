@@ -1,18 +1,15 @@
 package com.db_group_three.www.demo;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+
+import java.sql.*;
 
 public class DatabaseController {
 
     @FXML
     private Pane dbPane;
-
     // Fields for Vehicle Trends tab
     @FXML
     private TextField makeField;
@@ -50,6 +47,10 @@ public class DatabaseController {
     private ToggleGroup vehicleTypeToggleGroup;
     private ToggleGroup newUsedToggleGroup;
 
+    private final String DB_URL = "jdbc:mysql://database-2.cns6g8eseo17.us-east-2.rds.amazonaws.com:3306/FalconSportsCar?useLegacyDatetimeCode=false&serverTimezone=America/New_York";
+    private final String DB_USER = "admin";
+    private final String DB_PASSWORD = "password";
+
     @FXML
     public void initialize() {
         setupToggleGroups();
@@ -78,12 +79,67 @@ public class DatabaseController {
 
     @FXML
     private void handleVehicleSearch() {
-        String make = makeField.getText();
-        String model = modelField.getText();
+        String userMake = makeField.getText().trim();
+        String userModel = modelField.getText().trim();
         String timePeriod = yearRadioButton.isSelected() ? "Yearly" : "Monthly";
 
-        clearAndPopulateListView(vehicleListView, "Vehicle Search Results:",
-                "Make: " + make, "Model: " + model, "Time Period: " + timePeriod);
+        if (userMake.isEmpty() || userModel.isEmpty()) {
+            // Create and display an error dialog
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Input Error");
+            alert.setHeaderText("Missing Information");
+            alert.setContentText("Please fill in both 'Make' and 'Model' fields before searching.");
+            alert.showAndWait();
+            return; // Exit the method early if input is invalid
+        }
+
+        vehicleListView.getItems().clear();
+        vehicleListView.getItems().add("Vehicle Search Results:");
+        vehicleListView.getItems().add("Make: " + userMake);
+        vehicleListView.getItems().add("Model: " + userModel);
+        vehicleListView.getItems().add("Time Period: " + timePeriod);
+
+        // SQL query to retrieve relevant sales records
+        String query = "SELECT YEAR(r.dateOfPurchase) AS purchaseYear, " +
+                (timePeriod.equals("Monthly") ? "MONTH(r.dateOfPurchase) AS purchaseMonth, " : "") +
+                "COUNT(r.stockNumber) AS numSales, SUM(i.netSalePrice) AS totalSales " +
+                "FROM records r " +
+                "JOIN inventory i ON r.stockNumber = i.stockNumber " +
+                "WHERE i.make = ? AND i.model = ? " +
+                (timePeriod.equals("Yearly") ? "GROUP BY purchaseYear " : "GROUP BY purchaseYear, purchaseMonth ") +
+                "ORDER BY purchaseYear" + (timePeriod.equals("Monthly") ? ", purchaseMonth" : "");
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, userMake);
+            pstmt.setString(2, userModel);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            // Process and display results
+            while (rs.next()) {
+                String result;
+                if (timePeriod.equals("Yearly")) {
+                    int year = rs.getInt("purchaseYear");
+                    int totalSales = rs.getInt("totalSales");
+                    result = "Year: " + year + ", Total Sales: $" + totalSales;
+                } else {
+                    int year = rs.getInt("purchaseYear");
+                    int month = rs.getInt("purchaseMonth");
+                    int totalSales = rs.getInt("totalSales");
+                    result = "Date: " + year + "-" + String.format("%02d", month) + ", Total Sales: $" + totalSales;
+                }
+                vehicleListView.getItems().add(result);
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Error");
+            alert.setHeaderText("Error accessing the database");
+            alert.setContentText("An error occurred while querying the database: " + e.getMessage());
+            alert.showAndWait();
+            e.printStackTrace();
+        }
     }
 
     @FXML
