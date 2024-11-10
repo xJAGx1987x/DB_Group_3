@@ -112,11 +112,11 @@ public class DatabaseController {
         ctSearchButton.setOnAction(event -> handleCustomerSearch());
         topSellersButton.setOnAction(event -> handleTopSellersSearch());
         locationUpdateButton.setOnAction(event -> handleLocationSearch() );
-        employeeUpdateButton.setOnAction(event -> handleEmployeeUpdate() );
+        employeeUpdateButton.setOnAction(event -> handleSalespersonUpdate() );
     }
 
     @FXML
-    private void handleEmployeeUpdate() {
+    private void handleSalespersonUpdate() {
 
     }
 
@@ -130,7 +130,7 @@ public class DatabaseController {
                 "FROM records r " +
                 "JOIN inventory i ON r.stockNumber = i.stockNumber " +
                 "JOIN location l ON r.locationID = l.locationID " +
-                "WHERE YEAR(r.dateOfPurchase) = YEAR(CURDATE()) - 1 " +
+                "WHERE YEAR(r.dateOfPurchase) BETWEEN YEAR(CURDATE()) - 1 AND YEAR(CURDATE()) " +
                 "GROUP BY l.locationID, l.address, l.city, l.state " +
                 "ORDER BY totalSales DESC;";
 
