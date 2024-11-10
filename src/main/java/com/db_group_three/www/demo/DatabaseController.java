@@ -12,6 +12,7 @@ public class DatabaseController {
 
     @FXML
     private Pane dbPane;
+
     // Fields for Vehicle Trends tab
     @FXML
     private TextField makeField;
@@ -37,7 +38,6 @@ public class DatabaseController {
     private ListView<String> customerListView;
 
     // Fields for Top Sellers tab
-    // Fields for new/used vehicle selection
     @FXML
     private RadioButton newRadioButton;
     @FXML
@@ -52,6 +52,11 @@ public class DatabaseController {
 
     @FXML
     public void initialize() {
+        setupToggleGroups();
+        setupEventHandlers();
+    }
+
+    private void setupToggleGroups() {
         // Set up ToggleGroup for Vehicle Trends
         vehicleTypeToggleGroup = new ToggleGroup();
         yearRadioButton.setToggleGroup(vehicleTypeToggleGroup);
@@ -63,8 +68,9 @@ public class DatabaseController {
         newRadioButton.setToggleGroup(newUsedToggleGroup);
         usedRadioButton.setToggleGroup(newUsedToggleGroup);
         newRadioButton.setSelected(true);
+    }
 
-        // Add action listeners to search buttons
+    private void setupEventHandlers() {
         vSearchButton.setOnAction(event -> handleVehicleSearch());
         ctSearchButton.setOnAction(event -> handleCustomerSearch());
         topSellersButton.setOnAction(event -> handleTopSellersSearch());
@@ -76,11 +82,8 @@ public class DatabaseController {
         String model = modelField.getText();
         String timePeriod = yearRadioButton.isSelected() ? "Yearly" : "Monthly";
 
-        vehicleListView.getItems().clear();
-        vehicleListView.getItems().add("Vehicle Search Results:");
-        vehicleListView.getItems().add("Make: " + make);
-        vehicleListView.getItems().add("Model: " + model);
-        vehicleListView.getItems().add("Time Period: " + timePeriod);
+        clearAndPopulateListView(vehicleListView, "Vehicle Search Results:",
+                "Make: " + make, "Model: " + model, "Time Period: " + timePeriod);
     }
 
     @FXML
@@ -88,18 +91,27 @@ public class DatabaseController {
         String make = ctmakeField.getText();
         String model = ctmodelField.getText();
 
-        customerListView.getItems().clear();
-        customerListView.getItems().add("Customer Search Results:");
-        customerListView.getItems().add("Make: " + make);
-        customerListView.getItems().add("Model: " + model);
+        clearAndPopulateListView(customerListView, "Customer Search Results:",
+                "Make: " + make, "Model: " + model);
     }
 
     @FXML
     private void handleTopSellersSearch() {
-        // Logic to display top 5 vehicles based on the number sold in the past year
         topSellersListView.getItems().clear();
         topSellersListView.getItems().add("Top 5 Vehicles Sold in the Past Year:");
         // Placeholder data for demonstration
+        addPlaceholderTopSellers();
+    }
+
+    private void clearAndPopulateListView(ListView<String> listView, String header, String... items) {
+        listView.getItems().clear();
+        listView.getItems().add(header);
+        for (String item : items) {
+            listView.getItems().add(item);
+        }
+    }
+
+    private void addPlaceholderTopSellers() {
         topSellersListView.getItems().add("1. Vehicle A - 500 units");
         topSellersListView.getItems().add("2. Vehicle B - 450 units");
         topSellersListView.getItems().add("3. Vehicle C - 400 units");
