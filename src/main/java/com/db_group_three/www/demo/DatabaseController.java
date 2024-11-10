@@ -5,6 +5,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseController {
 
@@ -44,9 +46,16 @@ public class DatabaseController {
     @FXML
     private ListView<String> topSellersListView;
 
+    // Fields for Locations Tab
+    @FXML
+    private Button locationUpdateButton ;
+    @FXML
+    private ListView<String> locationListView ;
+
     private ToggleGroup vehicleTypeToggleGroup;
     private ToggleGroup newUsedToggleGroup;
 
+    // Database info for connection
     private final String DB_URL = "jdbc:mysql://database-2.cns6g8eseo17.us-east-2.rds.amazonaws.com:3306/FalconSportsCar?useLegacyDatetimeCode=false&serverTimezone=America/New_York";
     private final String DB_USER = "admin";
     private final String DB_PASSWORD = "password";
@@ -75,6 +84,48 @@ public class DatabaseController {
         vSearchButton.setOnAction(event -> handleVehicleSearch());
         ctSearchButton.setOnAction(event -> handleCustomerSearch());
         topSellersButton.setOnAction(event -> handleTopSellersSearch());
+        locationUpdateButton.setOnAction(event -> handleLocationSearch() );
+    }
+
+    @FXML
+    private void handleLocationSearch() {
+        String header = "Dealership Locations by Total Sales in the Past Year:";
+        List<String> locationData = new ArrayList<>();
+
+        // Query to get dealership locations and their total sales in the past year
+        String query = "SELECT l.locationID, l.address, l.city, l.state, SUM(i.netSalePrice) AS totalSales " +
+                "FROM records r " +
+                "JOIN inventory i ON r.stockNumber = i.stockNumber " +
+                "JOIN location l ON r.locationID = l.locationID " +
+                "WHERE YEAR(r.dateOfPurchase) = YEAR(CURDATE()) - 1 " +
+                "GROUP BY l.locationID, l.address, l.city, l.state " +
+                "ORDER BY totalSales DESC;";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            // Process and collect the results
+            while (rs.next()) {
+                String locationInfo = "Location ID: " + rs.getInt("locationID") +
+                        ", Address: " + rs.getString("address") +
+                        ", City: " + rs.getString("city") +
+                        ", State: " + rs.getString("state") +
+                        ", Total Sales: $" + rs.getDouble("totalSales");
+                locationData.add(locationInfo);
+            }
+
+            // Display the data in the ListView
+            clearAndPopulateListView(locationListView, header, locationData.toArray(new String[0]));
+
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Error");
+            alert.setHeaderText("Error accessing the database");
+            alert.setContentText("An error occurred while querying the database: " + e.getMessage());
+            alert.showAndWait();
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -93,31 +144,21 @@ public class DatabaseController {
             return; // Exit the method early if input is invalid
         }
 
-        vehicleListView.getItems().clear();
-        vehicleListView.getItems().add("Vehicle Search Results:");
-        vehicleListView.getItems().add("Make: " + userMake);
-        vehicleListView.getItems().add("Model: " + userModel);
-        vehicleListView.getItems().add("Time Period: " + timePeriod);
-
-        // SQL query to retrieve relevant sales records
-        String query = "SELECT YEAR(r.dateOfPurchase) AS purchaseYear, " +
-                (timePeriod.equals("Monthly") ? "MONTH(r.dateOfPurchase) AS purchaseMonth, " : "") +
-                "COUNT(r.stockNumber) AS numSales, SUM(i.netSalePrice) AS totalSales " +
-                "FROM records r " +
-                "JOIN inventory i ON r.stockNumber = i.stockNumber " +
-                "WHERE i.make = ? AND i.model = ? " +
-                (timePeriod.equals("Yearly") ? "GROUP BY purchaseYear " : "GROUP BY purchaseYear, purchaseMonth ") +
-                "ORDER BY purchaseYear" + (timePeriod.equals("Monthly") ? ", purchaseMonth" : "");
+        // Prepare the header for the list view
+        String header = "Vehicle Search Results for Make: " + userMake + ", Model: " + userModel + ", Time Period: " + timePeriod;
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(getVehicleSearchQuery(timePeriod))) {
 
             pstmt.setString(1, userMake);
             pstmt.setString(2, userModel);
 
             ResultSet rs = pstmt.executeQuery();
 
-            // Process and display results
+            // Clear and populate the ListView with results
+            vehicleListView.getItems().clear();
+            vehicleListView.getItems().add(header);
+
             while (rs.next()) {
                 String result;
                 if (timePeriod.equals("Yearly")) {
@@ -132,6 +173,11 @@ public class DatabaseController {
                 }
                 vehicleListView.getItems().add(result);
             }
+
+            if (vehicleListView.getItems().size() == 1) {
+                // If only the header is present, no data was found
+                vehicleListView.getItems().add("No data found for the specified make, model, and time period.");
+            }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Database Error");
@@ -142,13 +188,75 @@ public class DatabaseController {
         }
     }
 
+    private String getVehicleSearchQuery(String timePeriod) {
+        return "SELECT YEAR(r.dateOfPurchase) AS purchaseYear, " +
+                (timePeriod.equals("Monthly") ? "MONTH(r.dateOfPurchase) AS purchaseMonth, " : "") +
+                "COUNT(r.stockNumber) AS numSales, SUM(i.netSalePrice) AS totalSales " +
+                "FROM records r " +
+                "JOIN inventory i ON r.stockNumber = i.stockNumber " +
+                "WHERE i.make = ? AND i.model = ? " +
+                (timePeriod.equals("Yearly") ? "GROUP BY purchaseYear " : "GROUP BY purchaseYear, purchaseMonth ") +
+                "ORDER BY purchaseYear" + (timePeriod.equals("Monthly") ? ", purchaseMonth" : "");
+    }
+
     @FXML
     private void handleCustomerSearch() {
-        String make = ctmakeField.getText();
-        String model = ctmodelField.getText();
+        String make = ctmakeField.getText().trim();
+        String model = ctmodelField.getText().trim();
 
-        clearAndPopulateListView(customerListView, "Customer Search Results:",
-                "Make: " + make, "Model: " + model);
+        if (make.isEmpty() || model.isEmpty()) {
+            // Create and display an error dialog
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Input Error");
+            alert.setHeaderText("Missing Information");
+            alert.setContentText("Please fill in both 'Make' and 'Model' fields before searching.");
+            alert.showAndWait();
+            return; // Exit the method early if input is invalid
+        }
+
+        String query = "SELECT p.personID, p.name, p.email, p.phoneNum, p.address, p.city, p.state, p.zipcode " +
+                "FROM customer c " +
+                "JOIN person p ON c.personID = p.personID " +
+                "JOIN records r ON c.personID = r.customerID " +
+                "JOIN inventory i ON r.stockNumber = i.stockNumber " +
+                "WHERE i.make = ? AND i.model = ?";
+
+        clearAndPopulateListView(customerListView, "Customer Search Results for Make: " + make + ", Model: " + model);
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, make);
+            pstmt.setString(2, model);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String customerInfo = "ID: " + rs.getLong("personID") + // Change to getLong()
+                        "\nName: " + rs.getString("name") +
+                        "\nEmail: " + rs.getString("email") +
+                        "\nPhone: " + rs.getLong("phoneNum") + // Change to getLong() if needed
+                        "\nAddress: " + rs.getString("address") +
+                        "\nCity: " + rs.getString("city") +
+                        "\nState: " + rs.getString("state") +
+                        "\nZipcode: " + rs.getInt("zipcode") +
+                        "\n\n"; // Double newline for spacing between entries
+                customerListView.getItems().add(customerInfo);
+            }
+
+            if (customerListView.getItems().size() == 1) {
+                // If only the header is present, no data was found
+                customerListView.getItems().add("No customers found for the specified make and model.");
+            }
+
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Error");
+            alert.setHeaderText("Error accessing the database");
+            alert.setContentText("An error occurred while querying the database: " + e.getMessage());
+            alert.showAndWait();
+            e.printStackTrace();
+        }
     }
 
     @FXML
