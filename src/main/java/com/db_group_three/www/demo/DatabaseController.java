@@ -156,6 +156,8 @@ public class DatabaseController {
         topSellersListView.getItems().clear();
 
         String query;
+        String header;
+
         if (topRadioButton.isSelected()) {
             // Query for top 5 best-selling cars regardless of type
             query = "SELECT i.make, i.model, COUNT(r.stockNumber) AS salesCount " +
@@ -164,8 +166,7 @@ public class DatabaseController {
                     "GROUP BY i.make, i.model " +
                     "ORDER BY salesCount DESC " +
                     "LIMIT 5";
-
-            topSellersListView.getItems().add("Top 5 Best-Selling Cars:");
+            header = "Top 5 Best-Selling Cars:";
         } else if (usedRadioButton.isSelected()) {
             // Query for all used cars ordered by sales popularity
             query = "SELECT i.make, i.model, COUNT(r.stockNumber) AS salesCount " +
@@ -174,8 +175,7 @@ public class DatabaseController {
                     "WHERE i.carCondition = 'Used' " +
                     "GROUP BY i.make, i.model " +
                     "ORDER BY salesCount DESC";
-
-            topSellersListView.getItems().add("Used Cars by Popularity:");
+            header = "Used Cars by Popularity:";
         } else {
             // Handle case where neither radio button is selected (optional)
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -189,6 +189,8 @@ public class DatabaseController {
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
+
+            clearAndPopulateListView(topSellersListView, header);
 
             while (rs.next()) {
                 String make = rs.getString("make");
@@ -208,20 +210,14 @@ public class DatabaseController {
         }
     }
 
-
     private void clearAndPopulateListView(ListView<String> listView, String header, String... items) {
         listView.getItems().clear();
         listView.getItems().add(header);
-        for (String item : items) {
-            listView.getItems().add(item);
+        if (items.length > 0) {
+            for (String item : items) {
+                listView.getItems().add(item);
+            }
         }
     }
 
-    private void addPlaceholderTopSellers() {
-        topSellersListView.getItems().add("1. Vehicle A - 500 units");
-        topSellersListView.getItems().add("2. Vehicle B - 450 units");
-        topSellersListView.getItems().add("3. Vehicle C - 400 units");
-        topSellersListView.getItems().add("4. Vehicle D - 350 units");
-        topSellersListView.getItems().add("5. Vehicle E - 300 units");
-    }
 }
