@@ -17,12 +17,12 @@
                     <content>
                         <AnchorPane fx:id="vehiclePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="783.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-color: #FFFFFF;">
                             <children>
-                                <Button fx:id="vSearchButton" layoutX="393.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSearchButtonAction" prefHeight="26.0" prefWidth="87.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF; -fx-background-color: #860038;" text="Search" textFill="WHITE">
+                                <Button fx:id="vSearchButton" layoutX="393.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleVehicleSearch" prefHeight="26.0" prefWidth="87.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF; -fx-background-color: #860038;" text="Search" textFill="WHITE">
                                     <font>
                                         <Font name="Times New Roman Bold" size="12.0" />
                                     </font>
                                 </Button>
-                                <GridPane layoutX="14.0" layoutY="14.0" prefHeight="140.0" prefWidth="356.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF;">
+                                <GridPane fx:id="vGridPane" layoutX="14.0" layoutY="14.0" prefHeight="140.0" prefWidth="356.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF;">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="113.8" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.6" minWidth="10.0" prefWidth="238.2" />
@@ -60,24 +60,54 @@
                                         </HBox>
                                     </children>
                                 </GridPane>
-                                <ListView fx:id="vehicleListView" layoutX="14.0" layoutY="175.0" prefHeight="304.0" prefWidth="757.0" style="-fx-background-color: #FFFFFF;" />
+                        <ScrollPane fx:id="vlScrollPane" layoutX="14.0" layoutY="175.0">
+                           <content>
+                                      <ListView fx:id="vehicleListView" prefHeight="304.0" prefWidth="757.0" style="-fx-background-color: #FFFFFF;" />
+                           </content>
+                        </ScrollPane>
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab fx:id="locationTab" text="Locations">
-                    <content>
-                        <AnchorPane fx:id="locationPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
-                    </content>
-                </Tab>
                 <Tab fx:id="customerTab" text="Customers">
                     <content>
-                        <AnchorPane fx:id="customerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
-                    </content>
-                </Tab>
-                <Tab fx:id="employeeTab" text="Employees">
-                    <content>
-                        <AnchorPane fx:id="customerPane1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
+                        <AnchorPane fx:id="customerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;">
+                     <children>
+                        <GridPane fx:id="ctGridPane" layoutX="20.0" layoutY="14.0" prefHeight="93.0" prefWidth="356.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF;">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="113.8" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.6" minWidth="10.0" prefWidth="238.2" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label fx:id="ctmakeLabel" prefHeight="27.0" prefWidth="103.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 1px; -fx-border-color: #FFFFFF; -fx-alignment: center; -fx-padding: 5;" text="Make:" textAlignment="JUSTIFY" />
+                              <Label fx:id="ctmodelLabel" prefHeight="27.0" prefWidth="104.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 1px; -fx-border-color: #FFFFFF; -fx-alignment: center; -fx-padding: 5;" text="Model:" textAlignment="JUSTIFY" GridPane.rowIndex="1" />
+                              <TextField fx:id="ctmakeField" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 1; -fx-border-color: #FFFFFF; -fx-text-fill: #FFFFFF;" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="12.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="ctmodelField" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 1; -fx-border-color: #FFFFFF; -fx-text-fill: #FFFFFF;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="12.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </GridPane>
+                        <Button fx:id="ctSearchButton" layoutX="393.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCustomerSearch" prefHeight="26.0" prefWidth="87.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF; -fx-background-color: #860038;" text="Search" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <ScrollPane fx:id="ctScrollPane" layoutX="14.0" layoutY="130.0">
+                           <content>
+                              <ListView fx:id="customerListView" prefHeight="351.0" prefWidth="757.0" style="-fx-background-color: #FFFFFF;" />
+                           </content>
+                        </ScrollPane>
+                     </children></AnchorPane>
                     </content>
                 </Tab>
                 <Tab fx:id="salesTab" text="Sales">
@@ -85,9 +115,54 @@
                         <AnchorPane fx:id="salesPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
                     </content>
                 </Tab>
-                <Tab fx:id="recordsTab" text="Records">
+                <Tab fx:id="locationTab" text="Locations">
                     <content>
-                        <AnchorPane fx:id="recordsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
+                        <AnchorPane fx:id="locationPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
+                    </content>
+                </Tab>
+                <Tab fx:id="employeeTab" text="Employees">
+                    <content>
+                        <AnchorPane fx:id="customerPane1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
+                    </content>
+                </Tab>
+                <Tab fx:id="topVehiclesTab" text="Top Vehicles and Trends">
+                    <content>
+                        <AnchorPane fx:id="topVehiclesPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="783.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-color: #FFFFFF;">
+                            <children>
+                                <GridPane fx:id="tvGridPane" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="244.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF;">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.6" minWidth="10.0" prefWidth="176.6" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.6" minWidth="10.0" prefWidth="123.4" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.6" minWidth="10.0" prefWidth="119.80000000000001" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label fx:id="vehicleTypeLabel" prefHeight="32.0" prefWidth="124.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-alignment: center; -fx-padding: 5;" text="Vehicle Type:" textAlignment="JUSTIFY" />
+                                        <HBox spacing="10.0" GridPane.columnIndex="1">
+                                 <children>
+                                                <RadioButton fx:id="newRadioButton" prefHeight="51.0" prefWidth="122.0" text="New" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="Times New Roman Bold" size="13.0" />
+                                                    </font>
+                                                </RadioButton>
+                                 </children></HBox>
+                                          <RadioButton fx:id="usedRadioButton" prefHeight="46.0" prefWidth="251.0" text="Used" textFill="WHITE" GridPane.columnIndex="2">
+                                              <font>
+                                                  <Font name="Times New Roman Bold" size="12.0" />
+                                              </font>
+                                          </RadioButton>
+                                    </children>
+                                </GridPane>
+                                <Button fx:id="topSellersButton" layoutX="274.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleTopSellersSearch" prefHeight="32.0" prefWidth="87.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF; -fx-background-color: #860038;" text="Search" textFill="WHITE">
+                                    <font>
+                                        <Font name="Times New Roman Bold" size="12.0" />
+                                    </font>
+                                </Button>
+                                <ListView fx:id="topSellersListView" layoutX="14.0" layoutY="139.0" prefHeight="340.0" prefWidth="758.0" style="-fx-background-color: #FFFFFF;" />
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
             </tabs>
