@@ -6,9 +6,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Pane;
 
 public class DatabaseController {
 
+    @FXML
+    private Pane dbPane;
     // Fields for Vehicle Trends tab
     @FXML
     private TextField makeField;

@@ -24,7 +24,7 @@
     -fx-border-color: #FFFFFF; /* White border */
     -fx-border-width: 2px; /* Border width */
     -fx-margin: 0 4px 0 0; /* Add a few pixels of space on the right side */
-    -fx-padding: 5px; /* Internal padding to keep tabs comfortable */
+    -fx-padding: 10px; /* Internal padding to keep tabs comfortable */
 }
 
 /* Style the text within the selected tab */

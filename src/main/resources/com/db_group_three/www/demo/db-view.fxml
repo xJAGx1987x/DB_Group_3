@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<Pane fx:id="dbPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #860038;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.db_group_three.www.demo.DatabaseController">
+<Pane fx:id="dbPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #860038;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.db_group_three.www.demo.DatabaseController">
     <children>
         <Label fx:id="dbLabel" alignment="CENTER" layoutX="4.0" layoutY="6.0" prefHeight="40.0" prefWidth="792.0" text="Falcon Sports Cars Database" textFill="WHITE">
             <font>
@@ -22,7 +35,7 @@
                                         <Font name="Times New Roman Bold" size="12.0" />
                                     </font>
                                 </Button>
-                                <GridPane fx:id="vGridPane" layoutX="14.0" layoutY="14.0" prefHeight="140.0" prefWidth="356.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF;">
+                                <GridPane fx:id="vGridPane" layoutX="14.0" layoutY="14.0" prefHeight="140.0" prefWidth="356.0" style="-fx-border-width: 1; -fx-border-color: #FFFFFF;">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="113.8" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.6" minWidth="10.0" prefWidth="238.2" />
@@ -33,26 +46,28 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Label fx:id="makeLabel" prefHeight="27.0" prefWidth="103.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 1px; -fx-border-color: #FFFFFF; -fx-alignment: center; -fx-padding: 5;" text="Make:" textAlignment="JUSTIFY" />
-                                        <Label fx:id="modelLabel" prefHeight="27.0" prefWidth="104.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 1px; -fx-border-color: #FFFFFF; -fx-alignment: center; -fx-padding: 5;" text="Model:" textAlignment="JUSTIFY" GridPane.rowIndex="1" />
-                                        <TextField fx:id="makeField" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 1; -fx-border-color: #FFFFFF; -fx-text-fill: #FFFFFF;" GridPane.columnIndex="1">
+                                        <Label fx:id="makeLabel" prefHeight="27.0" prefWidth="103.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-alignment: center; -fx-padding: 5;" text="Make:" textAlignment="JUSTIFY" />
+                                        <Label fx:id="modelLabel" prefHeight="27.0" prefWidth="104.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-alignment: center; -fx-padding: 5;" text="Model:" textAlignment="JUSTIFY" GridPane.rowIndex="1" />
+                                        <TextField fx:id="makeField" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-text-fill: #FFFFFF;" GridPane.columnIndex="1">
                                             <font>
                                                 <Font name="Times New Roman Bold" size="12.0" />
                                             </font>
                                         </TextField>
-                                        <TextField fx:id="modelField" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 1; -fx-border-color: #FFFFFF; -fx-text-fill: #FFFFFF;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                        <TextField fx:id="modelField" prefHeight="27.0" prefWidth="255.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-text-fill: #FFFFFF;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                             <font>
                                                 <Font name="Times New Roman Bold" size="12.0" />
                                             </font>
                                         </TextField>
-                                        <Label fx:id="yearLabel" prefHeight="27.0" prefWidth="105.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 1px; -fx-border-color: #FFFFFF; -fx-alignment: center; -fx-padding: 5;" text="Year/Month" textAlignment="JUSTIFY" GridPane.rowIndex="2" />
+                                        <Label fx:id="yearLabel" prefHeight="27.0" prefWidth="105.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-alignment: center; -fx-padding: 5;" text="Period:" textAlignment="JUSTIFY" GridPane.rowIndex="2" />
                                         <HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                             <children>
-                                                <RadioButton fx:id="yearRadioButton" text="Year" textFill="WHITE">
+                                    <Separator orientation="VERTICAL" prefHeight="45.0" prefWidth="25.0" />
+                                                <RadioButton fx:id="yearRadioButton" prefHeight="45.0" prefWidth="105.0" text="Year" textFill="WHITE">
                                        <font>
                                           <Font name="Times New Roman Bold" size="12.0" />
                                        </font></RadioButton>
-                                                <RadioButton fx:id="monthRadioButton" text="Month" textFill="WHITE">
+                                    <Separator orientation="VERTICAL" prefHeight="45.0" prefWidth="90.0" />
+                                                <RadioButton fx:id="monthRadioButton" prefHeight="45.0" prefWidth="122.0" text="Month" textFill="WHITE">
                                        <font>
                                           <Font name="Times New Roman Bold" size="12.0" />
                                        </font></RadioButton>
@@ -65,6 +80,46 @@
                                       <ListView fx:id="vehicleListView" prefHeight="304.0" prefWidth="757.0" style="-fx-background-color: #FFFFFF;" />
                            </content>
                         </ScrollPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab fx:id="topSellersTab" text="Top Sellers">
+                    <content>
+                        <AnchorPane fx:id="topVehiclesPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="783.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-color: #FFFFFF;">
+                            <children>
+                                <GridPane fx:id="tvGridPane" layoutX="14.0" layoutY="14.0" prefHeight="32.0" prefWidth="244.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF;">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.6" minWidth="10.0" prefWidth="176.6" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.6" minWidth="10.0" prefWidth="123.4" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.6" minWidth="10.0" prefWidth="119.80000000000001" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label fx:id="vehicleTypeLabel" prefHeight="32.0" prefWidth="124.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-alignment: center; -fx-padding: 5;" text="Vehicle Type:" textAlignment="JUSTIFY" />
+                                        <HBox spacing="10.0" GridPane.columnIndex="1">
+                                 <children>
+                                                <RadioButton fx:id="newRadioButton" prefHeight="51.0" prefWidth="122.0" text="Top" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="Times New Roman Bold" size="13.0" />
+                                                    </font>
+                                                </RadioButton>
+                                 </children></HBox>
+                                          <RadioButton fx:id="usedRadioButton" prefHeight="46.0" prefWidth="251.0" text="Used" textFill="WHITE" GridPane.columnIndex="2">
+                                              <font>
+                                                  <Font name="Times New Roman Bold" size="12.0" />
+                                              </font>
+                                          </RadioButton>
+                                    </children>
+                                </GridPane>
+                                <Button fx:id="topSellersButton" layoutX="274.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleTopSellersSearch" prefHeight="32.0" prefWidth="87.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF; -fx-background-color: #860038;" text="Search" textFill="WHITE">
+                                    <font>
+                                        <Font name="Times New Roman Bold" size="12.0" />
+                                    </font>
+                                </Button>
+                                <ListView fx:id="topSellersListView" layoutX="14.0" layoutY="66.0" prefHeight="413.0" prefWidth="758.0" style="-fx-background-color: #FFFFFF;" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -110,14 +165,21 @@
                      </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab fx:id="salesTab" text="Sales">
-                    <content>
-                        <AnchorPane fx:id="salesPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
-                    </content>
-                </Tab>
                 <Tab fx:id="locationTab" text="Locations">
                     <content>
-                        <AnchorPane fx:id="locationPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
+                        <AnchorPane fx:id="locationPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;">
+                     <children>
+                        <ScrollPane fx:id="locationScrollPane" layoutX="7.0" layoutY="54.0">
+                           <content>
+                              <ListView fx:id="locationListView" prefHeight="427.0" prefWidth="770.0" />
+                           </content>
+                        </ScrollPane>
+                        <Button fx:id="locationUpdateButton" alignment="CENTER" contentDisplay="CENTER" layoutX="328.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-border-insets: 2,1,2,1;" text="Update" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children></AnchorPane>
                     </content>
                 </Tab>
                 <Tab fx:id="employeeTab" text="Employees">
@@ -125,44 +187,9 @@
                         <AnchorPane fx:id="customerPane1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
                     </content>
                 </Tab>
-                <Tab fx:id="topVehiclesTab" text="Top Vehicles and Trends">
+                <Tab fx:id="salesTab" text="Sales">
                     <content>
-                        <AnchorPane fx:id="topVehiclesPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="783.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-color: #FFFFFF;">
-                            <children>
-                                <GridPane fx:id="tvGridPane" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="244.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF;">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.6" minWidth="10.0" prefWidth="176.6" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.6" minWidth="10.0" prefWidth="123.4" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.6" minWidth="10.0" prefWidth="119.80000000000001" />
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    </rowConstraints>
-                                    <children>
-                                        <Label fx:id="vehicleTypeLabel" prefHeight="32.0" prefWidth="124.0" style="-fx-text-fill: #FFFFFF; -fx-font-family: 'Times New Roman Bold'; -fx-font-size: 12pt; -fx-alignment: center; -fx-padding: 5;" text="Vehicle Type:" textAlignment="JUSTIFY" />
-                                        <HBox spacing="10.0" GridPane.columnIndex="1">
-                                 <children>
-                                                <RadioButton fx:id="newRadioButton" prefHeight="51.0" prefWidth="122.0" text="New" textFill="WHITE">
-                                                    <font>
-                                                        <Font name="Times New Roman Bold" size="13.0" />
-                                                    </font>
-                                                </RadioButton>
-                                 </children></HBox>
-                                          <RadioButton fx:id="usedRadioButton" prefHeight="46.0" prefWidth="251.0" text="Used" textFill="WHITE" GridPane.columnIndex="2">
-                                              <font>
-                                                  <Font name="Times New Roman Bold" size="12.0" />
-                                              </font>
-                                          </RadioButton>
-                                    </children>
-                                </GridPane>
-                                <Button fx:id="topSellersButton" layoutX="274.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleTopSellersSearch" prefHeight="32.0" prefWidth="87.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF; -fx-background-color: #860038;" text="Search" textFill="WHITE">
-                                    <font>
-                                        <Font name="Times New Roman Bold" size="12.0" />
-                                    </font>
-                                </Button>
-                                <ListView fx:id="topSellersListView" layoutX="14.0" layoutY="139.0" prefHeight="340.0" prefWidth="758.0" style="-fx-background-color: #FFFFFF;" />
-                            </children>
-                        </AnchorPane>
+                        <AnchorPane fx:id="salesPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;" />
                     </content>
                 </Tab>
             </tabs>
