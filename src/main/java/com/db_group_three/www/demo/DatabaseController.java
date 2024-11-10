@@ -36,7 +36,7 @@ public class DatabaseController {
 
     // Fields for Top Sellers tab
     @FXML
-    private RadioButton newRadioButton;
+    private RadioButton topRadioButton;
     @FXML
     private RadioButton usedRadioButton;
     @FXML
@@ -66,9 +66,9 @@ public class DatabaseController {
 
         // Set up ToggleGroup for new/used selection
         newUsedToggleGroup = new ToggleGroup();
-        newRadioButton.setToggleGroup(newUsedToggleGroup);
+        topRadioButton.setToggleGroup(newUsedToggleGroup);
         usedRadioButton.setToggleGroup(newUsedToggleGroup);
-        newRadioButton.setSelected(true);
+        topRadioButton.setSelected(true);
     }
 
     private void setupEventHandlers() {
@@ -154,10 +154,60 @@ public class DatabaseController {
     @FXML
     private void handleTopSellersSearch() {
         topSellersListView.getItems().clear();
-        topSellersListView.getItems().add("Top 5 Vehicles Sold in the Past Year:");
-        // Placeholder data for demonstration
-        addPlaceholderTopSellers();
+
+        String query;
+        if (topRadioButton.isSelected()) {
+            // Query for top 5 best-selling cars regardless of type
+            query = "SELECT i.make, i.model, COUNT(r.stockNumber) AS salesCount " +
+                    "FROM records r " +
+                    "JOIN inventory i ON r.stockNumber = i.stockNumber " +
+                    "GROUP BY i.make, i.model " +
+                    "ORDER BY salesCount DESC " +
+                    "LIMIT 5";
+
+            topSellersListView.getItems().add("Top 5 Best-Selling Cars:");
+        } else if (usedRadioButton.isSelected()) {
+            // Query for all used cars ordered by sales popularity
+            query = "SELECT i.make, i.model, COUNT(r.stockNumber) AS salesCount " +
+                    "FROM records r " +
+                    "JOIN inventory i ON r.stockNumber = i.stockNumber " +
+                    "WHERE i.carCondition = 'Used' " +
+                    "GROUP BY i.make, i.model " +
+                    "ORDER BY salesCount DESC";
+
+            topSellersListView.getItems().add("Used Cars by Popularity:");
+        } else {
+            // Handle case where neither radio button is selected (optional)
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Selection Error");
+            alert.setHeaderText("No Option Selected");
+            alert.setContentText("Please select 'Top' or 'Used' before searching.");
+            alert.showAndWait();
+            return;
+        }
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                String make = rs.getString("make");
+                String model = rs.getString("model");
+                int salesCount = rs.getInt("salesCount");
+
+                String result = make + " " + model + " - " + salesCount + " units sold";
+                topSellersListView.getItems().add(result);
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Error");
+            alert.setHeaderText("Error accessing the database");
+            alert.setContentText("An error occurred while querying the database: " + e.getMessage());
+            alert.showAndWait();
+            e.printStackTrace();
+        }
     }
+
 
     private void clearAndPopulateListView(ListView<String> listView, String header, String... items) {
         listView.getItems().clear();
