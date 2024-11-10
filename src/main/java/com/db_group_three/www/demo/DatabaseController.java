@@ -52,6 +52,12 @@ public class DatabaseController {
     @FXML
     private ListView<String> locationListView ;
 
+    // Fields for Employee tab
+    @FXML
+    private Button employeeUpdateButton ;
+    @FXML
+    private ListView<String> employeeViewList ;
+
     private ToggleGroup vehicleTypeToggleGroup;
     private ToggleGroup newUsedToggleGroup;
 
@@ -80,11 +86,38 @@ public class DatabaseController {
         topRadioButton.setSelected(true);
     }
 
+    private void clearAndPopulateListView(ListView<String> listView, String header, String... items) {
+        listView.getItems().clear();
+        listView.getItems().add(header);
+        if (items.length > 0) {
+            for (String item : items) {
+                listView.getItems().add(item);
+            }
+        }
+    }
+
+    private String getVehicleSearchQuery(String timePeriod) {
+        return "SELECT YEAR(r.dateOfPurchase) AS purchaseYear, " +
+                (timePeriod.equals("Monthly") ? "MONTH(r.dateOfPurchase) AS purchaseMonth, " : "") +
+                "COUNT(r.stockNumber) AS numSales, SUM(i.netSalePrice) AS totalSales " +
+                "FROM records r " +
+                "JOIN inventory i ON r.stockNumber = i.stockNumber " +
+                "WHERE i.make = ? AND i.model = ? " +
+                (timePeriod.equals("Yearly") ? "GROUP BY purchaseYear " : "GROUP BY purchaseYear, purchaseMonth ") +
+                "ORDER BY purchaseYear" + (timePeriod.equals("Monthly") ? ", purchaseMonth" : "");
+    }
+
     private void setupEventHandlers() {
         vSearchButton.setOnAction(event -> handleVehicleSearch());
         ctSearchButton.setOnAction(event -> handleCustomerSearch());
         topSellersButton.setOnAction(event -> handleTopSellersSearch());
         locationUpdateButton.setOnAction(event -> handleLocationSearch() );
+        employeeUpdateButton.setOnAction(event -> handleEmployeeUpdate() );
+    }
+
+    @FXML
+    private void handleEmployeeUpdate() {
+
     }
 
     @FXML
@@ -186,17 +219,6 @@ public class DatabaseController {
             alert.showAndWait();
             e.printStackTrace();
         }
-    }
-
-    private String getVehicleSearchQuery(String timePeriod) {
-        return "SELECT YEAR(r.dateOfPurchase) AS purchaseYear, " +
-                (timePeriod.equals("Monthly") ? "MONTH(r.dateOfPurchase) AS purchaseMonth, " : "") +
-                "COUNT(r.stockNumber) AS numSales, SUM(i.netSalePrice) AS totalSales " +
-                "FROM records r " +
-                "JOIN inventory i ON r.stockNumber = i.stockNumber " +
-                "WHERE i.make = ? AND i.model = ? " +
-                (timePeriod.equals("Yearly") ? "GROUP BY purchaseYear " : "GROUP BY purchaseYear, purchaseMonth ") +
-                "ORDER BY purchaseYear" + (timePeriod.equals("Monthly") ? ", purchaseMonth" : "");
     }
 
     @FXML
@@ -317,15 +339,4 @@ public class DatabaseController {
             e.printStackTrace();
         }
     }
-
-    private void clearAndPopulateListView(ListView<String> listView, String header, String... items) {
-        listView.getItems().clear();
-        listView.getItems().add(header);
-        if (items.length > 0) {
-            for (String item : items) {
-                listView.getItems().add(item);
-            }
-        }
-    }
-
 }
