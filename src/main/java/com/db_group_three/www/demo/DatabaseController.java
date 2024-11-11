@@ -117,7 +117,47 @@ public class DatabaseController {
 
     @FXML
     private void handleSalespersonUpdate() {
+        String query = "SELECT sp.personID, p.name, COUNT(r.stockNumber) AS numSales, " +
+                "SUM(i.netSalePrice * (sp.commissionRate)) AS totalCommission " +
+                "FROM sales_person sp " +
+                "JOIN person p ON sp.personID = p.personID " +
+                "JOIN records r ON sp.personID = r.salesPersonID " +
+                "JOIN inventory i ON r.stockNumber = i.stockNumber " +
+                "WHERE YEAR(r.dateOfPurchase) = YEAR(CURDATE()) " +
+                "GROUP BY sp.personID, p.name " +
+                "ORDER BY numSales DESC";
 
+        employeeViewList.getItems().clear();
+        employeeViewList.getItems().add("Salesperson Details (Past Year):");
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                int personID = rs.getInt("personID");
+                String name = rs.getString("name");
+                int numSales = rs.getInt("numSales");
+                double totalCommission = rs.getDouble("totalCommission");
+
+                String result = "ID: " + personID + ", Name: " + name +
+                        ", Number of Sales: " + numSales +
+                        ", Total Commission: $" + totalCommission;
+                employeeViewList.getItems().add(result);
+            }
+
+            if (employeeViewList.getItems().size() == 1) {
+                employeeViewList.getItems().add("No data found for the past year.");
+            }
+
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Error");
+            alert.setHeaderText("Error accessing the database");
+            alert.setContentText("An error occurred while querying the database: " + e.getMessage());
+            alert.showAndWait();
+            e.printStackTrace();
+        }
     }
 
     @FXML
