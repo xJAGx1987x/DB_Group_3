@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args){
         // commented out the login and db applications
         // so I could add code to push images to the DB.
-        // Sorry, I guess for being so fucking awesome.
+        // Sorry, I guess for being so awesome.
         // LoginApplication.launch(LoginApplication.class, args);
         // DatabaseApplication.launch(DatabaseApplication.class, args) ;
 
