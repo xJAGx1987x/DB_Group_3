@@ -67,4 +67,8 @@
     -fx-background-color: #800000; /* Slightly darker color on hover */
 }
 
-
+/* Set the background color for the TextArea */
+#searchTextArea {
+    -fx-control-inner-background: #860038;  /* Background color of the text area */
+    -fx-text-fill: white;  /* Text color */
+}

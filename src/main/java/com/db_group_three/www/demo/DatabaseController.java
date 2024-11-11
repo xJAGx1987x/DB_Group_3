@@ -58,6 +58,14 @@ public class DatabaseController {
     @FXML
     private ListView<String> employeeViewList ;
 
+    // Fields for input search tab
+    @FXML
+    private Button inputSearchButton ;
+    @FXML
+    private TextArea searchTextArea ;
+    @FXML
+    private ListView<String> searchListView ;
+
     private ToggleGroup vehicleTypeToggleGroup;
     private ToggleGroup newUsedToggleGroup;
 
@@ -113,6 +121,71 @@ public class DatabaseController {
         topSellersButton.setOnAction(event -> handleTopSellersSearch());
         locationUpdateButton.setOnAction(event -> handleLocationSearch() );
         employeeUpdateButton.setOnAction(event -> handleSalespersonUpdate() );
+        inputSearchButton.setOnAction(event -> handleInputSearch() ) ;
+    }
+
+    @FXML
+    private void handleInputSearch() {
+        String query = searchTextArea.getText().trim();
+
+        if (query.isEmpty() || query.equals("Enter a query")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Input Error");
+            alert.setHeaderText("Missing Information");
+            alert.setContentText("Please enter a query before pressing search.");
+            alert.showAndWait();
+            return;
+        }
+
+        if (query.endsWith(";")) {
+            query = query.substring(0, query.length() - 1);
+        }
+
+        // Check if the query starts with UPDATE or INSERT
+        String queryUpper = query.toUpperCase(); // Convert to uppercase for case-insensitive comparison
+        if (queryUpper.startsWith("UPDATE") || queryUpper.startsWith("INSERT")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Query");
+            alert.setHeaderText("Only SELECT Queries Allowed");
+            alert.setContentText("Please enter a valid SELECT query.");
+            alert.showAndWait();
+            return;
+        }
+
+        searchListView.getItems().clear();
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            // Process each row in the ResultSet
+            while (rs.next()) {
+                StringBuilder row = new StringBuilder();
+
+                for (int i = 1; i <= columnCount; i++) {
+                    Object value = rs.getObject(i); // Get the column value as an Object
+
+                    if (value != null) {
+                        row.append(value.toString()).append(" "); // Convert to String if not null
+                    } else {
+                        row.append("NULL ").append(" "); // Handle null values
+                    }
+                }
+
+                searchListView.getItems().add(row.toString().trim()); // Add the row to ListView
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Error");
+            alert.setHeaderText("Query Failed");
+            alert.setContentText("Could not execute the query. Please try again.");
+            alert.showAndWait();
+        }
     }
 
     @FXML
