@@ -62,6 +62,8 @@ public class DatabaseController {
     @FXML
     private Button inputSearchButton ;
     @FXML
+    private Button clearInputSearchButton ;
+    @FXML
     private TextArea searchTextArea ;
     @FXML
     private ListView<String> searchListView ;
@@ -122,6 +124,13 @@ public class DatabaseController {
         locationUpdateButton.setOnAction(event -> handleLocationSearch() );
         employeeUpdateButton.setOnAction(event -> handleSalespersonUpdate() );
         inputSearchButton.setOnAction(event -> handleInputSearch() ) ;
+        clearInputSearchButton.setOnAction(event -> handleClearInput() );
+    }
+
+    @FXML
+    private void handleClearInput() {
+        searchListView.getItems().clear() ;
+        searchTextArea.setText(null) ;
     }
 
     @FXML
@@ -142,6 +151,8 @@ public class DatabaseController {
         }
 
         // Check if the query starts with UPDATE or INSERT
+        // we can allow more functionality by removing this block of code
+        // at the expense of the integrity of our Database
         String queryUpper = query.toUpperCase(); // Convert to uppercase for case-insensitive comparison
         if (queryUpper.startsWith("UPDATE") || queryUpper.startsWith("INSERT")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
