@@ -102,7 +102,7 @@ public class DatabaseController {
                 "COUNT(r.stockNumber) AS numSales, SUM(i.netSalePrice) AS totalSales " +
                 "FROM records r " +
                 "JOIN inventory i ON r.stockNumber = i.stockNumber " +
-                "WHERE i.make = ? AND i.model = ? " +
+                "WHERE i.make = ? AND i.model = ? AND Year(r.dateOfPurchase) between Year(curdate()) - 3 AND Year(curdate()) " +
                 (timePeriod.equals("Yearly") ? "GROUP BY purchaseYear " : "GROUP BY purchaseYear, purchaseMonth ") +
                 "ORDER BY purchaseYear" + (timePeriod.equals("Monthly") ? ", purchaseMonth" : "");
     }
@@ -117,13 +117,13 @@ public class DatabaseController {
 
     @FXML
     private void handleSalespersonUpdate() {
-        String query = "SELECT sp.personID, p.name, COUNT(r.stockNumber) AS numSales, " +
-                "SUM(i.netSalePrice * (sp.commissionRate)) AS totalCommission " +
+        String query = "SELECT sp.personID, p.name, p.email, p.phoneNum, p.address, p.city, p.state, p.zipcode, " +
+                "COUNT(r.stockNumber) AS numSales, " +
+                "SUM(CASE WHEN YEAR(r.dateOfPurchase) = YEAR(CURDATE()) - 1 THEN i.netSalePrice * sp.commissionRate ELSE 0 END) AS totalCommission " +
                 "FROM sales_person sp " +
                 "JOIN person p ON sp.personID = p.personID " +
-                "JOIN records r ON sp.personID = r.salesPersonID " +
-                "JOIN inventory i ON r.stockNumber = i.stockNumber " +
-                "WHERE YEAR(r.dateOfPurchase) = YEAR(CURDATE()) " +
+                "LEFT JOIN records r ON sp.personID = r.salesPersonID AND YEAR(r.dateOfPurchase) = YEAR(CURDATE()) - 1 " +
+                "LEFT JOIN inventory i ON r.stockNumber = i.stockNumber " +
                 "GROUP BY sp.personID, p.name " +
                 "ORDER BY numSales DESC";
 
@@ -137,12 +137,21 @@ public class DatabaseController {
             while (rs.next()) {
                 int personID = rs.getInt("personID");
                 String name = rs.getString("name");
+                String email = rs.getString("email");
+                String phoneNum = rs.getString("phoneNum");
+                String address = rs.getString("address");
+                String city = rs.getString("city");
+                String state = rs.getString("state");
+                int zipcode = rs.getInt("zipcode");
                 int numSales = rs.getInt("numSales");
                 double totalCommission = rs.getDouble("totalCommission");
 
                 String result = "ID: " + personID + ", Name: " + name +
-                        ", Number of Sales: " + numSales +
-                        ", Total Commission: $" + totalCommission;
+                        ", Email: " + email + ", Phone Number: " + phoneNum + '\n' +
+                        "Address: " + address + ", City: " + city +
+                        ", State: " + state + ", Zipcode: " + zipcode +
+                        ", Number of Sales: " + numSales + '\n' +
+                        "Total Commission: $" + totalCommission;
                 employeeViewList.getItems().add(result);
             }
 
@@ -333,6 +342,7 @@ public class DatabaseController {
             query = "SELECT i.make, i.model, COUNT(r.stockNumber) AS salesCount " +
                     "FROM records r " +
                     "JOIN inventory i ON r.stockNumber = i.stockNumber " +
+                    "WHERE Year(r.dateOfPurchase) between Year(curdate()) - 1 AND Year(curdate()) " +
                     "GROUP BY i.make, i.model " +
                     "ORDER BY salesCount DESC " +
                     "LIMIT 5";
