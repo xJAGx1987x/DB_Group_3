@@ -100,6 +100,11 @@ public class DatabaseController {
         cityColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("city").toString()));
         stateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("state").toString()));
         totalSalesColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("totalSales").toString()));
+        customerTableView.setPlaceholder(new Label(""));
+        searchTableView.setPlaceholder(new Label(""));
+        employeeTableView.setPlaceholder(new Label(""));
+        topSellersTableView.setPlaceholder(new Label(""));
+        vehicleTableView.setPlaceholder(new Label(""));
     }
 
     private void setupToggleGroups() {
