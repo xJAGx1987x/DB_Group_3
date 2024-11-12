@@ -1,12 +1,17 @@
 package com.db_group_three.www.demo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseController {
 
@@ -20,7 +25,7 @@ public class DatabaseController {
     @FXML
     private Button vSearchButton;
     @FXML
-    private ListView<String> vehicleListView;
+    private TableView<Map<String, Object>> vehicleTableView ;
     @FXML
     private RadioButton yearRadioButton;
     @FXML
@@ -34,7 +39,7 @@ public class DatabaseController {
     @FXML
     private Button ctSearchButton;
     @FXML
-    private ListView<String> customerListView;
+    private TableView<Map<String, Object>> customerTableView;
 
     // Fields for Top Sellers tab
     @FXML
@@ -44,19 +49,29 @@ public class DatabaseController {
     @FXML
     private Button topSellersButton;
     @FXML
-    private ListView<String> topSellersListView;
+    private TableView<Map<String, Object>> topSellersTableView;
 
     // Fields for Locations Tab
     @FXML
     private Button locationUpdateButton ;
     @FXML
-    private ListView<String> locationListView ;
+    private TableView<Map<String, Object>> locationTableView;
+    @FXML
+    private TableColumn<Map<String, Object>, String> locationIDColumn;
+    @FXML
+    private TableColumn<Map<String, Object>, String> addressColumn;
+    @FXML
+    private TableColumn<Map<String, Object>, String> cityColumn;
+    @FXML
+    private TableColumn<Map<String, Object>, String> stateColumn;
+    @FXML
+    private TableColumn<Map<String, Object>, String> totalSalesColumn;
 
     // Fields for Employee tab
     @FXML
     private Button employeeUpdateButton ;
     @FXML
-    private ListView<String> employeeViewList ;
+    private TableView<Map<String, Object>> employeeTableView;
 
     // Fields for input search tab
     @FXML
@@ -66,7 +81,7 @@ public class DatabaseController {
     @FXML
     private TextArea searchTextArea ;
     @FXML
-    private ListView<String> searchListView ;
+    private TableView<Map<String, Object>> searchTableView;
 
     private ToggleGroup vehicleTypeToggleGroup;
     private ToggleGroup newUsedToggleGroup;
@@ -80,6 +95,11 @@ public class DatabaseController {
     public void initialize() {
         setupToggleGroups();
         setupEventHandlers();
+        locationIDColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("locationID").toString()));
+        addressColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("address").toString()));
+        cityColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("city").toString()));
+        stateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("state").toString()));
+        totalSalesColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("totalSales").toString()));
     }
 
     private void setupToggleGroups() {
@@ -129,7 +149,8 @@ public class DatabaseController {
 
     @FXML
     private void handleClearInput() {
-        searchListView.getItems().clear() ;
+        searchTableView.getItems().clear() ;
+        searchTableView.getColumns().clear();
         searchTextArea.setText(null) ;
     }
 
@@ -151,9 +172,7 @@ public class DatabaseController {
         }
 
         // Check if the query starts with UPDATE or INSERT
-        // we can allow more functionality by removing this block of code
-        // at the expense of the integrity of our Database
-        String queryUpper = query.toUpperCase(); // Convert to uppercase for case-insensitive comparison
+        String queryUpper = query.toUpperCase();
         if (queryUpper.startsWith("UPDATE") || queryUpper.startsWith("INSERT")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Query");
@@ -163,7 +182,8 @@ public class DatabaseController {
             return;
         }
 
-        searchListView.getItems().clear();
+        searchTableView.getItems().clear();
+        searchTableView.getColumns().clear();
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              Statement stmt = conn.createStatement();
@@ -172,22 +192,34 @@ public class DatabaseController {
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount = metaData.getColumnCount();
 
-            // Process each row in the ResultSet
-            while (rs.next()) {
-                StringBuilder row = new StringBuilder();
+            // Dynamically create TableView columns based on ResultSet metadata
+            for (int i = 1; i <= columnCount; i++) {
+                final int columnIndex = i;
+                TableColumn<Map<String, Object>, String> column = new TableColumn<>(metaData.getColumnName(i));
 
-                for (int i = 1; i <= columnCount; i++) {
-                    Object value = rs.getObject(i); // Get the column value as an Object
-
-                    if (value != null) {
-                        row.append(value.toString()).append(" "); // Convert to String if not null
-                    } else {
-                        row.append("NULL ").append(" "); // Handle null values
+                column.setCellValueFactory(cellData -> {
+                    Map<String, Object> row = cellData.getValue();
+                    Object cellValue = null;
+                    try {
+                        cellValue = row.get(metaData.getColumnName(columnIndex));
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
-                }
-
-                searchListView.getItems().add(row.toString().trim()); // Add the row to ListView
+                    return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
+                });
+                searchTableView.getColumns().add(column);
             }
+
+            // Populate TableView rows
+            ObservableList<Map<String, Object>> tableData = FXCollections.observableArrayList();
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+                tableData.add(row);
+            }
+            searchTableView.setItems(tableData);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -211,36 +243,50 @@ public class DatabaseController {
                 "GROUP BY sp.personID, p.name " +
                 "ORDER BY numSales DESC";
 
-        employeeViewList.getItems().clear();
-        employeeViewList.getItems().add("Salesperson Details (Past Year):");
+        // Clear existing data from the TableView
+        employeeTableView.getItems().clear();
+        employeeTableView.getColumns().clear();
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
-            while (rs.next()) {
-                int personID = rs.getInt("personID");
-                String name = rs.getString("name");
-                String email = rs.getString("email");
-                String phoneNum = rs.getString("phoneNum");
-                String address = rs.getString("address");
-                String city = rs.getString("city");
-                String state = rs.getString("state");
-                int zipcode = rs.getInt("zipcode");
-                int numSales = rs.getInt("numSales");
-                double totalCommission = rs.getDouble("totalCommission");
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
 
-                String result = "ID: " + personID + ", Name: " + name +
-                        ", Email: " + email + ", Phone Number: " + phoneNum + '\n' +
-                        "Address: " + address + ", City: " + city +
-                        ", State: " + state + ", Zipcode: " + zipcode +
-                        ", Number of Sales: " + numSales + '\n' +
-                        "Total Commission: $" + totalCommission;
-                employeeViewList.getItems().add(result);
+            // Dynamically create columns based on ResultSet metadata
+            for (int i = 1; i <= columnCount; i++) {
+                final int columnIndex = i;
+                TableColumn<Map<String, Object>, String> column = new TableColumn<>(metaData.getColumnName(i));
+                column.setCellValueFactory(cellData -> {
+                    Map<String, Object> row = cellData.getValue();
+                    Object cellValue = null;
+                    try {
+                        cellValue = row.get(metaData.getColumnName(columnIndex));
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
+                });
+                employeeTableView.getColumns().add(column);
             }
 
-            if (employeeViewList.getItems().size() == 1) {
-                employeeViewList.getItems().add("No data found for the past year.");
+            // Populate rows with ResultSet data
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+                employeeTableView.getItems().add(row);
+            }
+
+            // Check if no data was returned
+            if (employeeTableView.getItems().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("No Data Found");
+                alert.setHeaderText("No Salesperson Data Available");
+                alert.setContentText("No data found for the past year.");
+                alert.showAndWait();
             }
 
         } catch (SQLException e) {
@@ -255,10 +301,6 @@ public class DatabaseController {
 
     @FXML
     private void handleLocationSearch() {
-        String header = "Dealership Locations by Total Sales in the Past Year:";
-        List<String> locationData = new ArrayList<>();
-
-        // Query to get dealership locations and their total sales in the past year
         String query = "SELECT l.locationID, l.address, l.city, l.state, SUM(i.netSalePrice) AS totalSales " +
                 "FROM records r " +
                 "JOIN inventory i ON r.stockNumber = i.stockNumber " +
@@ -267,22 +309,32 @@ public class DatabaseController {
                 "GROUP BY l.locationID, l.address, l.city, l.state " +
                 "ORDER BY totalSales DESC;";
 
+        // Clear previous data
+        locationTableView.getItems().clear();
+
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
 
-            // Process and collect the results
+            // Populate TableView with the query result
             while (rs.next()) {
-                String locationInfo = "Location ID: " + rs.getInt("locationID") +
-                        ", Address: " + rs.getString("address") +
-                        ", City: " + rs.getString("city") +
-                        ", State: " + rs.getString("state") +
-                        ", Total Sales: $" + rs.getDouble("totalSales");
-                locationData.add(locationInfo);
+                Map<String, Object> row = new HashMap<>();
+                row.put("locationID", rs.getInt("locationID"));
+                row.put("address", rs.getString("address"));
+                row.put("city", rs.getString("city"));
+                row.put("state", rs.getString("state"));
+                row.put("totalSales", String.format("$%,.2f", rs.getDouble("totalSales")));
+                locationTableView.getItems().add(row);
             }
 
-            // Display the data in the ListView
-            clearAndPopulateListView(locationListView, header, locationData.toArray(new String[0]));
+            if (locationTableView.getItems().isEmpty()) {
+                // Handle case where no data is found
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("No Results");
+                alert.setHeaderText("No Data Found");
+                alert.setContentText("No sales data found for the specified period.");
+                alert.showAndWait();
+            }
 
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -301,17 +353,16 @@ public class DatabaseController {
         String timePeriod = yearRadioButton.isSelected() ? "Yearly" : "Monthly";
 
         if (userMake.isEmpty() || userModel.isEmpty()) {
-            // Create and display an error dialog
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Input Error");
             alert.setHeaderText("Missing Information");
             alert.setContentText("Please fill in both 'Make' and 'Model' fields before searching.");
             alert.showAndWait();
-            return; // Exit the method early if input is invalid
+            return;
         }
 
-        // Prepare the header for the list view
-        String header = "Vehicle Search Results for Make: " + userMake + ", Model: " + userModel + ", Time Period: " + timePeriod;
+        vehicleTableView.getItems().clear();
+        vehicleTableView.getColumns().clear();
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(getVehicleSearchQuery(timePeriod))) {
@@ -320,30 +371,44 @@ public class DatabaseController {
             pstmt.setString(2, userModel);
 
             ResultSet rs = pstmt.executeQuery();
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
 
-            // Clear and populate the ListView with results
-            vehicleListView.getItems().clear();
-            vehicleListView.getItems().add(header);
+            // Dynamically create columns based on ResultSet metadata
+            for (int i = 1; i <= columnCount; i++) {
+                final int columnIndex = i;
+                TableColumn<Map<String, Object>, String> column = new TableColumn<>(metaData.getColumnName(i));
+                column.setCellValueFactory(cellData -> {
+                    Map<String, Object> row = cellData.getValue();
+                    Object cellValue = null;
+                    try {
+                        cellValue = row.get(metaData.getColumnName(columnIndex));
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
+                });
+                vehicleTableView.getColumns().add(column);
+            }
 
+            // Populate rows with ResultSet data
             while (rs.next()) {
-                String result;
-                if (timePeriod.equals("Yearly")) {
-                    int year = rs.getInt("purchaseYear");
-                    int totalSales = rs.getInt("totalSales");
-                    result = "Year: " + year + ", Total Sales: $" + totalSales;
-                } else {
-                    int year = rs.getInt("purchaseYear");
-                    int month = rs.getInt("purchaseMonth");
-                    int totalSales = rs.getInt("totalSales");
-                    result = "Date: " + year + "-" + String.format("%02d", month) + ", Total Sales: $" + totalSales;
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
                 }
-                vehicleListView.getItems().add(result);
+                vehicleTableView.getItems().add(row);
             }
 
-            if (vehicleListView.getItems().size() == 1) {
-                // If only the header is present, no data was found
-                vehicleListView.getItems().add("No data found for the specified make, model, and time period.");
+            // Check if no data was returned
+            if (vehicleTableView.getItems().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("No Data Found");
+                alert.setHeaderText("No Vehicle Data Available");
+                alert.setContentText("No data found for the specified make, model, and time period.");
+                alert.showAndWait();
             }
+
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Database Error");
@@ -376,7 +441,9 @@ public class DatabaseController {
                 "JOIN inventory i ON r.stockNumber = i.stockNumber " +
                 "WHERE i.make = ? AND i.model = ?";
 
-        clearAndPopulateListView(customerListView, "Customer Search Results for Make: " + make + ", Model: " + model);
+        // Clear previous data from TableView
+        customerTableView.getItems().clear();
+        customerTableView.getColumns().clear();
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -385,23 +452,39 @@ public class DatabaseController {
             pstmt.setString(2, model);
 
             ResultSet rs = pstmt.executeQuery();
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
 
-            while (rs.next()) {
-                String customerInfo = "ID: " + rs.getLong("personID") + // Change to getLong()
-                        "\nName: " + rs.getString("name") +
-                        "\nEmail: " + rs.getString("email") +
-                        "\nPhone: " + rs.getLong("phoneNum") + // Change to getLong() if needed
-                        "\nAddress: " + rs.getString("address") +
-                        "\nCity: " + rs.getString("city") +
-                        "\nState: " + rs.getString("state") +
-                        "\nZipcode: " + rs.getInt("zipcode") +
-                        "\n\n"; // Double newline for spacing between entries
-                customerListView.getItems().add(customerInfo);
+            // Create columns dynamically based on ResultSet metadata
+            for (int i = 1; i <= columnCount; i++) {
+                final String columnName = metaData.getColumnName(i); // Must be effectively final
+                TableColumn<Map<String, Object>, String> column = new TableColumn<>(columnName);
+
+                column.setCellValueFactory(cellData -> {
+                    Map<String, Object> row = cellData.getValue();
+                    Object cellValue = row.get(columnName);
+                    return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
+                });
+
+                customerTableView.getColumns().add(column);
             }
 
-            if (customerListView.getItems().size() == 1) {
-                // If only the header is present, no data was found
-                customerListView.getItems().add("No customers found for the specified make and model.");
+            // Populate rows
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+                customerTableView.getItems().add(row);
+            }
+
+            // Check if no data was found
+            if (customerTableView.getItems().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("No Results");
+                alert.setHeaderText("No Data Found");
+                alert.setContentText("No customers found for the specified make and model.");
+                alert.showAndWait();
             }
 
         } catch (SQLException e) {
@@ -416,13 +499,13 @@ public class DatabaseController {
 
     @FXML
     private void handleTopSellersSearch() {
-        topSellersListView.getItems().clear();
+        topSellersTableView.getItems().clear();
+        topSellersTableView.getColumns().clear();
 
         String query;
         String header;
 
         if (topRadioButton.isSelected()) {
-            // Query for top 5 best-selling cars regardless of type
             query = "SELECT i.make, i.model, COUNT(r.stockNumber) AS salesCount " +
                     "FROM records r " +
                     "JOIN inventory i ON r.stockNumber = i.stockNumber " +
@@ -432,7 +515,6 @@ public class DatabaseController {
                     "LIMIT 5";
             header = "Top 5 Best-Selling Cars:";
         } else if (usedRadioButton.isSelected()) {
-            // Query for all used cars ordered by sales popularity
             query = "SELECT i.make, i.model, COUNT(r.stockNumber) AS salesCount " +
                     "FROM records r " +
                     "JOIN inventory i ON r.stockNumber = i.stockNumber " +
@@ -441,7 +523,6 @@ public class DatabaseController {
                     "ORDER BY salesCount DESC";
             header = "Used Cars by Popularity:";
         } else {
-            // Handle case where neither radio button is selected (optional)
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Selection Error");
             alert.setHeaderText("No Option Selected");
@@ -454,16 +535,31 @@ public class DatabaseController {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
-            clearAndPopulateListView(topSellersListView, header);
+            // Display header in TableView by creating columns
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
 
-            while (rs.next()) {
-                String make = rs.getString("make");
-                String model = rs.getString("model");
-                int salesCount = rs.getInt("salesCount");
-
-                String result = make + " " + model + " - " + salesCount + " units sold";
-                topSellersListView.getItems().add(result);
+            // Dynamically add columns based on query result
+            for (int i = 1; i <= columnCount; i++) {
+                TableColumn<Map<String, Object>, String> column = new TableColumn<>(metaData.getColumnName(i));
+                final String columnName = metaData.getColumnName(i); // make columnName effectively final
+                column.setCellValueFactory(cellData -> {
+                    Map<String, Object> row = cellData.getValue();
+                    Object cellValue = row.get(columnName);
+                    return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
+                });
+                topSellersTableView.getColumns().add(column);
             }
+
+            // Populate rows in the TableView
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+                topSellersTableView.getItems().add(row);
+            }
+
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Database Error");

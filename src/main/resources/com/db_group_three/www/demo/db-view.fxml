@@ -13,7 +13,7 @@
         </Label>
         <TabPane fx:id="dbTabPane" layoutX="8.0" layoutY="57.0" prefHeight="536.0" prefWidth="785.0" stylesheets="@../../../../css/styles.css" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab fx:id="vehicleTab" text="Vehicle Trends">
+                <Tab fx:id="vehicleView" text="Vehicle Trends">
                     <content>
                         <AnchorPane fx:id="vehiclePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="783.0" style="-fx-background-color: #860038; -fx-border-width: 3px; -fx-border-color: #FFFFFF;">
                             <children>
@@ -22,7 +22,7 @@
                                         <Font name="Times New Roman Bold" size="12.0" />
                                     </font>
                                 </Button>
-                                <GridPane fx:id="vGridPane" layoutX="14.0" layoutY="14.0" prefHeight="113.0" prefWidth="356.0" style="-fx-border-width: 1; -fx-border-color: #FFFFFF;">
+                                <GridPane fx:id="vGridPane" layoutX="11.0" layoutY="6.0" prefHeight="113.0" prefWidth="356.0" style="-fx-border-width: 1; -fx-border-color: #FFFFFF;">
                                     <columnConstraints>
                                         <ColumnConstraints />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="109.4" />
@@ -66,11 +66,12 @@
                                         <Separator orientation="VERTICAL" prefHeight="40.0" prefWidth="0.0" GridPane.rowIndex="1" />
                                     </children>
                                 </GridPane>
-                                <ScrollPane fx:id="vlScrollPane" layoutX="14.0" layoutY="136.0" prefHeight="340.0" prefWidth="759.0">
-                                    <content>
-                                        <ListView fx:id="vehicleListView" prefHeight="340.0" prefWidth="764.0" style="-fx-background-color: #FFFFFF;" />
-                                    </content>
-                                </ScrollPane>
+                        <TableView fx:id="vehicleTableView" layoutX="11.0" layoutY="126.0" prefHeight="349.0" prefWidth="764.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
                             </children>
                         </AnchorPane>
                     </content>
@@ -110,11 +111,12 @@
                                         <Font name="Times New Roman Bold" size="12.0" />
                                     </font>
                                 </Button>
-                                <ScrollPane fx:id="topSellersScrollPane" layoutX="14.0" layoutY="66.0" prefHeight="411.0" prefWidth="760.0">
-                                    <content>
-                                        <ListView fx:id="topSellersListView" prefHeight="414.0" prefWidth="759.0" style="-fx-background-color: #FFFFFF;" />
-                                    </content>
-                                </ScrollPane>
+                        <TableView fx:id="topSellersTableView" layoutX="14.0" layoutY="56.0" prefHeight="418.0" prefWidth="759.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
                             </children>
                         </AnchorPane>
                     </content>
@@ -123,7 +125,7 @@
                     <content>
                         <AnchorPane fx:id="customerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;">
                             <children>
-                                <GridPane fx:id="ctGridPane" layoutX="20.0" layoutY="14.0" prefHeight="75.0" prefWidth="356.0" style="-fx-border-width: 2px; -fx-border-color: #FFFFFF;">
+                                <GridPane fx:id="ctGridPane" layoutX="14.0" layoutY="14.0" prefHeight="75.0" prefWidth="356.0" style="-fx-border-width: 2px; -fx-border-color: #FFFFFF;">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="104.79999618530272" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="394.0" minWidth="10.0" prefWidth="266.40000381469724" />
@@ -147,16 +149,17 @@
                                         </TextField>
                                     </children>
                                 </GridPane>
-                                <Button fx:id="ctSearchButton" layoutX="393.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCustomerSearch" prefHeight="26.0" prefWidth="87.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF; -fx-background-color: #860038;" text="Search" textFill="WHITE">
+                                <Button fx:id="ctSearchButton" layoutX="383.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCustomerSearch" prefHeight="26.0" prefWidth="87.0" style="-fx-border-width: 2; -fx-border-color: #FFFFFF; -fx-background-color: #860038;" text="Search" textFill="WHITE">
                                     <font>
                                         <Font name="Times New Roman Bold" size="12.0" />
                                     </font>
                                 </Button>
-                                <ScrollPane fx:id="ctScrollPane" layoutX="14.0" layoutY="101.0" prefHeight="377.0" prefWidth="759.0">
-                                    <content>
-                                        <ListView fx:id="customerListView" prefHeight="381.0" prefWidth="758.0" style="-fx-background-color: #FFFFFF;" />
-                                    </content>
-                                </ScrollPane>
+                        <TableView fx:id="customerTableView" layoutX="14.0" layoutY="96.0" prefHeight="379.0" prefWidth="760.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
                             </children></AnchorPane>
                     </content>
                 </Tab>
@@ -164,16 +167,20 @@
                     <content>
                         <AnchorPane fx:id="locationPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3px; -fx-border-color: #FFFFFF;">
                             <children>
-                                <ScrollPane fx:id="locationScrollPane" layoutX="15.0" layoutY="54.0" prefHeight="424.0" prefWidth="758.0">
-                                    <content>
-                                        <ListView fx:id="locationListView" prefHeight="427.0" prefWidth="770.0" />
-                                    </content>
-                                </ScrollPane>
-                                <Button fx:id="locationUpdateButton" alignment="CENTER" contentDisplay="CENTER" layoutX="328.0" layoutY="14.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="33.6" prefWidth="105.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-border-insets: 2,2,1,1;" text="Update" textFill="WHITE">
+                                <Button fx:id="locationUpdateButton" alignment="CENTER" contentDisplay="CENTER" layoutX="330.0" layoutY="8.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="33.6" prefWidth="105.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-border-insets: 2,2,1,1;" text="Update" textFill="WHITE">
                                     <font>
                                         <Font name="Times New Roman Bold" size="14.0" />
                                     </font>
                                 </Button>
+                                <TableView fx:id="locationTableView" layoutX="14.0" layoutY="48.0" prefHeight="424.0" prefWidth="758.0">
+                                    <columns>
+                                        <TableColumn fx:id="locationIDColumn" text="Location ID" />
+                                        <TableColumn fx:id="addressColumn" text="Address" />
+                                        <TableColumn fx:id="cityColumn" text="City" />
+                                        <TableColumn fx:id="stateColumn" text="State" />
+                                        <TableColumn fx:id="totalSalesColumn" text="Total Sales" />
+                                    </columns>
+                                </TableView>
                             </children></AnchorPane>
                     </content>
                 </Tab>
@@ -181,16 +188,17 @@
                     <content>
                         <AnchorPane fx:id="customerPane1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #860038; -fx-border-width: 3; -fx-border-color: #FFFFFF;">
                             <children>
-                                <ScrollPane fx:id="employeeScrollPane" layoutX="14.0" layoutY="53.0" prefHeight="424.0" prefWidth="758.0">
-                                    <content>
-                                        <ListView fx:id="employeeViewList" prefHeight="424.0" prefWidth="762.0" />
-                                    </content>
-                                </ScrollPane>
-                                <Button fx:id="employeeUpdateButton" alignment="CENTER" contentDisplay="CENTER" layoutX="326.0" layoutY="14.0" mnemonicParsing="false" prefHeight="33.5" prefWidth="105.6" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-border-insets: 2, 2, 1, 1;" text="Update" textAlignment="CENTER" textFill="WHITE">
+                                <Button fx:id="employeeUpdateButton" alignment="CENTER" contentDisplay="CENTER" layoutX="326.0" layoutY="8.0" mnemonicParsing="false" prefHeight="33.5" prefWidth="105.6" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-border-insets: 2, 2, 1, 1;" text="Update" textAlignment="CENTER" textFill="WHITE">
                                     <font>
                                         <Font name="Times New Roman Bold" size="14.0" />
                                     </font>
                                 </Button>
+                        <TableView fx:id="employeeTableView" layoutX="14.0" layoutY="42.0" prefHeight="431.0" prefWidth="759.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
                             </children></AnchorPane>
                     </content>
                 </Tab>
@@ -208,7 +216,7 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <TextArea fx:id="searchTextArea" prefHeight="104.0" prefWidth="633.0" promptText="Enter a query" style="-fx-control-inner-background: #860038; -fx-text-fill: white; -fx-prompt-text-fill: #FFFFFF" GridPane.columnIndex="2">
+                                        <TextArea fx:id="searchTextArea" prefHeight="104.0" prefWidth="712.0" promptText="Enter a query" style="-fx-control-inner-background: #860038; -fx-text-fill: white; -fx-prompt-text-fill: #FFFFFF" GridPane.columnIndex="2">
                                  <font>
                                     <Font name="Times New Roman Bold" size="14.0" />
                                  </font></TextArea>
@@ -231,11 +239,12 @@
                               <Separator orientation="VERTICAL" prefHeight="104.0" prefWidth="0.0" />
                                     </children>
                                 </GridPane>
-                                <ScrollPane layoutX="14.0" layoutY="134.0" prefHeight="344.0" prefWidth="763.0">
-                                    <content>
-                                        <ListView fx:id="searchListView" prefHeight="342.0" prefWidth="766.0" />
-                                    </content>
-                                </ScrollPane>
+                        <TableView fx:id="searchTableView" layoutX="14.0" layoutY="132.0" prefHeight="347.0" prefWidth="761.0" style="-fx-background-color: #860038; -fx-text-fill: #FFFFFF; -fx-border-width: 2px; -fx-border-color: #FFFFFF; -fx-alignment: CENTER;">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
                             </children>
                         </AnchorPane>
                     </content>
