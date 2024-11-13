@@ -180,7 +180,13 @@ public class DatabaseController {
 
         // Check if the query starts with UPDATE or INSERT
         String queryUpper = query.toUpperCase();
-        if (queryUpper.startsWith("UPDATE") || queryUpper.startsWith("INSERT") || queryUpper.startsWith("DELETE") ) {
+        if (queryUpper.startsWith("UPDATE") || queryUpper.startsWith("INSERT")
+                || queryUpper.startsWith("DELETE") || queryUpper.startsWith("DROP")
+                || queryUpper.startsWith("ALTER") || queryUpper.startsWith("TRUNCATE")
+                || queryUpper.startsWith("EXEC") || queryUpper.startsWith("GRANT")
+                || queryUpper.startsWith("REVOKE") || queryUpper.startsWith("CREATE")
+                || queryUpper.startsWith("REPLACE") || queryUpper.startsWith("RENAME")
+                || queryUpper.startsWith("MERGE")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Query");
             alert.setHeaderText("Only SELECT Queries Allowed");
