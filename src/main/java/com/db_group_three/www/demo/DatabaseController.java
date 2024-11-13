@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -180,13 +181,7 @@ public class DatabaseController {
 
         // Check if the query starts with UPDATE or INSERT
         String queryUpper = query.toUpperCase();
-        if (queryUpper.startsWith("UPDATE") || queryUpper.startsWith("INSERT")
-                || queryUpper.startsWith("DELETE") || queryUpper.startsWith("DROP")
-                || queryUpper.startsWith("ALTER") || queryUpper.startsWith("TRUNCATE")
-                || queryUpper.startsWith("EXEC") || queryUpper.startsWith("GRANT")
-                || queryUpper.startsWith("REVOKE") || queryUpper.startsWith("CREATE")
-                || queryUpper.startsWith("REPLACE") || queryUpper.startsWith("RENAME")
-                || queryUpper.startsWith("MERGE")) {
+        if (queryUpper.startsWith("UPDATE") || queryUpper.startsWith("INSERT") || queryUpper.startsWith("DELETE")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Query");
             alert.setHeaderText("Only SELECT Queries Allowed");
@@ -208,8 +203,9 @@ public class DatabaseController {
             // Dynamically create TableView columns based on ResultSet metadata
             for (int i = 1; i <= columnCount; i++) {
                 final int columnIndex = i;
-                TableColumn<Map<String, Object>, String> column = new TableColumn<>(metaData.getColumnName(i));
+                TableColumn<Map<String, Object>, Object> column = new TableColumn<>(metaData.getColumnName(i));
 
+                // Set to handle any object type (like Image or String)
                 column.setCellValueFactory(cellData -> {
                     Map<String, Object> row = cellData.getValue();
                     Object cellValue = null;
@@ -218,17 +214,54 @@ public class DatabaseController {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
+                    return new SimpleObjectProperty<>(cellValue); // Uses SimpleObjectProperty for any object type
                 });
+
+                // Set a custom cell for rendering Objects
+                column.setCellFactory(col -> new TableCell<Map<String, Object>, Object>() {
+                    @Override
+                    protected void updateItem(Object item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setGraphic(null);
+                            setText(null);  // Clear text for empty cells
+                        } else {
+                            if (item instanceof Image) {
+                                Image image = (Image) item;
+                                ImageView imageView = new ImageView(image);
+                                imageView.setFitWidth(100);
+                                imageView.setFitHeight(100);
+                                setGraphic(imageView);
+                                setText(null);
+                            } else {  // Default behavior for non-image data
+                                setText(item.toString());
+                                setGraphic(null);
+                            }
+                        }
+                    }
+                });
+
                 searchTableView.getColumns().add(column);
             }
+
+
 
             // Populate TableView rows
             ObservableList<Map<String, Object>> tableData = FXCollections.observableArrayList();
             while (rs.next()) {
                 Map<String, Object> row = new HashMap<>();
                 for (int i = 1; i <= columnCount; i++) {
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                    Object columnValue = rs.getObject(i);
+
+                    // Check if the column is a BLOB type (for image data)
+                    if (columnValue instanceof byte[]) {
+                        byte[] bytes = (byte[]) columnValue;
+                        InputStream inputStream = new ByteArrayInputStream(bytes);
+                        Image image = new Image(inputStream);
+                        row.put(metaData.getColumnName(i), image);  // Store Image in the row data map
+                    } else {
+                        row.put(metaData.getColumnName(i), columnValue);
+                    }
                 }
                 tableData.add(row);
             }
@@ -243,6 +276,7 @@ public class DatabaseController {
             alert.showAndWait();
         }
     }
+
 
     @FXML
     private void handleSalespersonUpdate() {
