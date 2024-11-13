@@ -11,6 +11,7 @@ module com.db_group_three.www.demo {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.sql;
+    requires java.desktop;
 
     opens com.db_group_three.www.demo to javafx.fxml;
     exports com.db_group_three.www.demo;

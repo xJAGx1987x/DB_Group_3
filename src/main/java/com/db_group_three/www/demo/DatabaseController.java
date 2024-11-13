@@ -1,22 +1,24 @@
 package com.db_group_three.www.demo;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DatabaseController {
-
-    @FXML
-    private Pane dbPane;
     // Fields for Vehicle Trends tab
     @FXML
     private TextField makeField;
@@ -178,7 +180,7 @@ public class DatabaseController {
 
         // Check if the query starts with UPDATE or INSERT
         String queryUpper = query.toUpperCase();
-        if (queryUpper.startsWith("UPDATE") || queryUpper.startsWith("INSERT")) {
+        if (queryUpper.startsWith("UPDATE") || queryUpper.startsWith("INSERT") || queryUpper.startsWith("DELETE") ) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Query");
             alert.setHeaderText("Only SELECT Queries Allowed");
