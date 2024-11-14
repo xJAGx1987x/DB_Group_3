@@ -42,10 +42,11 @@ public class LoginController {
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
             // Updated query to join with location_employee to determine if the user is a manager
-            String query = "SELECT personID, username, password, isManager " +
-                            "FROM location_employee " +
-                            "JOIN sales_person s ON location_employee.personID = sales_person.personID " +
-                            "WHERE s.username = ? AND s.password = ?";
+            String query = "SELECT p.name, s.personID, le.isManager " +
+                    "FROM sales_person s " +
+                    "JOIN person p ON s.personID = p.personID " +
+                    "JOIN location_employee le ON s.personID = le.personID " +
+                    "WHERE s.username = ? AND s.password = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employeeID);
