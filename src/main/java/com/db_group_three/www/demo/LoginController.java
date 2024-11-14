@@ -1,12 +1,11 @@
 package com.db_group_three.www.demo;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,36 +17,49 @@ public class LoginController {
     @FXML
     private Label falconLabel;
     @FXML
-    private TextField loginField;
+    private TextField usernameField;
     @FXML
     private Button loginButton;
+    @FXML
+    private PasswordField passwordField ;
 
-    private static final String DB_URL = "jdbc:mysql://database-2.cns6g8eseo17.us-east-2.rds.amazonaws.com:3306/database-2";
-    private static final String DB_USER = "admin";
-    private static final String DB_PASSWORD = "password";
+    private final String DB_URL = "jdbc:mysql://database-2.cns6g8eseo17.us-east-2.rds.amazonaws.com:3306/FalconSportsCar?useLegacyDatetimeCode=false&serverTimezone=America/New_York";
+    private final String DB_USER = "admin";
+    private final String DB_PASSWORD = "password";
 
 
     // We should consider making this a boolean, or int return
     // to confirm a successful login.
     @FXML
     private void handleLoginAction() {
-        String employeeID = loginField.getText().trim();
+        String employeeID = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
 
-        if (employeeID.isEmpty()) {
+        if (employeeID.isEmpty() || employeeID.equalsIgnoreCase("Enter a Username")) {
             showAlert("Input Error", "Please enter an employee number.");
             return;
         }
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-            String query = "SELECT * FROM employees WHERE employee_id = ?";
+            // Updated query to join with location_employee to determine if the user is a manager
+            String query = "SELECT personID, username, password, isManager " +
+                            "FROM location_employee " +
+                            "JOIN sales_person s ON location_employee.personID = sales_person.personID " +
+                            "WHERE s.username = ? AND s.password = ?";
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employeeID);
+            preparedStatement.setString(2, password);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                showAlert("Login Successful", "Welcome, " + resultSet.getString("name") + "!");
+                int personID = resultSet.getInt("personID");
+                boolean isManager = resultSet.getBoolean("isManager");
+                String userType = isManager ? "Manager" : "Employee";
+
+                showAlert("Login Successful", "Welcome, " + resultSet.getString("name") + "! You are logged in as a " + userType + ".");
             } else {
-                showAlert("Login Failed", "Employee ID not found.");
+                showAlert("Login Failed", "Employee ID or password is incorrect.");
             }
         } catch (Exception e) {
             e.printStackTrace();
