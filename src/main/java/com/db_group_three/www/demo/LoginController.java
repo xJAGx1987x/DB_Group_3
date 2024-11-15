@@ -37,8 +37,13 @@ public class LoginController {
         String employeeID = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
-        if (employeeID.isEmpty() || employeeID.equalsIgnoreCase("Enter a Username")) {
+        if (employeeID.isEmpty() || employeeID.equalsIgnoreCase("Enter Employee Username")) {
             showAlert("Input Error", "Please enter an employee number.");
+            return;
+        }
+
+        if (password.isEmpty() || password.equalsIgnoreCase("Enter Employee Password")) {
+            showAlert("Input Error", "Please enter employee password.");
             return;
         }
 
