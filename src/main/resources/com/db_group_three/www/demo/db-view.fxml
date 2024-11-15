@@ -144,7 +144,7 @@
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                             </padding>
                                         </GridPane>
-                                        <TableView fx:id="topSellersTableView" layoutX="3.0" layoutY="62.0" prefHeight="422.0" prefWidth="783.0" AnchorPane.bottomAnchor="3.6000000000000227" AnchorPane.leftAnchor="3.199999999999932" AnchorPane.rightAnchor="4.199999999999932" AnchorPane.topAnchor="61.60000000000002" />
+                                        <TableView fx:id="topSellersTableView" layoutX="3.0" layoutY="62.0" prefHeight="430.0" prefWidth="784.0" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="62.0" />
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -196,7 +196,7 @@
                                                 </Label>
                                             </children>
                                         </GridPane>
-                                        <TableView fx:id="customerTableView" layoutX="3.0" layoutY="138.0" prefHeight="345.0" prefWidth="782.0" AnchorPane.bottomAnchor="4.399999999999977" AnchorPane.leftAnchor="3.2000000000000455" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="138.39999999999998" />
+                                        <TableView fx:id="customerTableView" layoutX="3.0" layoutY="138.0" prefHeight="352.0" prefWidth="783.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="138.0" />
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -215,7 +215,7 @@
                                             <children>
                                                 <HBox alignment="CENTER" prefHeight="46.0" prefWidth="781.0">
                                                     <children>
-                                                        <Button fx:id="locationUpdateButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Update" textFill="WHITE">
+                                                        <Button fx:id="locationUpdateButton" mnemonicParsing="false" onAction="#handleLocationSearch" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Update" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
@@ -224,7 +224,7 @@
                                                 </HBox>
                                             </children>
                                         </GridPane>
-                                        <TableView fx:id="locationTableView" layoutX="3.0" layoutY="65.0" prefHeight="419.0" prefWidth="784.0" AnchorPane.bottomAnchor="3.8" AnchorPane.leftAnchor="3.2" AnchorPane.rightAnchor="3.4" AnchorPane.topAnchor="64.8">
+                                        <TableView fx:id="locationTableView" layoutX="3.0" layoutY="65.0" prefHeight="427.0" prefWidth="785.0" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="65.0">
                                             <columns>
                                                 <TableColumn fx:id="locationIDColumn" text="Location ID" />
                                                 <TableColumn fx:id="addressColumn" text="Address" />
@@ -260,7 +260,7 @@
                                                 </HBox>
                                             </children>
                                         </GridPane>
-                                        <TableView fx:id="employeeTableView" layoutX="3.0" layoutY="65.0" prefHeight="419.0" prefWidth="784.0" AnchorPane.bottomAnchor="3.8000000000000114" AnchorPane.leftAnchor="3.199999999999932" AnchorPane.rightAnchor="3.3999999999999773" AnchorPane.topAnchor="64.80000000000001" />
+                                        <TableView fx:id="employeeTableView" layoutX="3.0" layoutY="65.0" prefHeight="426.0" prefWidth="785.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="65.0" />
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -300,7 +300,7 @@
                                                 </VBox>
                                             </children>
                                         </GridPane>
-                                        <TableView fx:id="searchTableView" layoutX="3.0" layoutY="98.0" prefHeight="384.0" prefWidth="784.0" AnchorPane.bottomAnchor="-15.600000000000023" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="4.2000000000000455" AnchorPane.topAnchor="98.0" />
+                                        <TableView fx:id="searchTableView" layoutX="3.0" layoutY="98.0" prefHeight="393.0" prefWidth="784.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="98.0" />
                                     </children>
                                 </AnchorPane>
                             </content>

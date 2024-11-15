@@ -105,11 +105,17 @@ public class DatabaseController {
     public void initialize() {
         setupToggleGroups();
         setupEventHandlers();
-        locationIDColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("locationID").toString()));
-        addressColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("address").toString()));
-        cityColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("city").toString()));
-        stateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("state").toString()));
-        totalSalesColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("totalSales").toString()));
+        // Define cellValueFactory for each column
+        locationIDColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().get("locationID"))));
+        addressColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("address")));
+        cityColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("city")));
+        stateColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("state")));
+        totalSalesColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("totalSales")));
         customerTableView.setPlaceholder(new Label(""));
         searchTableView.setPlaceholder(new Label(""));
         employeeTableView.setPlaceholder(new Label(""));
@@ -121,7 +127,6 @@ public class DatabaseController {
         employeeTableView.getColumns().clear();
         topSellersTableView.getColumns().clear();
         vehicleTableView.getColumns().clear();
-        locationTableView.getColumns().clear();
     }
 
     private void setupToggleGroups() {
@@ -403,7 +408,7 @@ public class DatabaseController {
             // Populate TableView with the query result
             while (rs.next()) {
                 Map<String, Object> row = new HashMap<>();
-                row.put("locationID", rs.getInt("locationID"));
+                row.put("locationID", rs.getInt("locationID")) ;
                 row.put("address", rs.getString("address"));
                 row.put("city", rs.getString("city"));
                 row.put("state", rs.getString("state"));
