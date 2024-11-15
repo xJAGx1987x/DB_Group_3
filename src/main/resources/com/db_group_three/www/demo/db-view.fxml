@@ -21,7 +21,7 @@
                     </font>
                 </Label>
                 <Separator focusTraversable="false" prefHeight="0.0" prefWidth="790.0" VBox.vgrow="ALWAYS" />
-                <TabPane prefHeight="200.0" prefWidth="200.0" stylesheets="@../../../../css/styles.css" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+                <TabPane fx:id="dbTabPane" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../../../css/styles.css" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
                     <tabs>
                         <Tab fx:id="vehicleTab" closable="false" text="Vehicle Trends">
                             <content>

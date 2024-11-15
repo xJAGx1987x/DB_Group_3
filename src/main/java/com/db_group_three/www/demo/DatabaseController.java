@@ -23,6 +23,8 @@ public class DatabaseController {
     // Field for define a successfully logged in user
     private DBUser currentUser ;
     @FXML
+    private TabPane dbTabPane ;
+    @FXML
     private Tab locationTab ;
     @FXML
     private Tab employeeTab ;
@@ -661,9 +663,19 @@ public class DatabaseController {
 
     public void setDBUser(DBUser currentUser){
         this.currentUser = currentUser ;
-        if(!this.currentUser.getIsManager()){
-            locationTab.setDisable(true);
-            employeeTab.setDisable(true);
+        if (!this.currentUser.getIsManager()) {
+            // Ensure dbTabPane is properly referenced
+            if (dbTabPane != null) {
+                // Remove the locationTab if it exists in the TabPane
+                if (dbTabPane.getTabs().contains(locationTab)) {
+                    dbTabPane.getTabs().remove(locationTab);
+                }
+
+                // Remove the employeeTab if it exists in the TabPane
+                if (dbTabPane.getTabs().contains(employeeTab)) {
+                    dbTabPane.getTabs().remove(employeeTab);
+                }
+            }
         }
     }
 }
