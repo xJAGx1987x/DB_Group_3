@@ -7,9 +7,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 
 import java.io.ByteArrayInputStream;
@@ -44,9 +48,9 @@ public class DatabaseController {
 
     // Fields for Customer tab
     @FXML
-    private TextField ctmakeField;
+    private TextField ctMakeField;
     @FXML
-    private TextField ctmodelField;
+    private TextField ctModelField;
     @FXML
     private Button ctSearchButton;
     @FXML
@@ -512,8 +516,8 @@ public class DatabaseController {
 
     @FXML
     private void handleCustomerSearch() {
-        String make = ctmakeField.getText().trim();
-        String model = ctmodelField.getText().trim();
+        String make = ctMakeField.getText().trim();
+        String model = ctModelField.getText().trim();
 
         if (make.isEmpty() || model.isEmpty()) {
             // Create and display an error dialog

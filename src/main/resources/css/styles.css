@@ -113,3 +113,12 @@
     -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.3), 10, 0.0, 0, 2);
 }
 /* linear-gradient(#101010 0%, #860038 100%); */
+
+.button {
+    -fx-background-color: #860038;
+    -fx-text-fill: #FFFFFF ;
+}
+
+.button:pressed {
+    -fx-background-color: #ff0055; /* Lighter maroon */
+}

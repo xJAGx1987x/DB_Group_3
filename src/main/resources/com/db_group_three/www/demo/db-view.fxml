@@ -77,7 +77,7 @@
                                                             </font>
                                                         </RadioButton>
                                                         <Separator focusTraversable="false" orientation="VERTICAL" prefHeight="34.0" prefWidth="171.0" visible="false" />
-                                                        <Button fx:id="vSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Search" textFill="WHITE">
+                                                        <Button fx:id="vSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style=" -fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Search" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
@@ -129,7 +129,7 @@
                                                 <HBox prefWidth="333.0" GridPane.columnIndex="3">
                                                     <children>
                                                         <Separator focusTraversable="false" orientation="VERTICAL" prefHeight="38.0" prefWidth="166.0" visible="false" />
-                                                        <Button fx:id="topSellersButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Search" textFill="WHITE">
+                                                        <Button fx:id="topSellersButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style=" -fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Search" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
@@ -174,17 +174,17 @@
                                                         <Font name="Times New Roman Bold" size="16.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="ctMakeField" style="-fx-background-color: #860038; -fx-text-fill: #FFFFFF; -fx-border-width: 1px; -fx-border-color: #FFFFFF;" GridPane.columnIndex="1">
+                                                <TextField fx:id="ctMakeField" style="-fx-background-color: #860038; -fx-text-fill: #FFFFFF; -fx-border-width: 2px; -fx-border-color: #FFFFFF;" GridPane.columnIndex="1">
                                                     <font>
                                                         <Font name="Times New Roman Bold" size="16.0" />
                                                     </font>
                                                 </TextField>
-                                                <TextField fx:id="ctmodelField" layoutX="124.0" layoutY="13.0" style="-fx-background-color: #860038; -fx-text-fill: #FFFFFF; -fx-border-width: 2px; -fx-border-color: #FFFFFF;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <TextField fx:id="ctModelField" layoutX="124.0" layoutY="13.0" style="-fx-background-color: #860038; -fx-text-fill: #FFFFFF; -fx-border-width: 2px; -fx-border-color: #FFFFFF;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                     <font>
                                                         <Font name="Times New Roman Bold" size="16.0" />
                                                     </font>
                                                 </TextField>
-                                                <Button fx:id="ctSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Search" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <Button fx:id="ctSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Search" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                     <font>
                                                         <Font name="Times New Roman Bold" size="16.0" />
                                                     </font>
@@ -215,7 +215,7 @@
                                             <children>
                                                 <HBox alignment="CENTER" prefHeight="46.0" prefWidth="781.0">
                                                     <children>
-                                                        <Button fx:id="locationUpdateButton" mnemonicParsing="false" onAction="#handleLocationSearch" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Update" textFill="WHITE">
+                                                        <Button fx:id="locationUpdateButton" mnemonicParsing="false" onAction="#handleLocationSearch" prefHeight="38.0" prefWidth="150.0" style="-fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Update" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
@@ -251,7 +251,7 @@
                                             <children>
                                                 <HBox alignment="CENTER" prefHeight="46.0" prefWidth="781.0">
                                                     <children>
-                                                        <Button fx:id="employeeUpdateButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Update" textFill="WHITE">
+                                                        <Button fx:id="employeeUpdateButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Update" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
@@ -285,13 +285,13 @@
                                                 </TextArea>
                                                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                                                     <children>
-                                                        <Button fx:id="inputSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Search" textFill="WHITE">
+                                                        <Button fx:id="inputSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Search" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
                                                         </Button>
                                                         <Separator focusTraversable="false" prefHeight="18.0" prefWidth="133.0" visible="false" />
-                                                        <Button fx:id="clearInputSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #860038; -fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Clear" textFill="WHITE">
+                                                        <Button fx:id="clearInputSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Clear" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
