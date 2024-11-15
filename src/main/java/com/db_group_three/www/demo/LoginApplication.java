@@ -16,5 +16,6 @@ public class LoginApplication extends Application {
         primaryStage.setTitle("Employee Login");
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryStage.setResizable(false);
     }
 }

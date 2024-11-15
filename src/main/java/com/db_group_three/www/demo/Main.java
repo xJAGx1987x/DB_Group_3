@@ -1,7 +1,5 @@
 package com.db_group_three.www.demo;
 
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args){
         LoginApplication.launch(LoginApplication.class, args);
@@ -9,20 +7,19 @@ public class Main {
 
         /*
         ******* Please don't remove yet.
-        ******* We still may need this logic
+        ******* We may still need this logic
 
+            InventoryUpdater updater = new InventoryUpdater();
+            Scanner scanner = new Scanner(System.in);
 
-        InventoryUpdater updater = new InventoryUpdater();
-        Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter Vehicle ID (1-301): ");
+            int vehicleID = scanner.nextInt();
+            scanner.nextLine();  // Consume newline
 
-        System.out.print("Enter Vehicle ID (1-301): ");
-        int vehicleID = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+            System.out.print("Enter Image File Path: ");
+            String filePath = scanner.nextLine();
 
-        System.out.print("Enter Image File Path: ");
-        String filePath = scanner.nextLine();
-
-        updater.updateInventoryImage(vehicleID, filePath);
+            updater.updateInventoryImage(vehicleID, filePath);
         */
     }
 }

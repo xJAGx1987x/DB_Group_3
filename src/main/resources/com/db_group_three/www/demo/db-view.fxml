@@ -5,17 +5,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="800.0" style="-fx-background-color: #860038;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.db_group_three.www.demo.DatabaseController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="800.0" style="-fx-background-color: #860038;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.db_group_three.www.demo.DatabaseController">
     <padding>
         <Insets top="10.0" />
     </padding>
     <children>
-        <VBox layoutY="-1.5999999999999996" prefHeight="624.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="CENTER" layoutY="-1.5999999999999996" prefHeight="624.0" prefWidth="800.0" AnchorPane.bottomAnchor="-30.399999999999977" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.5999999999999996">
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" prefHeight="61.0" prefWidth="790.0" text="Falcon Sports Cars Database" textFill="WHITE" VBox.vgrow="ALWAYS">
+                <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" prefHeight="61.0" prefWidth="790.0" text="Falcon Sports Cars Database" textAlignment="JUSTIFY" textFill="WHITE" VBox.vgrow="ALWAYS">
                     <font>
                         <Font name="Times New Roman Bold" size="36.0" />
                     </font>
@@ -91,7 +91,7 @@
                                                 </Label>
                                             </children>
                                         </GridPane>
-                                        <TableView fx:id="vehicleTableView" layoutX="2.4" layoutY="112.8" prefHeight="370.0" prefWidth="784.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="113.0" />
+                                        <TableView fx:id="vehicleTableView" layoutX="2.4" layoutY="112.8" prefHeight="353.0" prefWidth="784.0" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="113.0" />
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -278,7 +278,7 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <TextArea fx:id="searchTextArea" prefHeight="78.0" prefWidth="730.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" >
+                                                <TextArea fx:id="searchTextArea" prefHeight="78.0" prefWidth="730.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                                                     <font>
                                                         <Font name="Times New Roman Bold" size="16.0" />
                                                     </font>

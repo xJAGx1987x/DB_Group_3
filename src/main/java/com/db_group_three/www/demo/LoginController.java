@@ -78,6 +78,7 @@ public class LoginController {
                     Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     primaryStage.setScene(mainScene);
                     primaryStage.show();
+                    primaryStage.setResizable(true);
 
                     // Show login success message
                     showAlert("Login Successful", "Welcome, " + resultSet.getString("name") + "! You are logged in as a " + userType + ".");

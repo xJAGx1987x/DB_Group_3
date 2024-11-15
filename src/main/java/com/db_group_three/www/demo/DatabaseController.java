@@ -195,7 +195,32 @@ public class DatabaseController {
 
         // Check if the query starts with UPDATE or INSERT
         String queryUpper = query.toUpperCase();
-        if (queryUpper.startsWith("UPDATE") || queryUpper.startsWith("INSERT") || queryUpper.startsWith("DELETE")) {
+        if (queryUpper.startsWith("ALTER") ||
+                queryUpper.startsWith("CREATE") ||
+                queryUpper.startsWith("DELETE") ||
+                queryUpper.startsWith("DROP") ||
+                queryUpper.startsWith("EXEC") ||
+                queryUpper.startsWith("EXECUTE") ||
+                queryUpper.startsWith("GRANT") ||
+                queryUpper.startsWith("INSERT") ||
+                queryUpper.startsWith("MERGE") ||
+                queryUpper.startsWith("REPLACE") ||
+                queryUpper.startsWith("SET") ||
+                queryUpper.startsWith("TRUNCATE") ||
+                queryUpper.startsWith("UPDATE") ||
+                queryUpper.startsWith("WITH") ||
+                queryUpper.startsWith("CALL") ||
+                queryUpper.startsWith("COMMIT") ||
+                queryUpper.startsWith("ROLLBACK") ||
+                queryUpper.startsWith("SAVEPOINT") ||
+                queryUpper.startsWith("TRANSACTION") ||
+                queryUpper.startsWith("LOCK") ||
+                queryUpper.startsWith("UNLOCK") ||
+                queryUpper.startsWith("REVOKE") ||
+                queryUpper.startsWith("ADD") ||
+                queryUpper.startsWith("REMOVE") ||
+                queryUpper.startsWith("DISABLE") ||
+                queryUpper.startsWith("ENABLE")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Query");
             alert.setHeaderText("Only SELECT Queries Allowed");
@@ -257,7 +282,6 @@ public class DatabaseController {
 
                 searchTableView.getColumns().add(column);
             }
-
 
 
             // Populate TableView rows
