@@ -1,11 +1,18 @@
 package com.db_group_three.www.demo;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,11 +34,8 @@ public class LoginController {
     private final String DB_USER = "admin";
     private final String DB_PASSWORD = "password";
 
-
-    // We should consider making this a boolean, or int return
-    // to confirm a successful login.
     @FXML
-    private void handleLoginAction() {
+    private void handleLoginAction(ActionEvent event) {
         String employeeID = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
@@ -58,9 +62,33 @@ public class LoginController {
                 boolean isManager = resultSet.getBoolean("isManager");
                 String userType = isManager ? "Manager" : "Employee";
 
-                showAlert("Login Successful", "Welcome, " + resultSet.getString("name") + "! You are logged in as a " + userType + ".");
+                DBUser dbUser = new DBUser(personID, isManager);
+
+                try {
+                    // Load the main view
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("db-view.fxml"));
+                    Parent mainRoot = loader.load();
+
+                    // Get the controller and pass DBUser data
+                    DatabaseController dbController = loader.getController();
+                    dbController.setDBUser(dbUser);
+
+                    // Set up the new scene
+                    Scene mainScene = new Scene(mainRoot);
+                    Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    primaryStage.setScene(mainScene);
+                    primaryStage.show();
+
+                    // Show login success message
+                    showAlert("Login Successful", "Welcome, " + resultSet.getString("name") + "! You are logged in as a " + userType + ".");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    showAlert("Loading Error", "Unable to load the main application view.");
+                }
             } else {
                 showAlert("Login Failed", "Employee ID or password is incorrect.");
+                usernameField.setText("");
+                passwordField.setText("");
             }
         } catch (Exception e) {
             e.printStackTrace();

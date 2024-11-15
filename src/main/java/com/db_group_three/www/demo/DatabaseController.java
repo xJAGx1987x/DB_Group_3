@@ -20,6 +20,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DatabaseController {
+    // Field for define a successfully logged in user
+    private DBUser currentUser ;
+    @FXML
+    private Tab locationTab ;
+    @FXML
+    private Tab employeeTab ;
     // Fields for Vehicle Trends tab
     @FXML
     private TextField makeField;
@@ -94,6 +100,7 @@ public class DatabaseController {
     private final String DB_USER = "admin";
     private final String DB_PASSWORD = "password";
 
+
     @FXML
     public void initialize() {
         setupToggleGroups();
@@ -108,20 +115,21 @@ public class DatabaseController {
         employeeTableView.setPlaceholder(new Label(""));
         topSellersTableView.setPlaceholder(new Label(""));
         vehicleTableView.setPlaceholder(new Label(""));
+        locationTableView.setPlaceholder(new Label(""));
     }
 
     private void setupToggleGroups() {
         // Set up ToggleGroup for Vehicle Trends
-        vehicleTypeToggleGroup = new ToggleGroup();
-        yearRadioButton.setToggleGroup(vehicleTypeToggleGroup);
-        monthRadioButton.setToggleGroup(vehicleTypeToggleGroup);
-        yearRadioButton.setSelected(true);
+        this.vehicleTypeToggleGroup = new ToggleGroup();
+        this.yearRadioButton.setToggleGroup(vehicleTypeToggleGroup);
+        this.monthRadioButton.setToggleGroup(vehicleTypeToggleGroup);
+        this.yearRadioButton.setSelected(true);
 
         // Set up ToggleGroup for new/used selection
-        newUsedToggleGroup = new ToggleGroup();
-        topRadioButton.setToggleGroup(newUsedToggleGroup);
-        usedRadioButton.setToggleGroup(newUsedToggleGroup);
-        topRadioButton.setSelected(true);
+        this.newUsedToggleGroup = new ToggleGroup();
+        this.topRadioButton.setToggleGroup(newUsedToggleGroup);
+        this.usedRadioButton.setToggleGroup(newUsedToggleGroup);
+        this.topRadioButton.setSelected(true);
     }
 
     private void clearAndPopulateListView(ListView<String> listView, String header, String... items) {
@@ -276,7 +284,6 @@ public class DatabaseController {
             alert.showAndWait();
         }
     }
-
 
     @FXML
     private void handleSalespersonUpdate() {
@@ -614,6 +621,14 @@ public class DatabaseController {
             alert.setContentText("An error occurred while querying the database: " + e.getMessage());
             alert.showAndWait();
             e.printStackTrace();
+        }
+    }
+
+    public void setDBUser(DBUser currentUser){
+        this.currentUser = currentUser ;
+        if(!this.currentUser.getIsManager()){
+            locationTab.setDisable(true);
+            employeeTab.setDisable(true);
         }
     }
 }

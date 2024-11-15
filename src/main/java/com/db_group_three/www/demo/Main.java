@@ -9,7 +9,6 @@ public class Main {
         // so I could add code to push images to the DB.
         // Sorry, I guess for being so awesome.
         LoginApplication.launch(LoginApplication.class, args);
-        // DatabaseApplication.launch(DatabaseApplication.class, args) ;
 
         /*
         InventoryUpdater updater = new InventoryUpdater();
