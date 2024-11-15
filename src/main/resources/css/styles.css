@@ -49,24 +49,6 @@
     -fx-background-color: #860038;
 }
 
-/* Styling for the dropdown list */
-.list-view {
-    -fx-background-color: #860038; /* Background color for dropdown container */
-}
-
-/* Styling for the individual items in the dropdown */
-.list-view .list-cell {
-    -fx-background-color: #860038; /* Background color for dropdown items */
-    -fx-text-fill: #FFFFFF; /* Text color for dropdown items */
-    -fx-font-family: 'Times New Roman'; /* Font */
-    -fx-font-size: 12pt; /* Font size */
-}
-
-/* Styling when a dropdown item is hovered */
-.list-view .list-cell:hover {
-    -fx-background-color: #800000; /* Slightly darker color on hover */
-}
-
 /* Set the background color for the TextArea */
 #searchTextArea {
     -fx-control-inner-background: #860038;  /* Background color of the text area */
@@ -84,6 +66,7 @@
 
 .table-view .column-header-background {
     -fx-background-color: #860038; /* Match your theme color */
+    -fx-border-width: 0;
 }
 
 .table-view .column-header .label {
@@ -115,3 +98,18 @@
     -fx-background-color: #ff0055;
     -fx-text-fill: white;
 }
+
+.table-view .column-header {
+    -fx-padding: 2; /* Minimizes the header padding */
+    -fx-background-color: #FFFFFF;
+}
+
+.table-view .placeholder {
+    -fx-background-color: #860038; /* Set the color for the empty space when no data is displayed */
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: linear-gradient(to bottom, #860038, #53002a);
+    -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.3), 10, 0.0, 0, 2);
+}
+/* linear-gradient(#101010 0%, #860038 100%); */

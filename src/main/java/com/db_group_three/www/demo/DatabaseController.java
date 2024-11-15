@@ -116,6 +116,12 @@ public class DatabaseController {
         topSellersTableView.setPlaceholder(new Label(""));
         vehicleTableView.setPlaceholder(new Label(""));
         locationTableView.setPlaceholder(new Label(""));
+        customerTableView.getColumns().clear();
+        searchTableView.getColumns().clear();
+        employeeTableView.getColumns().clear();
+        topSellersTableView.getColumns().clear();
+        vehicleTableView.getColumns().clear();
+        locationTableView.getColumns().clear();
     }
 
     private void setupToggleGroups() {

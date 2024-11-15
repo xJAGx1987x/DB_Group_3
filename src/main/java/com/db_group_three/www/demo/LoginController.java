@@ -60,7 +60,7 @@ public class LoginController {
             if (resultSet.next()) {
                 int personID = resultSet.getInt("personID");
                 boolean isManager = resultSet.getBoolean("isManager");
-                String userType = isManager ? "Manager" : "Employee";
+                String userType = isManager ? "Manager" : "Sales Person";
 
                 DBUser dbUser = new DBUser(personID, isManager);
 
