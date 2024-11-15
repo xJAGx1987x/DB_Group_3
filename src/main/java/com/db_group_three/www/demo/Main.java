@@ -4,13 +4,14 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
-        // commented out the login and db applications
-        // to add code to push images to the DB.
-        // so I could add code to push images to the DB.
-        // Sorry, I guess for being so awesome.
         LoginApplication.launch(LoginApplication.class, args);
 
+
         /*
+        ******* Please don't remove yet.
+        ******* We still may need this logic
+
+
         InventoryUpdater updater = new InventoryUpdater();
         Scanner scanner = new Scanner(System.in);
 
