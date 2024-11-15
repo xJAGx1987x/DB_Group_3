@@ -202,3 +202,45 @@
 .radio-button:selected {
     -fx-mark-color: #FF0055; /* Change dot color to red */
 }
+
+/* Style the entire DialogPane */
+.dialog-pane {
+    -fx-background-color: #860038; /* Maroon background */
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-padding: 10px;
+    -fx-background-radius: 10px; /* Rounded corners */
+}
+
+/* Style the header panel */
+.dialog-pane .header-panel {
+    -fx-background-color: transparent; /* Make header background transparent */
+    -fx-padding: 10px; /* Add some padding if needed */
+}
+
+/* Header text style */
+.dialog-pane .header-panel .label {
+    -fx-text-fill: white; /* White header text */
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 16px;
+}
+
+/* Content text style */
+.dialog-pane .content {
+    -fx-text-fill: white; /* White content text */
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 14px;
+}
+
+/* Buttons in the alert */
+.dialog-pane .button-bar .button {
+    -fx-background-color: #990042; /* Button maroon */
+    -fx-text-fill: white;         /* Button text */
+    -fx-border-color: white;      /* Button border */
+    -fx-border-width: 1px;
+}
+
+.dialog-pane .button-bar .button:hover {
+    -fx-background-color: #ff0055; /* Lighter maroon on hover */
+}
+

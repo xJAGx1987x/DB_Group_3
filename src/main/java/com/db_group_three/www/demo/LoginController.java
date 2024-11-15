@@ -101,6 +101,10 @@ public class LoginController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+        dialogPane.getStyleClass().add("custom-alert");
         alert.showAndWait();
     }
 

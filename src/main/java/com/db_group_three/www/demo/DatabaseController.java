@@ -176,6 +176,10 @@ public class DatabaseController {
             alert.setTitle("Input Error");
             alert.setHeaderText("Missing Information");
             alert.setContentText("Please enter a query before pressing search.");
+
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+            dialogPane.getStyleClass().add("custom-alert");
             alert.showAndWait();
             return;
         }
@@ -216,6 +220,10 @@ public class DatabaseController {
             alert.setTitle("Invalid Query");
             alert.setHeaderText("Only SELECT Queries Allowed");
             alert.setContentText("Please enter a valid SELECT query.");
+
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+            dialogPane.getStyleClass().add("custom-alert");
             alert.showAndWait();
             return;
         }
@@ -302,6 +310,10 @@ public class DatabaseController {
             alert.setTitle("Database Error");
             alert.setHeaderText("Query Failed");
             alert.setContentText("Could not execute the query. Please try again.");
+
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+            dialogPane.getStyleClass().add("custom-alert");
             alert.showAndWait();
         }
     }
@@ -361,6 +373,10 @@ public class DatabaseController {
                 alert.setTitle("No Data Found");
                 alert.setHeaderText("No Salesperson Data Available");
                 alert.setContentText("No data found for the past year.");
+
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+                dialogPane.getStyleClass().add("custom-alert");
                 alert.showAndWait();
             }
 
@@ -369,6 +385,10 @@ public class DatabaseController {
             alert.setTitle("Database Error");
             alert.setHeaderText("Error accessing the database");
             alert.setContentText("An error occurred while querying the database: " + e.getMessage());
+
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+            dialogPane.getStyleClass().add("custom-alert");
             alert.showAndWait();
             e.printStackTrace();
         }
@@ -427,6 +447,10 @@ public class DatabaseController {
                 alert.setTitle("No Results");
                 alert.setHeaderText("No Data Found");
                 alert.setContentText("No sales data found for the specified period.");
+
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+                dialogPane.getStyleClass().add("custom-alert");
                 alert.showAndWait();
             }
         } catch (SQLException e) {
@@ -434,6 +458,10 @@ public class DatabaseController {
             alert.setTitle("Database Error");
             alert.setHeaderText("Error accessing the database");
             alert.setContentText("An error occurred while querying the database: " + e.getMessage());
+
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+            dialogPane.getStyleClass().add("custom-alert");
             alert.showAndWait();
             e.printStackTrace();
         }
@@ -450,6 +478,10 @@ public class DatabaseController {
             alert.setTitle("Input Error");
             alert.setHeaderText("Missing Information");
             alert.setContentText("Please fill in both 'Make' and 'Model' fields before searching.");
+
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+            dialogPane.getStyleClass().add("custom-alert");
             alert.showAndWait();
             return;
         }
@@ -499,6 +531,10 @@ public class DatabaseController {
                 alert.setTitle("No Data Found");
                 alert.setHeaderText("No Vehicle Data Available");
                 alert.setContentText("No data found for the specified make, model, and time period.");
+
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+                dialogPane.getStyleClass().add("custom-alert");
                 alert.showAndWait();
             }
 
@@ -507,6 +543,10 @@ public class DatabaseController {
             alert.setTitle("Database Error");
             alert.setHeaderText("Error accessing the database");
             alert.setContentText("An error occurred while querying the database: " + e.getMessage());
+
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+            dialogPane.getStyleClass().add("custom-alert");
             alert.showAndWait();
             e.printStackTrace();
         }
@@ -523,6 +563,10 @@ public class DatabaseController {
             alert.setTitle("Input Error");
             alert.setHeaderText("Missing Information");
             alert.setContentText("Please fill in both 'Make' and 'Model' fields before searching.");
+
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+            dialogPane.getStyleClass().add("custom-alert");
             alert.showAndWait();
             return; // Exit the method early if input is invalid
         }
@@ -577,6 +621,10 @@ public class DatabaseController {
                 alert.setTitle("No Results");
                 alert.setHeaderText("No Data Found");
                 alert.setContentText("No customers found for the specified make and model.");
+
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+                dialogPane.getStyleClass().add("custom-alert");
                 alert.showAndWait();
             }
 
@@ -585,6 +633,10 @@ public class DatabaseController {
             alert.setTitle("Database Error");
             alert.setHeaderText("Error accessing the database");
             alert.setContentText("An error occurred while querying the database: " + e.getMessage());
+
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+            dialogPane.getStyleClass().add("custom-alert");
             alert.showAndWait();
             e.printStackTrace();
         }
@@ -620,6 +672,10 @@ public class DatabaseController {
             alert.setTitle("Selection Error");
             alert.setHeaderText("No Option Selected");
             alert.setContentText("Please select 'Top' or 'Used' before searching.");
+
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+            dialogPane.getStyleClass().add("custom-alert");
             alert.showAndWait();
             return;
         }
@@ -658,6 +714,10 @@ public class DatabaseController {
             alert.setTitle("Database Error");
             alert.setHeaderText("Error accessing the database");
             alert.setContentText("An error occurred while querying the database: " + e.getMessage());
+
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+            dialogPane.getStyleClass().add("custom-alert");
             alert.showAndWait();
             e.printStackTrace();
         }
