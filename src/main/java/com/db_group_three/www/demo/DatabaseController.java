@@ -7,17 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-
-
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.HashMap;
@@ -106,22 +97,10 @@ public class DatabaseController {
     private final String DB_USER = "admin";
     private final String DB_PASSWORD = "password";
 
-
     @FXML
     public void initialize() {
         setupToggleGroups();
         setupEventHandlers();
-        // Define cellValueFactory for each column
-        locationIDColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().get("locationID"))));
-        addressColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty((String) cellData.getValue().get("address")));
-        cityColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty((String) cellData.getValue().get("city")));
-        stateColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty((String) cellData.getValue().get("state")));
-        totalSalesColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty((String) cellData.getValue().get("totalSales")));
         customerTableView.setPlaceholder(new Label(""));
         searchTableView.setPlaceholder(new Label(""));
         employeeTableView.setPlaceholder(new Label(""));
@@ -133,6 +112,7 @@ public class DatabaseController {
         employeeTableView.getColumns().clear();
         topSellersTableView.getColumns().clear();
         vehicleTableView.getColumns().clear();
+        locationTableView.getColumns().clear();
     }
 
     private void setupToggleGroups() {
@@ -396,6 +376,23 @@ public class DatabaseController {
 
     @FXML
     private void handleLocationSearch() {
+        // Ensure columns are set up dynamically
+        if (!locationTableView.getColumns().contains(locationIDColumn)) {
+            locationTableView.getColumns().addAll(locationIDColumn, addressColumn, cityColumn, stateColumn, totalSalesColumn);
+        }
+
+        // Define cellValueFactory for each column
+        locationIDColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().get("locationID"))));
+        addressColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("address")));
+        cityColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("city")));
+        stateColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("state")));
+        totalSalesColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty((String) cellData.getValue().get("totalSales")));
+
         String query = "SELECT l.locationID, l.address, l.city, l.state, SUM(i.netSalePrice) AS totalSales " +
                 "FROM records r " +
                 "JOIN inventory i ON r.stockNumber = i.stockNumber " +
@@ -412,17 +409,19 @@ public class DatabaseController {
              ResultSet rs = pstmt.executeQuery()) {
 
             // Populate TableView with the query result
+            ObservableList<Map<String, Object>> data = FXCollections.observableArrayList();
             while (rs.next()) {
                 Map<String, Object> row = new HashMap<>();
-                row.put("locationID", rs.getInt("locationID")) ;
+                row.put("locationID", rs.getInt("locationID"));
                 row.put("address", rs.getString("address"));
                 row.put("city", rs.getString("city"));
                 row.put("state", rs.getString("state"));
                 row.put("totalSales", String.format("$%,.2f", rs.getDouble("totalSales")));
-                locationTableView.getItems().add(row);
+                data.add(row);
             }
+            locationTableView.setItems(data);
 
-            if (locationTableView.getItems().isEmpty()) {
+            if (data.isEmpty()) {
                 // Handle case where no data is found
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("No Results");
@@ -430,7 +429,6 @@ public class DatabaseController {
                 alert.setContentText("No sales data found for the specified period.");
                 alert.showAndWait();
             }
-
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Database Error");

@@ -27,7 +27,7 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <GridPane alignment="CENTER" layoutX="3.2" layoutY="4.8" prefHeight="102.0" prefWidth="783.0" style="-fx-border-width: 2px; -fx-border-color: #FFFFFF;" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="5.0">
+                                        <GridPane alignment="CENTER" layoutX="3.2" layoutY="4.8" prefHeight="121.0" prefWidth="784.0" style="-fx-border-width: 2px; -fx-border-color: #FFFFFF;" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="5.0">
                                             <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="387.199951171875" minWidth="10.0" prefWidth="112.20002441406251" />
                                                 <ColumnConstraints hgrow="ALWAYS" maxWidth="666.5999755859375" minWidth="10.0" prefWidth="666.5999755859375" />
@@ -53,31 +53,31 @@
                                                         <Font name="Times New Roman Bold" size="16.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="makeField" style="-fx-background-color: #860038; -fx-text-fill: #FFFFFF; -fx-border-width: 1px; -fx-border-color: #FFFFFF;" GridPane.columnIndex="1">
+                                                <TextField fx:id="makeField" GridPane.columnIndex="1">
                                                     <font>
                                                         <Font name="Times New Roman Bold" size="16.0" />
                                                     </font>
                                                 </TextField>
-                                                <TextField fx:id="modelField" layoutX="124.0" layoutY="13.0" style="-fx-background-color: #860038; -fx-text-fill: #FFFFFF; -fx-border-width: 1px; -fx-border-color: #FFFFFF;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <TextField fx:id="modelField" layoutX="124.0" layoutY="13.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                     <font>
                                                         <Font name="Times New Roman Bold" size="16.0" />
                                                     </font>
                                                 </TextField>
                                                 <HBox prefHeight="34.0" prefWidth="666.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                     <children>
-                                                        <RadioButton fx:id="yearRadioButton" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="34.0" prefWidth="150.0" text="Year" textFill="WHITE">
+                                                        <RadioButton fx:id="yearRadioButton" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="34.0" prefWidth="150.0" text="Year">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
                                                         </RadioButton>
                                                         <Separator focusTraversable="false" orientation="VERTICAL" prefHeight="34.0" prefWidth="44.0" visible="false" />
-                                                        <RadioButton fx:id="monthRadioButton" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="150.0" text="Month" textFill="WHITE">
+                                                        <RadioButton fx:id="monthRadioButton" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="150.0" text="Month">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
                                                         </RadioButton>
                                                         <Separator focusTraversable="false" orientation="VERTICAL" prefHeight="34.0" prefWidth="171.0" visible="false" />
-                                                        <Button fx:id="vSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style=" -fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Search" textFill="WHITE">
+                                                        <Button fx:id="vSearchButton" mnemonicParsing="false" prefHeight="33.0" prefWidth="135.0" text="Search" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
@@ -91,7 +91,7 @@
                                                 </Label>
                                             </children>
                                         </GridPane>
-                                        <TableView fx:id="vehicleTableView" layoutX="2.4" layoutY="112.8" prefHeight="353.0" prefWidth="784.0" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="113.0" />
+                                        <TableView fx:id="vehicleTableView" layoutX="2.4" layoutY="133.0" prefHeight="356.0" prefWidth="784.0" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="133.0" />
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -129,7 +129,7 @@
                                                 <HBox prefWidth="333.0" GridPane.columnIndex="3">
                                                     <children>
                                                         <Separator focusTraversable="false" orientation="VERTICAL" prefHeight="38.0" prefWidth="166.0" visible="false" />
-                                                        <Button fx:id="topSellersButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style=" -fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Search" textFill="WHITE">
+                                                        <Button fx:id="topSellersButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" text="Search">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
@@ -174,17 +174,17 @@
                                                         <Font name="Times New Roman Bold" size="16.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="ctMakeField" style="-fx-background-color: #860038; -fx-text-fill: #FFFFFF; -fx-border-width: 2px; -fx-border-color: #FFFFFF;" GridPane.columnIndex="1">
+                                                <TextField fx:id="ctMakeField" GridPane.columnIndex="1">
                                                     <font>
                                                         <Font name="Times New Roman Bold" size="16.0" />
                                                     </font>
                                                 </TextField>
-                                                <TextField fx:id="ctModelField" layoutX="124.0" layoutY="13.0" style="-fx-background-color: #860038; -fx-text-fill: #FFFFFF; -fx-border-width: 2px; -fx-border-color: #FFFFFF;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <TextField fx:id="ctModelField" layoutX="124.0" layoutY="13.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                     <font>
                                                         <Font name="Times New Roman Bold" size="16.0" />
                                                     </font>
                                                 </TextField>
-                                                <Button fx:id="ctSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Search" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <Button fx:id="ctSearchButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="150.0" text="Search" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                     <font>
                                                         <Font name="Times New Roman Bold" size="16.0" />
                                                     </font>
@@ -196,7 +196,7 @@
                                                 </Label>
                                             </children>
                                         </GridPane>
-                                        <TableView fx:id="customerTableView" layoutX="3.0" layoutY="138.0" prefHeight="352.0" prefWidth="783.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="138.0" />
+                                        <TableView fx:id="customerTableView" layoutX="3.0" layoutY="147.0" prefHeight="344.0" prefWidth="783.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="138.0" />
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -215,7 +215,7 @@
                                             <children>
                                                 <HBox alignment="CENTER" prefHeight="46.0" prefWidth="781.0">
                                                     <children>
-                                                        <Button fx:id="locationUpdateButton" mnemonicParsing="false" onAction="#handleLocationSearch" prefHeight="38.0" prefWidth="150.0" style="-fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Update" textFill="WHITE">
+                                                        <Button fx:id="locationUpdateButton" mnemonicParsing="false" onAction="#handleLocationSearch" prefHeight="38.0" prefWidth="150.0" text="Update">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
@@ -251,7 +251,7 @@
                                             <children>
                                                 <HBox alignment="CENTER" prefHeight="46.0" prefWidth="781.0">
                                                     <children>
-                                                        <Button fx:id="employeeUpdateButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Update" textFill="WHITE">
+                                                        <Button fx:id="employeeUpdateButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" text="Update">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
@@ -285,13 +285,13 @@
                                                 </TextArea>
                                                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                                                     <children>
-                                                        <Button fx:id="inputSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Search" textFill="WHITE">
+                                                        <Button fx:id="inputSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" text="Search" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>
                                                         </Button>
                                                         <Separator focusTraversable="false" prefHeight="18.0" prefWidth="133.0" visible="false" />
-                                                        <Button fx:id="clearInputSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-border-width: 2px; -fx-border-insets: 2, 2, 2, 2; -fx-border-color: #FFFFFF;" text="Clear" textFill="WHITE">
+                                                        <Button fx:id="clearInputSearchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" text="Clear" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
                                                             </font>

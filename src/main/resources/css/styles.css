@@ -115,10 +115,90 @@
 /* linear-gradient(#101010 0%, #860038 100%); */
 
 .button {
-    -fx-background-color: #860038;
-    -fx-text-fill: #FFFFFF ;
+    -fx-background-color: linear-gradient(#860038, #5a0025); /* Default gradient */
+    -fx-text-fill: #FFFFFF ;                                   /* Text color */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0.5, 0, 1); /* Shadow */
+    -fx-padding: 5;
 }
 
 .button:pressed {
-    -fx-background-color: #ff0055; /* Lighter maroon */
+    -fx-background-color: linear-gradient(#5a0025, #3a0018); /* Darker gradient */
+    -fx-effect: innershadow(two-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1); /* Inset shadow */
+    -fx-padding: 7;
+}
+
+.text-field {
+    -fx-background-color: #860038; /* Maroon background */
+    -fx-border-color: #FFFFFF;    /* White border */
+    -fx-border-width: 2px;        /* Thick border */
+    -fx-background-insets: 2;     /* Slight inset for the background */
+    -fx-padding: 8;               /* Internal padding for text */
+    -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2); /* Inner shadow */
+    -fx-text-fill: white;         /* White text */
+    -fx-font-family: "Times New Roman"; /* Font style */
+    -fx-font-size: 14px;          /* Font size */
+}
+
+.text-field:hover {
+    -fx-background-color: #990042; /* Slightly lighter maroon on hover */
+    -fx-border-color: #FF0055;     /* Bright maroon border */
+}
+
+.text-field:focused {
+    -fx-background-color: #B3004D; /* Lighter maroon on focus */
+    -fx-border-color: #FFFFFF;     /* White border when focused */
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 5, 0.0, 0, 0); /* Subtle glow */
+}
+
+.password-field {
+    -fx-background-color: #860038; /* Maroon background */
+    -fx-border-color: #FFFFFF;    /* White border */
+    -fx-border-width: 2px;        /* Border thickness */
+    -fx-background-insets: 2;     /* Inset background */
+    -fx-padding: 8;               /* Internal padding for text */
+    -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2); /* Inner shadow for depth */
+    -fx-text-fill: white;         /* White text */
+    -fx-font-family: "Times New Roman"; /* Font style */
+    -fx-font-size: 14px;          /* Font size */
+}
+
+.password-field:hover {
+    -fx-background-color: #990042; /* Slightly lighter maroon on hover */
+    -fx-border-color: #FF0055;     /* Bright maroon border */
+}
+
+.password-field:focused {
+    -fx-background-color: #B3004D; /* Lighter maroon when focused */
+    -fx-border-color: #FFFFFF;     /* White border on focus */
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 5, 0.0, 0, 0); /* Subtle glow */
+}
+
+.radio-button {
+    -fx-mark-color: #FFFFFF; /* White checkmark inside the circle */
+    -fx-text-fill: #FFFFFF;  /* White text color */
+    -fx-font-family: "Times New Roman"; /* Font style */
+    -fx-font-size: 14px;     /* Font size */
+}
+
+.radio-button .radio {
+    -fx-background-color: #860038; /* Maroon background for the circle */
+    -fx-border-color: #FFFFFF;     /* White border around the circle */
+    -fx-border-width: 2px;         /* Border width */
+    -fx-padding: 3;                /* Padding inside the circle */
+    -fx-shape: "M 0.5 0 L 0.61 0.35 L 1 0.35 L 0.68 0.57 L 0.81 0.91 L 0.5 0.7 L 0.19 0.91 L 0.32 0.57 L 0 0.35 L 0.39 0.35 Z"; /* Keeps the default circular shape */
+}
+
+.radio-button:hover .radio {
+    -fx-background-color: #990042; /* Lighter maroon on hover */
+    -fx-border-color: #FF0055;     /* Bright maroon border */
+}
+
+.radio-button:focused .radio {
+    -fx-background-color: #B3004D; /* Lighter maroon when focused */
+    -fx-border-color: #FFFFFF;     /* White border */
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 5, 0.0, 0, 0); /* Subtle glow */
+}
+
+.radio-button:selected {
+    -fx-mark-color: #FF0055; /* Change dot color to red */
 }
