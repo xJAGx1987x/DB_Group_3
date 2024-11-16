@@ -7,8 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
@@ -18,7 +17,7 @@ import java.sql.ResultSet;
 
 public class LoginController {
     @FXML
-    private Pane loginPane;
+    private AnchorPane loginPane;
     @FXML
     private Label falconLabel;
     @FXML
@@ -33,10 +32,18 @@ public class LoginController {
     private final String DB_PASSWORD = "password";
 
     @FXML
+    public void initialize() {
+        // Set initial focus to the background pane to keep prompt text visible in text fields
+        falconLabel.requestFocus();
+    }
+
+    @FXML
     private void handleLoginAction(ActionEvent event) {
+        // Retrieve the entered username and password
         String employeeID = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
+        // Validate input fields
         if (employeeID.isEmpty() || employeeID.equalsIgnoreCase("Enter Employee Username")) {
             showAlert("Input Error", "Please enter an employee number.");
             return;
@@ -47,8 +54,8 @@ public class LoginController {
             return;
         }
 
+        // Database connection and login check
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-            // Updated query to join with location_employee to determine if the user is a manager
             String query = "SELECT p.name, s.personID, le.isManager " +
                     "FROM sales_person s " +
                     "JOIN person p ON s.personID = p.personID " +
@@ -61,36 +68,33 @@ public class LoginController {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                // User authenticated successfully
                 int personID = resultSet.getInt("personID");
                 boolean isManager = resultSet.getBoolean("isManager");
                 String userType = isManager ? "Manager" : "Sales Person";
 
                 DBUser dbUser = new DBUser(personID, isManager);
 
-                try {
-                    // Load the main view
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("db-view.fxml"));
-                    Parent mainRoot = loader.load();
+                // Load the main view and pass user data to the next controller
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("db-view.fxml"));
+                Parent mainRoot = loader.load();
 
-                    // Get the controller and pass DBUser data
-                    DatabaseController dbController = loader.getController();
-                    dbController.setDBUser(dbUser);
+                DatabaseController dbController = loader.getController();
+                dbController.setDBUser(dbUser);
 
-                    // Set up the new scene
-                    Scene mainScene = new Scene(mainRoot);
-                    Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    primaryStage.setScene(mainScene);
-                    primaryStage.show();
-                    primaryStage.setResizable(true);
-                    primaryStage.centerOnScreen();
+                // Switch to the main application view
+                Scene mainScene = new Scene(mainRoot);
+                Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                primaryStage.setScene(mainScene);
+                primaryStage.show();
+                primaryStage.setResizable(true);
+                primaryStage.centerOnScreen();
+                mainRoot.requestFocus();
 
-                    // Show login success message
-                    showAlert("Login Successful", "Welcome, " + resultSet.getString("name") + "! You are logged in as a " + userType + ".");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    showAlert("Loading Error", "Unable to load the main application view.");
-                }
+                // Show success message
+                showAlert("Login Successful", "Welcome, " + resultSet.getString("name") + "! You are logged in as a " + userType + ".");
             } else {
+                // Authentication failed
                 showAlert("Login Failed", "Employee ID or password is incorrect.");
                 usernameField.setText("");
                 passwordField.setText("");
@@ -101,8 +105,9 @@ public class LoginController {
         }
     }
 
+    // Show alert dialog with a custom message
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
@@ -112,5 +117,4 @@ public class LoginController {
         dialogPane.getStyleClass().add("custom-alert");
         alert.showAndWait();
     }
-
 }

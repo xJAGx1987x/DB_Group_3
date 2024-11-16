@@ -1,9 +1,12 @@
 package com.db_group_three.www.demo;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class LoginApplication extends Application {
@@ -13,9 +16,12 @@ public class LoginApplication extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
         Scene scene = new Scene(root);
 
+        root.requestFocus();
         primaryStage.setTitle("Employee Login");
         primaryStage.setScene(scene);
-        primaryStage.show();
         primaryStage.setResizable(false);
+        primaryStage.centerOnScreen();
+        primaryStage.show() ;
+
     }
 }

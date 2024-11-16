@@ -23,6 +23,7 @@ public class DatabaseController {
     private Tab locationTab ;
     @FXML
     private Tab employeeTab ;
+
     // Fields for Vehicle Trends tab
     @FXML
     private TextField makeField;
@@ -31,21 +32,13 @@ public class DatabaseController {
     @FXML
     private Button vSearchButton;
     @FXML
+    private Button vClearButton ;
+    @FXML
     private TableView<Map<String, Object>> vehicleTableView ;
     @FXML
     private RadioButton yearRadioButton;
     @FXML
     private RadioButton monthRadioButton;
-
-    // Fields for Customer tab
-    @FXML
-    private TextField ctMakeField;
-    @FXML
-    private TextField ctModelField;
-    @FXML
-    private Button ctSearchButton;
-    @FXML
-    private TableView<Map<String, Object>> customerTableView;
 
     // Fields for Top Sellers tab
     @FXML
@@ -55,11 +48,27 @@ public class DatabaseController {
     @FXML
     private Button topSellersButton;
     @FXML
+    private Button clearTopSellersButton ;
+    @FXML
     private TableView<Map<String, Object>> topSellersTableView;
+
+    // Fields for Customer tab
+    @FXML
+    private TextField ctMakeField;
+    @FXML
+    private TextField ctModelField;
+    @FXML
+    private Button ctSearchButton;
+    @FXML
+    private Button ctClearButton ;
+    @FXML
+    private TableView<Map<String, Object>> customerTableView;
 
     // Fields for Locations Tab
     @FXML
     private Button locationUpdateButton ;
+    @FXML
+    private Button locationClearButton ;
     @FXML
     private TableView<Map<String, Object>> locationTableView;
     @FXML
@@ -76,6 +85,8 @@ public class DatabaseController {
     // Fields for Employee tab
     @FXML
     private Button employeeUpdateButton ;
+    @FXML
+    private Button employeeClearButton ;
     @FXML
     private TableView<Map<String, Object>> employeeTableView;
 
@@ -129,14 +140,27 @@ public class DatabaseController {
         this.topRadioButton.setSelected(true);
     }
 
-    private void clearAndPopulateListView(ListView<String> listView, String header, String... items) {
-        listView.getItems().clear();
-        listView.getItems().add(header);
-        if (items.length > 0) {
-            for (String item : items) {
-                listView.getItems().add(item);
-            }
-        }
+    private void setupEventHandlers() {
+        // Events for Trends Tab
+        vSearchButton.setOnAction(event -> handleVehicleSearch());
+        vClearButton.setOnAction(event -> clearVTableView() ) ;
+
+        // Events for Top Sellers Tabs
+        topSellersButton.setOnAction(event -> handleTopSellersSearch());
+        clearTopSellersButton.setOnAction(event -> handleClearTopSellers() );
+
+        // Events for Customers Tab
+        ctSearchButton.setOnAction(event -> handleCustomerSearch());
+        ctClearButton.setOnAction(event -> handleCTClear() );
+
+        // Events for Location Tab
+        locationUpdateButton.setOnAction(event -> handleLocationSearch() );
+        locationClearButton.setOnAction(event -> handleLocationClear() );
+
+        employeeUpdateButton.setOnAction(event -> handleSalespersonUpdate() );
+        employeeClearButton.setOnAction(event -> handleEmployeeClear() );
+        inputSearchButton.setOnAction(event -> handleInputSearch() ) ;
+        clearInputSearchButton.setOnAction(event -> handleClearInput() );
     }
 
     private String getVehicleSearchQuery(String timePeriod) {
@@ -148,16 +172,6 @@ public class DatabaseController {
                 "WHERE i.make = ? AND i.model = ? AND Year(r.dateOfPurchase) between Year(curdate()) - 3 AND Year(curdate()) " +
                 (timePeriod.equals("Yearly") ? "GROUP BY purchaseYear " : "GROUP BY purchaseYear, purchaseMonth ") +
                 "ORDER BY purchaseYear" + (timePeriod.equals("Monthly") ? ", purchaseMonth" : "");
-    }
-
-    private void setupEventHandlers() {
-        vSearchButton.setOnAction(event -> handleVehicleSearch());
-        ctSearchButton.setOnAction(event -> handleCustomerSearch());
-        topSellersButton.setOnAction(event -> handleTopSellersSearch());
-        locationUpdateButton.setOnAction(event -> handleLocationSearch() );
-        employeeUpdateButton.setOnAction(event -> handleSalespersonUpdate() );
-        inputSearchButton.setOnAction(event -> handleInputSearch() ) ;
-        clearInputSearchButton.setOnAction(event -> handleClearInput() );
     }
 
     @FXML
@@ -739,5 +753,46 @@ public class DatabaseController {
                 }
             }
         }
+    }
+
+    private void clearVTableView(){
+        vehicleTableView.getItems().clear();
+        vehicleTableView.getColumns().clear() ;
+        vehicleTableView.getSelectionModel().clearSelection();
+        vehicleTableView.refresh();
+        makeField.setText("") ;
+        modelField.setText("") ;
+    }
+
+    private void handleClearTopSellers() {
+        topSellersTableView.getColumns().clear();
+        vehicleTableView.getItems().clear();
+        vehicleTableView.getSelectionModel().clearSelection();
+        vehicleTableView.refresh();
+    }
+
+    private void handleCTClear(){
+
+        customerTableView.getColumns().clear();
+        customerTableView.getItems().clear();
+        customerTableView.getSelectionModel().clearSelection();
+        customerTableView.refresh();
+
+        ctMakeField.setText("");
+        ctModelField.setText("") ;
+    }
+
+    private void handleLocationClear() {
+        locationTableView.getColumns().clear();
+        locationTableView.getItems().clear();
+        locationTableView.getSelectionModel().clearSelection();
+        locationTableView.refresh();
+    }
+
+    private void handleEmployeeClear() {
+        employeeTableView.getColumns().clear();
+        employeeTableView.getItems().clear();
+        employeeTableView.getSelectionModel().clearSelection();
+        employeeTableView.refresh();
     }
 }

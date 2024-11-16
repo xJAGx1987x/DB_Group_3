@@ -15,7 +15,7 @@
     -fx-text-fill: #860038; /* Maroon text color for tab labels */
     -fx-font-weight: bold;
     -fx-font-family: "Times New Roman"; /* Replace with your desired font */
-    -fx-font-size: 14pt; /* Set font size to 14pt */
+    -fx-font-size: 16pt; /* Set font size to 14pt */
 }
 
 /* Style the selected tab background and border */
@@ -31,7 +31,7 @@
 .tab-pane .tab-header-area .tab:selected .tab-label {
     -fx-text-fill: #FFFFFF; /* White text color */
     -fx-font-family: "Times New Roman"; /* Ensure consistent font for selected tab */
-    -fx-font-size: 14pt; /* Set font size to 14pt */
+    -fx-font-size: 16pt; /* Set font size to 14pt */
 }
 
 .choice-box {
@@ -39,7 +39,7 @@
     -fx-border-color: #FFFFFF; /* Border color */
     -fx-border-width: 1px; /* Border width */
     -fx-font-family: 'Times New Roman'; /* Font */
-    -fx-font-size: 12pt; /* Font size */
+    -fx-font-size: 16pt; /* Font size */
     -fx-text-fill: #FFFFFF; /* Text color */
 }
 
@@ -73,13 +73,13 @@
     -fx-text-fill: white; /* Set text color to white */
     -fx-background-color: #860038 ;
     -fx-font-family: "Times New Roman Bold"; /* Match font */
-    -fx-font-size: 14px; /* Adjust size as needed */
+    -fx-font-size: 16px; /* Adjust size as needed */
 }
 
 .table-cell {
     -fx-alignment: center;
     -fx-text-fill: white;
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
     -fx-font-family: "Times New Roman BOLD";
 }
 
@@ -127,16 +127,21 @@
     -fx-padding: 7;
 }
 
+.button:hover {
+    -fx-background-color: linear-gradient(#9a003e, #68002c); /* Lighter gradient */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 7, 0.5, 0, 1); /* Slightly stronger shadow */
+}
+
 .text-field {
     -fx-background-color: #860038; /* Maroon background */
     -fx-border-color: #FFFFFF;    /* White border */
-    -fx-border-width: 2px;        /* Thick border */
+    -fx-border-width: 1px;        /* Thinner border */
     -fx-background-insets: 2;     /* Slight inset for the background */
-    -fx-padding: 8;               /* Internal padding for text */
+    -fx-padding: 2;               /* Reduced internal padding for text */
     -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2); /* Inner shadow */
     -fx-text-fill: white;         /* White text */
-    -fx-font-family: "Times New Roman"; /* Font style */
-    -fx-font-size: 14px;          /* Font size */
+    -fx-font-family: "Times New Roman BOLD"; /* Font style */
+    -fx-font-size: 12px;          /* Slightly smaller font size */
 }
 
 .text-field:hover {
@@ -153,13 +158,13 @@
 .password-field {
     -fx-background-color: #860038; /* Maroon background */
     -fx-border-color: #FFFFFF;    /* White border */
-    -fx-border-width: 2px;        /* Border thickness */
+    -fx-border-width: 1px;        /* Thinner border */
     -fx-background-insets: 2;     /* Inset background */
-    -fx-padding: 8;               /* Internal padding for text */
+    -fx-padding: 2;               /* Reduced internal padding */
     -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2); /* Inner shadow for depth */
     -fx-text-fill: white;         /* White text */
-    -fx-font-family: "Times New Roman"; /* Font style */
-    -fx-font-size: 14px;          /* Font size */
+    -fx-font-family: "Times New Roman BOLD"; /* Font style */
+    -fx-font-size: 12px;          /* Slightly smaller font size */
 }
 
 .password-field:hover {
@@ -176,7 +181,7 @@
 .radio-button {
     -fx-mark-color: #FFFFFF; /* White checkmark inside the circle */
     -fx-text-fill: #FFFFFF;  /* White text color */
-    -fx-font-family: "Times New Roman"; /* Font style */
+    -fx-font-family: "Times New Roman BOLD"; /* Font style */
     -fx-font-size: 14px;     /* Font size */
 }
 
@@ -221,8 +226,8 @@
 /* Header text style */
 .dialog-pane .header-panel .label {
     -fx-text-fill: white; /* White header text */
-    -fx-font-family: "Times New Roman";
-    -fx-font-size: 16px;
+    -fx-font-family: "Times New Roman BOLD";
+    -fx-font-size: 14px;
 }
 
 /* Content text style */
@@ -244,3 +249,25 @@
     -fx-background-color: #ff0055; /* Lighter maroon on hover */
 }
 
+.text-area {
+    -fx-background-color: #860038; /* Maroon background */
+    -fx-border-color: #FFFFFF;    /* White border */
+    -fx-border-width: 2px;        /* Thinner border */
+    -fx-background-insets: 2;     /* Inset background */
+    -fx-padding: 4;               /* Slightly larger padding for multi-line text */
+    -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2); /* Inner shadow for depth */
+    -fx-text-fill: white;         /* White text */
+    -fx-font-family: "Times New Roman BOLD"; /* Font style */
+    -fx-font-size: 12px;          /* Slightly smaller font size */
+}
+
+.text-area:hover {
+    -fx-background-color: #990042; /* Slightly lighter maroon on hover */
+    -fx-border-color: #FF0055;     /* Bright maroon border */
+}
+
+.text-area:focused {
+    -fx-background-color: #B3004D; /* Lighter maroon when focused */
+    -fx-border-color: #FFFFFF;     /* White border on focus */
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 5, 0.0, 0, 0); /* Subtle glow */
+}
