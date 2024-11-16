@@ -125,7 +125,6 @@
                                                 </RadioButton>
                                                 <HBox prefWidth="333.0" GridPane.columnIndex="3">
                                                     <children>
-                                                        <Separator focusTraversable="false" orientation="VERTICAL" prefHeight="34.0" prefWidth="0.0" visible="false" />
                                                         <Button fx:id="topSellersButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" text="Search">
                                                             <font>
                                                                 <Font name="Times New Roman Bold" size="16.0" />
@@ -134,7 +133,7 @@
                                                                 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                                             </HBox.margin>
                                                         </Button>
-                                          <Separator orientation="VERTICAL" prefHeight="34.0" prefWidth="21.0" visible="false" />
+                                          <Separator orientation="VERTICAL" prefHeight="34.0" prefWidth="36.0" visible="false" />
                                           <Button fx:id="clearTopSellersButton" layoutX="19.0" layoutY="12.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" text="Clear">
                                              <font>
                                                 <Font name="Times New Roman Bold" size="16.0" />
@@ -290,7 +289,7 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                              <VBox layoutX="3.0" layoutY="10.0" prefHeight="129.0" prefWidth="784.0" AnchorPane.bottomAnchor="329.20000000000005" AnchorPane.topAnchor="10.0">
+                              <VBox layoutX="3.0" layoutY="10.0" prefHeight="129.0" prefWidth="784.0" AnchorPane.bottomAnchor="329.20000000000005" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="4.2000000000000455" AnchorPane.topAnchor="10.0">
                                  <children>
                                                 <TextArea fx:id="searchTextArea" prefHeight="76.0" prefWidth="784.0">
                                                     <font>

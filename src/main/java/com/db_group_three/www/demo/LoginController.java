@@ -27,15 +27,12 @@ public class LoginController {
     @FXML
     private PasswordField passwordField ;
 
-    private final String DB_URL = "jdbc:mysql://database-2.cns6g8eseo17.us-east-2.rds.amazonaws.com:3306/FalconSportsCar?useLegacyDatetimeCode=false&serverTimezone=America/New_York";
+    private final String DB_URL
+            = "jdbc:mysql://database-2.cns6g8eseo17.us-east-2.rds.amazonaws.com:3306" +
+            "/FalconSportsCar?useLegacyDatetimeCode=false&serverTimezone=America/New_York";
     private final String DB_USER = "admin";
     private final String DB_PASSWORD = "password";
 
-    @FXML
-    public void initialize() {
-        // Set initial focus to the background pane to keep prompt text visible in text fields
-        falconLabel.requestFocus();
-    }
 
     @FXML
     private void handleLoginAction(ActionEvent event) {

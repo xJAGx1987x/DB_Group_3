@@ -5,9 +5,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.*;
@@ -104,7 +109,9 @@ public class DatabaseController {
     private ToggleGroup newUsedToggleGroup;
 
     // Database info for connection
-    private final String DB_URL = "jdbc:mysql://database-2.cns6g8eseo17.us-east-2.rds.amazonaws.com:3306/FalconSportsCar?useLegacyDatetimeCode=false&serverTimezone=America/New_York";
+    private final String DB_URL
+        = "jdbc:mysql://database-2.cns6g8eseo17.us-east-2.rds.amazonaws.com:3306" +
+            "/FalconSportsCar?useLegacyDatetimeCode=false&serverTimezone=America/New_York";
     private final String DB_USER = "admin";
     private final String DB_PASSWORD = "password";
 
@@ -144,21 +151,19 @@ public class DatabaseController {
         // Events for Trends Tab
         vSearchButton.setOnAction(event -> handleVehicleSearch());
         vClearButton.setOnAction(event -> clearVTableView() ) ;
-
         // Events for Top Sellers Tabs
         topSellersButton.setOnAction(event -> handleTopSellersSearch());
         clearTopSellersButton.setOnAction(event -> handleClearTopSellers() );
-
         // Events for Customers Tab
         ctSearchButton.setOnAction(event -> handleCustomerSearch());
         ctClearButton.setOnAction(event -> handleCTClear() );
-
         // Events for Location Tab
         locationUpdateButton.setOnAction(event -> handleLocationSearch() );
         locationClearButton.setOnAction(event -> handleLocationClear() );
-
+        // Events for Employee Tab
         employeeUpdateButton.setOnAction(event -> handleSalespersonUpdate() );
         employeeClearButton.setOnAction(event -> handleEmployeeClear() );
+        //Events for Search Tab
         inputSearchButton.setOnAction(event -> handleInputSearch() ) ;
         clearInputSearchButton.setOnAction(event -> handleClearInput() );
     }
@@ -186,15 +191,7 @@ public class DatabaseController {
         String query = searchTextArea.getText().trim();
 
         if (query.isEmpty() || query.equals("Enter a query")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Input Error");
-            alert.setHeaderText("Missing Information");
-            alert.setContentText("Please enter a query before pressing search.");
-
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            dialogPane.getStyleClass().add("custom-alert");
-            alert.showAndWait();
+            showAlert("Input Error","Missing Information","Please enter a query before pressing search.");
             return;
         }
 
@@ -230,15 +227,8 @@ public class DatabaseController {
                 queryUpper.startsWith("REMOVE") ||
                 queryUpper.startsWith("DISABLE") ||
                 queryUpper.startsWith("ENABLE")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid Query");
-            alert.setHeaderText("Only SELECT Queries Allowed");
-            alert.setContentText("Please enter a valid SELECT query.");
-
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            dialogPane.getStyleClass().add("custom-alert");
-            alert.showAndWait();
+            showAlert("Invalid Query","Only SELECT Queries Allowed","Please enter a valid SELECT query.");
+            searchTextArea.setText("") ;
             return;
         }
 
@@ -319,30 +309,24 @@ public class DatabaseController {
             searchTableView.setItems(tableData);
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Database Error");
-            alert.setHeaderText("Query Failed");
-            alert.setContentText("Could not execute the query. Please try again.");
-
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            dialogPane.getStyleClass().add("custom-alert");
-            alert.showAndWait();
+            showAlert("Database Error", "Error accessing the database",
+                    "An error occurred while querying the database: " + e.getMessage());
         }
     }
 
     @FXML
     private void handleSalespersonUpdate() {
-        String query = "SELECT sp.personID, p.name, p.email, p.phoneNum, p.address, p.city, p.state, p.zipcode, " +
-                "COUNT(r.stockNumber) AS numSales, " +
-                "SUM(CASE WHEN YEAR(r.dateOfPurchase) = YEAR(CURDATE()) - 1 THEN i.netSalePrice * sp.commissionRate ELSE 0 END) AS totalCommission " +
-                "FROM sales_person sp " +
-                "JOIN person p ON sp.personID = p.personID " +
-                "LEFT JOIN records r ON sp.personID = r.salesPersonID AND YEAR(r.dateOfPurchase) = YEAR(CURDATE()) - 1 " +
-                "LEFT JOIN inventory i ON r.stockNumber = i.stockNumber " +
-                "GROUP BY sp.personID, p.name " +
-                "ORDER BY numSales DESC";
+
+    String query = "SELECT sp.personID, p.name, p.email, p.phoneNum, p.address, p.city, p.state, p.zipcode, " +
+            "COUNT(r.stockNumber) AS numSales, " +
+            "SUM(CASE WHEN YEAR(r.dateOfPurchase) = YEAR(CURDATE()) - 1 THEN i.netSalePrice " +
+            "* sp.commissionRate ELSE 0 END) AS totalCommission " +
+            "FROM sales_person sp " +
+            "JOIN person p ON sp.personID = p.personID " +
+            "LEFT JOIN records r ON sp.personID = r.salesPersonID AND YEAR(r.dateOfPurchase) = YEAR(CURDATE()) - 1 " +
+            "LEFT JOIN inventory i ON r.stockNumber = i.stockNumber " +
+            "GROUP BY sp.personID, p.name " +
+            "ORDER BY numSales DESC";
 
         // Clear existing data from the TableView
         employeeTableView.getItems().clear();
@@ -383,28 +367,13 @@ public class DatabaseController {
 
             // Check if no data was returned
             if (employeeTableView.getItems().isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("No Data Found");
-                alert.setHeaderText("No Salesperson Data Available");
-                alert.setContentText("No data found for the past year.");
-
-                DialogPane dialogPane = alert.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-                dialogPane.getStyleClass().add("custom-alert");
-                alert.showAndWait();
+                showAlert("No Data Found","No Salesperson Data Available",
+                        "No data found for the past year.");
             }
 
         } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Database Error");
-            alert.setHeaderText("Error accessing the database");
-            alert.setContentText("An error occurred while querying the database: " + e.getMessage());
-
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            dialogPane.getStyleClass().add("custom-alert");
-            alert.showAndWait();
-            e.printStackTrace();
+            showAlert("Database Error", "Error accessing the database",
+                    "An error occurred while querying the database: " + e.getMessage());
         }
     }
 
@@ -412,7 +381,8 @@ public class DatabaseController {
     private void handleLocationSearch() {
         // Ensure columns are set up dynamically
         if (!locationTableView.getColumns().contains(locationIDColumn)) {
-            locationTableView.getColumns().addAll(locationIDColumn, addressColumn, cityColumn, stateColumn, totalSalesColumn);
+            locationTableView.getColumns().addAll(
+                    locationIDColumn, addressColumn, cityColumn, stateColumn, totalSalesColumn);
         }
 
         // Define cellValueFactory for each column
@@ -456,28 +426,12 @@ public class DatabaseController {
             locationTableView.setItems(data);
 
             if (data.isEmpty()) {
-                // Handle case where no data is found
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("No Results");
-                alert.setHeaderText("No Data Found");
-                alert.setContentText("No sales data found for the specified period.");
-
-                DialogPane dialogPane = alert.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-                dialogPane.getStyleClass().add("custom-alert");
-                alert.showAndWait();
+                showAlert("No Results","No Data Found",
+                        "No sales data found for the specified period.");
             }
         } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Database Error");
-            alert.setHeaderText("Error accessing the database");
-            alert.setContentText("An error occurred while querying the database: " + e.getMessage());
-
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            dialogPane.getStyleClass().add("custom-alert");
-            alert.showAndWait();
-            e.printStackTrace();
+            showAlert("Database Error", "Error accessing the database",
+                    "An error occurred while querying the database: " + e.getMessage());
         }
     }
 
@@ -488,15 +442,7 @@ public class DatabaseController {
         String timePeriod = yearRadioButton.isSelected() ? "Yearly" : "Monthly";
 
         if (userMake.isEmpty() || userModel.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Input Error");
-            alert.setHeaderText("Missing Information");
-            alert.setContentText("Please fill in both 'Make' and 'Model' fields before searching.");
-
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            dialogPane.getStyleClass().add("custom-alert");
-            alert.showAndWait();
+            showAlert("Input Error", "Missing Information","Please fill in both 'Make' and 'Model' fields before searching.");
             return;
         }
 
@@ -541,28 +487,13 @@ public class DatabaseController {
 
             // Check if no data was returned
             if (vehicleTableView.getItems().isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("No Data Found");
-                alert.setHeaderText("No Vehicle Data Available");
-                alert.setContentText("No data found for the specified make, model, and time period.");
-
-                DialogPane dialogPane = alert.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-                dialogPane.getStyleClass().add("custom-alert");
-                alert.showAndWait();
+                showAlert("No Data Found", "No Vehicle Data Available",
+                        "No data found for the specified make, model, and time period.");
             }
 
         } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Database Error");
-            alert.setHeaderText("Error accessing the database");
-            alert.setContentText("An error occurred while querying the database: " + e.getMessage());
-
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            dialogPane.getStyleClass().add("custom-alert");
-            alert.showAndWait();
-            e.printStackTrace();
+            showAlert("Database Error", "Error accessing the database",
+                    "An error occurred while querying the database: " + e.getMessage() );
         }
     }
 
@@ -572,16 +503,8 @@ public class DatabaseController {
         String model = ctModelField.getText().trim();
 
         if (make.isEmpty() || model.isEmpty()) {
-            // Create and display an error dialog
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Input Error");
-            alert.setHeaderText("Missing Information");
-            alert.setContentText("Please fill in both 'Make' and 'Model' fields before searching.");
-
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            dialogPane.getStyleClass().add("custom-alert");
-            alert.showAndWait();
+            showAlert("Input Error", "Missing Information",
+                    "Please fill in both 'Make' and 'Model' fields before searching.");
             return; // Exit the method early if input is invalid
         }
 
@@ -631,28 +554,13 @@ public class DatabaseController {
 
             // Check if no data was found
             if (customerTableView.getItems().isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("No Results");
-                alert.setHeaderText("No Data Found");
-                alert.setContentText("No customers found for the specified make and model.");
-
-                DialogPane dialogPane = alert.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-                dialogPane.getStyleClass().add("custom-alert");
-                alert.showAndWait();
+                showAlert("No Results", "No Data Found",
+                        "No customers found for the specified make and model.");
             }
 
         } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Database Error");
-            alert.setHeaderText("Error accessing the database");
-            alert.setContentText("An error occurred while querying the database: " + e.getMessage());
-
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            dialogPane.getStyleClass().add("custom-alert");
-            alert.showAndWait();
-            e.printStackTrace();
+            showAlert("Database Error", "Error accessing the database",
+                    "An error occurred while querying the database: " + e.getMessage() );
         }
     }
 
@@ -682,15 +590,8 @@ public class DatabaseController {
                     "ORDER BY salesCount DESC";
             header = "Used Cars by Popularity:";
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Selection Error");
-            alert.setHeaderText("No Option Selected");
-            alert.setContentText("Please select 'Top' or 'Used' before searching.");
-
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            dialogPane.getStyleClass().add("custom-alert");
-            alert.showAndWait();
+            showAlert("Selection Error","No Option Selected",
+                    "Please select 'Top' or 'Used' before searching.");
             return;
         }
 
@@ -724,16 +625,8 @@ public class DatabaseController {
             }
 
         } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Database Error");
-            alert.setHeaderText("Error accessing the database");
-            alert.setContentText("An error occurred while querying the database: " + e.getMessage());
-
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            dialogPane.getStyleClass().add("custom-alert");
-            alert.showAndWait();
-            e.printStackTrace();
+            showAlert("Database Error","Error accessing the database",
+                    "An error occurred while querying the database: " + e.getMessage() );
         }
     }
 
@@ -794,5 +687,21 @@ public class DatabaseController {
         employeeTableView.getItems().clear();
         employeeTableView.getSelectionModel().clearSelection();
         employeeTableView.refresh();
+    }
+
+    private void showAlert(String title, String header, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        styleAlert(alert);
+    }
+
+    // Styling function to apply consistent styles
+    private void styleAlert(Alert alert) {
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+        dialogPane.getStyleClass().add("custom-alert");
+        alert.showAndWait();
     }
 }

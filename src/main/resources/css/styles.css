@@ -135,13 +135,13 @@
 .text-field {
     -fx-background-color: #860038; /* Maroon background */
     -fx-border-color: #FFFFFF;    /* White border */
-    -fx-border-width: 1px;        /* Thinner border */
+    -fx-border-width: 2px;        /* Thinner border */
     -fx-background-insets: 2;     /* Slight inset for the background */
     -fx-padding: 2;               /* Reduced internal padding for text */
     -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2); /* Inner shadow */
     -fx-text-fill: white;         /* White text */
     -fx-font-family: "Times New Roman BOLD"; /* Font style */
-    -fx-font-size: 12px;          /* Slightly smaller font size */
+    -fx-font-size: 16px;          /* Slightly smaller font size */
 }
 
 .text-field:hover {
@@ -158,13 +158,13 @@
 .password-field {
     -fx-background-color: #860038; /* Maroon background */
     -fx-border-color: #FFFFFF;    /* White border */
-    -fx-border-width: 1px;        /* Thinner border */
+    -fx-border-width: 2px;        /* Thinner border */
     -fx-background-insets: 2;     /* Inset background */
     -fx-padding: 2;               /* Reduced internal padding */
     -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2); /* Inner shadow for depth */
     -fx-text-fill: white;         /* White text */
     -fx-font-family: "Times New Roman BOLD"; /* Font style */
-    -fx-font-size: 12px;          /* Slightly smaller font size */
+    -fx-font-size: 16px;          /* Slightly smaller font size */
 }
 
 .password-field:hover {
@@ -182,7 +182,7 @@
     -fx-mark-color: #FFFFFF; /* White checkmark inside the circle */
     -fx-text-fill: #FFFFFF;  /* White text color */
     -fx-font-family: "Times New Roman BOLD"; /* Font style */
-    -fx-font-size: 14px;     /* Font size */
+    -fx-font-size: 16px;     /* Font size */
 }
 
 .radio-button .radio {
