@@ -64,15 +64,25 @@
                                                         <RadioButton fx:id="monthRadioButton" prefHeight="53.0" prefWidth="141.0" text="Month" />
                                                     </children>
                                                 </HBox>
-                                    <HBox prefHeight="42.0" prefWidth="701.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                       <children>
-                                                      <Button fx:id="vSearchButton" prefHeight="0.0" prefWidth="139.0" text="Search" textFill="WHITE">
-                                                      </Button>
-                                          <Separator focusTraversable="false" orientation="VERTICAL" prefHeight="42.0" prefWidth="84.0" visible="false" />
-                                          <Button fx:id="vClearButton" prefHeight="0.0" prefWidth="139.0" text="Clear" textFill="WHITE">
-                                          </Button>
-                                       </children>
-                                    </HBox>
+                                                <HBox prefHeight="42.0" prefWidth="701.0" alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                    <children>
+                                                        <Button fx:id="vSearchButton" prefHeight="42.0" prefWidth="139.0" text="Search" textFill="WHITE">
+                                                            <HBox.margin>
+                                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                            </HBox.margin>
+                                                        </Button>
+                                                        <Separator focusTraversable="false" orientation="VERTICAL" prefHeight="42.0" prefWidth="10.0" visible="false">
+                                                            <HBox.margin>
+                                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                            </HBox.margin>
+                                                        </Separator>
+                                                        <Button fx:id="vClearButton" prefHeight="42.0" prefWidth="139.0" text="Clear" textFill="WHITE">
+                                                            <HBox.margin>
+                                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                            </HBox.margin>
+                                                        </Button>
+                                                    </children>
+                                                </HBox>
                                             </children>
                                         </GridPane>
                                         <TableView fx:id="vehicleTableView" layoutX="4.0" layoutY="204.0" prefHeight="303.0" prefWidth="784.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="160.60000000000002" />
@@ -104,17 +114,18 @@
                                                 </RadioButton>
                                                 <RadioButton fx:id="usedRadioButton" layoutX="120.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="162.0" text="Used Vehicles" textFill="WHITE" GridPane.columnIndex="2">
                                                 </RadioButton>
-                                                <HBox prefWidth="333.0" GridPane.columnIndex="3">
+                                                <HBox prefWidth="333.0" alignment="CENTER" spacing="10.0" GridPane.columnIndex="3">
                                                     <children>
-                                          <Separator layoutX="159.0" layoutY="10.0" orientation="VERTICAL" prefHeight="40.0" prefWidth="0.0" visible="false" />
-                                                        <Button fx:id="topSellersButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="144.0" text="Search">
+                                                        <Button fx:id="topSellersButton" mnemonicParsing="false" prefHeight="33.0" prefWidth="146.0" text="Search">
                                                             <HBox.margin>
                                                                 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                                             </HBox.margin>
                                                         </Button>
-                                          <Separator orientation="VERTICAL" prefHeight="34.0" prefWidth="36.0" visible="false" />
-                                          <Button fx:id="clearTopSellersButton" layoutX="19.0" layoutY="12.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="146.0" text="Clear">
-                                          </Button>
+                                                        <Button fx:id="clearTopSellersButton" mnemonicParsing="false" prefHeight="33.0" prefWidth="146.0" text="Clear">
+                                                            <HBox.margin>
+                                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                            </HBox.margin>
+                                                        </Button>
                                                     </children>
                                                 </HBox>
                                             </children>
@@ -159,8 +170,8 @@
                                     <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <children>
                                           <Separator focusTraversable="false" orientation="VERTICAL" prefHeight="40.0" prefWidth="0.0" visible="false" />
-                                                      <Button fx:id="ctSearchButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="150.0" text="Search">
-                                                      </Button>
+                                          <Button fx:id="ctSearchButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="150.0" text="Search">
+                                          </Button>
                                           <Separator focusTraversable="false" orientation="VERTICAL" prefHeight="40.0" prefWidth="70.0" visible="false" />
                                           <Button fx:id="ctClearButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="150.0" text="Clear">
                                           </Button>

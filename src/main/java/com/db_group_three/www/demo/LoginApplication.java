@@ -13,15 +13,20 @@ public class LoginApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
+        Parent root = loader.load();
+
         Scene scene = new Scene(root);
+
+        // Explicitly load and apply the stylesheet
+        scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
 
         root.requestFocus();
         primaryStage.setTitle("Employee Login");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.centerOnScreen();
-        primaryStage.show() ;
-
+        primaryStage.show();
     }
+
 }

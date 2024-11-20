@@ -142,12 +142,13 @@
     -fx-background-color: #860038;
     -fx-border-color: rgba(255, 255, 255, 0.3);
     -fx-border-width: 2px;
-    -fx-border-radius: 5 ;
+    -fx-border-radius: 5;
     -fx-background-insets: 4;
     -fx-padding: 4;
     -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2);
     -fx-text-fill: white;
-    -fx-font-family: "Times New Roman BOLD";
+    -fx-font-family: "Times New Roman";
+    -fx-font-weight: bold;
     -fx-font-size: 16px;
 }
 
@@ -160,6 +161,8 @@
     -fx-background-color: #B3004D;
     -fx-border-color: #FFFFFF;
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 5, 0.0, 0, 0);
+    -fx-font-family: "Times New Roman"; /* Ensure consistency */
+    -fx-font-weight: bold;
 }
 
 .password-field {
@@ -171,7 +174,8 @@
     -fx-padding: 2;
     -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2);
     -fx-text-fill: white;
-    -fx-font-family: "Times New Roman BOLD";
+    -fx-font-family: "Times New Roman";
+    -fx-font-weight: bold;
     -fx-font-size: 16px;
 }
 
@@ -184,6 +188,8 @@
     -fx-background-color: #B3004D;
     -fx-border-color: #FFFFFF;
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 5, 0.0, 0, 0);
+    -fx-font-family: "Times New Roman"; /* Ensure consistency */
+    -fx-font-weight: bold;
 }
 
 .radio-button {

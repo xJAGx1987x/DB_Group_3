@@ -20,7 +20,7 @@
               </PasswordField>
          </children>
       </VBox>
-        <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="214.0" mnemonicParsing="false" onAction="#handleLoginAction" prefHeight="33.0" prefWidth="101.0" text="Login" AnchorPane.leftAnchor="147.0" AnchorPane.rightAnchor="148.4">
+        <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" layoutX="127.0" layoutY="214.0" mnemonicParsing="false" onAction="#handleLoginAction" prefHeight="34.0" prefWidth="153.0" text="Login" AnchorPane.leftAnchor="124.0" AnchorPane.rightAnchor="123.0">
         </Button>
     </children>
 </AnchorPane>
