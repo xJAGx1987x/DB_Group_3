@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 
 public class LoginApplication extends Application {
 
+    @FXML
+    private Button loginButton;
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));

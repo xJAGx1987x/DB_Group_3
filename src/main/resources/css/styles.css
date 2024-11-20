@@ -1,55 +1,43 @@
-
+/* Background color for tab header */
 .tab-pane .tab-header-background {
     -fx-background-color: #860038;
 }
+
+/* Header area spacing (use container spacing, as -fx-margin isn't supported) */
 .tab-pane .tab-header-area {
-    -fx-margin: 0 10px 0 10px; /* Top (0), Right (4px), Bottom (0), Left (4px) */
+    -fx-padding: 0 10px 0 10px; /* Space inside header area */
 }
+
+/* Default tab appearance */
 .tab-pane .tab-header-area .tab {
     -fx-background-color: #FFFFFF;
     -fx-border-radius: 5;
-    -fx-margin: 0 10px 0 10px; /* Top (0), Right (4px), Bottom (0), Left (4px) */
     -fx-padding: 5px;
 }
 
-
+/* Default tab label styling */
 .tab-pane .tab-header-area .tab .tab-label {
     -fx-text-fill: #860038;
     -fx-font-weight: bold;
-    -fx-border-radius: 5 ;
     -fx-font-family: "Times New Roman";
     -fx-font-size: 16pt;
 }
 
+/* Selected tab appearance */
 .tab-pane .tab-header-area .tab:selected {
-    -fx-background-color: #800000;
+    -fx-background-color: linear-gradient(to bottom, #A00050, #860038); /* Gradient */
     -fx-border-color: #FFFFFF;
-    -fx-border-radius: 5 ;
-    -fx-padding: 10px;
+    -fx-border-width: 2; /* Highlighted border */
+    -fx-border-radius: 5;
+    -fx-padding: 10px; /* Larger padding for emphasis */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.3, 0, 2); /* Shadow */
 }
 
+/* Selected tab label overrides */
 .tab-pane .tab-header-area .tab:selected .tab-label {
-    -fx-text-fill: #FFFFFF;
-    -fx-font-family: "Times New Roman";
-    -fx-font-size: 16pt;
-    -fx-border-width: 2px;
+    -fx-text-fill: #FFFFFF; /* Ensure text is readable */
+    /* Font family and size are inherited if unchanged */
 }
-
-.choice-box {
-    -fx-background-color: #860038;
-    -fx-border-color: #FFFFFF;
-    -fx-border-width: 1px;
-    -fx-font-family: 'Times New Roman';
-    -fx-font-size: 16pt;
-    -fx-text-fill: #FFFFFF;
-}
-
-
-.choice-box .label {
-    -fx-text-fill: #FFFFFF;
-    -fx-background-color: #860038;
-}
-
 
 #searchTextArea {
     -fx-control-inner-background: #860038;
@@ -120,22 +108,31 @@
     -fx-text-fill: #FFFFFF;
     -fx-effect: dropshadow(gaussian, rgba(84, 82, 82, 0.5), 5, 0.5, 0, 1);
     -fx-padding: 5;
-    -fx-border-width: 2px ;
+    -fx-border-width: 2px;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
-    -fx-font-family:"Times New Roman BOLD"; ;
-    -fx-font-size: 16px ;
+    -fx-font-family: "Times New Roman";
+    -fx-font-weight: bold ;
+    -fx-font-size: 16px;
 }
 
 .button:pressed {
-    -fx-background-color: linear-gradient(#730030, #A6445E);
-    -fx-effect: innershadow(two-pass-box, rgb(0, 0, 0), 5, 0, 0, 1);
-    -fx-padding: 7;
+    -fx-background-color: linear-gradient(#730030, #8B2A40);
+    -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.8), 10, 0.0, 0, 2);
+    -fx-padding: 6;
+    -fx-text-fill: #E0E0E0;
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(#9B0042, #B35F70);
-    -fx-effect: dropshadow(gaussian, rgba(84, 82, 82, 0.5), 7, 0.5, 0, 1);
+    -fx-background-color: linear-gradient(#9B0042, #C05B73);
+    -fx-effect: dropshadow(gaussian, rgba(84, 82, 82, 0.7), 10, 0.6, 0, 2);
+    -fx-cursor: hand;
+}
+
+.button:focused {
+    -fx-border-color: #FFFFFF;
+    -fx-border-width: 3px;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.8), 8, 0.6, 0, 1);
 }
 
 .text-field {
