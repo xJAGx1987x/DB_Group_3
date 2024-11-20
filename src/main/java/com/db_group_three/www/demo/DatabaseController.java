@@ -5,13 +5,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -174,7 +170,8 @@ public class DatabaseController {
                 "COUNT(r.stockNumber) AS numSales, SUM(i.netSalePrice) AS totalSales " +
                 "FROM records r " +
                 "JOIN inventory i ON r.stockNumber = i.stockNumber " +
-                "WHERE i.make = ? AND i.model = ? AND Year(r.dateOfPurchase) between Year(curdate()) - 3 AND Year(curdate()) " +
+                "WHERE LOWER(i.make) LIKE LOWER(?) AND LOWER(i.model) LIKE LOWER(?) " +
+                "AND Year(r.dateOfPurchase) between Year(curdate()) - 3 AND Year(curdate()) " +
                 (timePeriod.equals("Yearly") ? "GROUP BY purchaseYear " : "GROUP BY purchaseYear, purchaseMonth ") +
                 "ORDER BY purchaseYear" + (timePeriod.equals("Monthly") ? ", purchaseMonth" : "");
     }
@@ -285,7 +282,6 @@ public class DatabaseController {
 
                 searchTableView.getColumns().add(column);
             }
-
 
             // Populate TableView rows
             ObservableList<Map<String, Object>> tableData = FXCollections.observableArrayList();
@@ -452,8 +448,9 @@ public class DatabaseController {
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(getVehicleSearchQuery(timePeriod))) {
 
-            pstmt.setString(1, userMake);
-            pstmt.setString(2, userModel);
+            pstmt.setString(1, "%" + userMake + "%");
+            pstmt.setString(2, "%" + userModel + "%");
+
 
             ResultSet rs = pstmt.executeQuery();
             ResultSetMetaData metaData = rs.getMetaData();
@@ -513,7 +510,7 @@ public class DatabaseController {
                 "JOIN person p ON c.personID = p.personID " +
                 "JOIN records r ON c.personID = r.customerID " +
                 "JOIN inventory i ON r.stockNumber = i.stockNumber " +
-                "WHERE i.make = ? AND i.model = ?";
+                "WHERE LOWER(i.make) LIKE LOWER(?) AND LOWER(i.model) LIKE LOWER(?)";
 
         // Clear previous data from TableView
         customerTableView.getItems().clear();
@@ -522,8 +519,8 @@ public class DatabaseController {
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setString(1, make);
-            pstmt.setString(2, model);
+            pstmt.setString(1,"%"+make+"%");
+            pstmt.setString(2, "%"+model+"%");
 
             ResultSet rs = pstmt.executeQuery();
             ResultSetMetaData metaData = rs.getMetaData();
@@ -531,7 +528,7 @@ public class DatabaseController {
 
             // Create columns dynamically based on ResultSet metadata
             for (int i = 1; i <= columnCount; i++) {
-                final String columnName = metaData.getColumnName(i); // Must be effectively final
+                final String columnName = metaData.getColumnName(i);
                 TableColumn<Map<String, Object>, String> column = new TableColumn<>(columnName);
 
                 column.setCellValueFactory(cellData -> {

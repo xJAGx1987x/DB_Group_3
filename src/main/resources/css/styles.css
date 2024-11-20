@@ -1,58 +1,59 @@
-/* Style the header area background */
+
 .tab-pane .tab-header-background {
-    -fx-background-color: #860038; /* Maroon color */
+    -fx-background-color: #860038;
 }
-
-/* Add margin between tabs without affecting their size */
+.tab-pane .tab-header-area {
+    -fx-margin: 0 10px 0 10px; /* Top (0), Right (4px), Bottom (0), Left (4px) */
+}
 .tab-pane .tab-header-area .tab {
-    -fx-background-color: #FFFFFF; /* White background for tabs */
-    -fx-margin: 0 4px 0 0; /* Add a few pixels of space on the right side */
-    -fx-padding: 5px; /* Internal padding to keep tabs comfortable */
+    -fx-background-color: #FFFFFF;
+    -fx-border-radius: 5;
+    -fx-margin: 0 10px 0 10px; /* Top (0), Right (4px), Bottom (0), Left (4px) */
+    -fx-padding: 5px;
 }
 
-/* Style the tab text */
+
 .tab-pane .tab-header-area .tab .tab-label {
-    -fx-text-fill: #860038; /* Maroon text color for tab labels */
+    -fx-text-fill: #860038;
     -fx-font-weight: bold;
-    -fx-font-family: "Times New Roman"; /* Replace with your desired font */
-    -fx-font-size: 16pt; /* Set font size to 14pt */
+    -fx-border-radius: 5 ;
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 16pt;
 }
 
-/* Style the selected tab background and border */
 .tab-pane .tab-header-area .tab:selected {
-    -fx-background-color: #800000; /* Darker maroon color for the selected tab */
-    -fx-border-color: #FFFFFF; /* White border */
-    -fx-border-width: 2px; /* Border width */
-    -fx-margin: 0 4px 0 0; /* Add a few pixels of space on the right side */
-    -fx-padding: 10px; /* Internal padding to keep tabs comfortable */
+    -fx-background-color: #800000;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 5 ;
+    -fx-padding: 10px;
 }
 
-/* Style the text within the selected tab */
 .tab-pane .tab-header-area .tab:selected .tab-label {
-    -fx-text-fill: #FFFFFF; /* White text color */
-    -fx-font-family: "Times New Roman"; /* Ensure consistent font for selected tab */
-    -fx-font-size: 16pt; /* Set font size to 14pt */
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 16pt;
+    -fx-border-width: 2px;
 }
 
 .choice-box {
-    -fx-background-color: #860038; /* Background color for the ChoiceBox */
-    -fx-border-color: #FFFFFF; /* Border color */
-    -fx-border-width: 1px; /* Border width */
-    -fx-font-family: 'Times New Roman'; /* Font */
-    -fx-font-size: 16pt; /* Font size */
-    -fx-text-fill: #FFFFFF; /* Text color */
+    -fx-background-color: #860038;
+    -fx-border-color: #FFFFFF;
+    -fx-border-width: 1px;
+    -fx-font-family: 'Times New Roman';
+    -fx-font-size: 16pt;
+    -fx-text-fill: #FFFFFF;
 }
 
-/* Styling for the selected item label */
+
 .choice-box .label {
-    -fx-text-fill: #FFFFFF; /* Text color for the selected item */
+    -fx-text-fill: #FFFFFF;
     -fx-background-color: #860038;
 }
 
-/* Set the background color for the TextArea */
+
 #searchTextArea {
-    -fx-control-inner-background: #860038;  /* Background color of the text area */
-    -fx-text-fill: white;  /* Text color */
+    -fx-control-inner-background: #860038;
+    -fx-text-fill: white;
 }
 
 .table-view .cell {
@@ -65,15 +66,15 @@
 }
 
 .table-view .column-header-background {
-    -fx-background-color: #860038; /* Match your theme color */
+    -fx-background-color: #860038;
     -fx-border-width: 0;
 }
 
 .table-view .column-header .label {
-    -fx-text-fill: white; /* Set text color to white */
+    -fx-text-fill: white;
     -fx-background-color: #860038 ;
-    -fx-font-family: "Times New Roman Bold"; /* Match font */
-    -fx-font-size: 16px; /* Adjust size as needed */
+    -fx-font-family: "Times New Roman Bold";
+    -fx-font-size: 16px;
 }
 
 .table-cell {
@@ -105,7 +106,7 @@
 }
 
 .table-view .placeholder {
-    -fx-background-color: #860038; /* Set the color for the empty space when no data is displayed */
+    -fx-background-color: #860038;
 }
 
 .table-view .column-header-background .filler {
@@ -115,117 +116,121 @@
 /* linear-gradient(#101010 0%, #860038 100%); */
 
 .button {
-    -fx-background-color: linear-gradient(#860038, #5a0025); /* Default gradient */
-    -fx-text-fill: #FFFFFF ;                                   /* Text color */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0.5, 0, 1); /* Shadow */
+    -fx-background-color: linear-gradient(#860036, #A6445E);
+    -fx-text-fill: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(84, 82, 82, 0.5), 5, 0.5, 0, 1);
     -fx-padding: 5;
+    -fx-border-width: 2px ;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-family:"Times New Roman BOLD"; ;
+    -fx-font-size: 16px ;
 }
 
 .button:pressed {
-    -fx-background-color: linear-gradient(#5a0025, #3a0018); /* Darker gradient */
-    -fx-effect: innershadow(two-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1); /* Inset shadow */
+    -fx-background-color: linear-gradient(#730030, #A6445E);
+    -fx-effect: innershadow(two-pass-box, rgb(0, 0, 0), 5, 0, 0, 1);
     -fx-padding: 7;
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(#9a003e, #68002c); /* Lighter gradient */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 7, 0.5, 0, 1); /* Slightly stronger shadow */
+    -fx-background-color: linear-gradient(#9B0042, #B35F70);
+    -fx-effect: dropshadow(gaussian, rgba(84, 82, 82, 0.5), 7, 0.5, 0, 1);
 }
 
 .text-field {
-    -fx-background-color: #860038; /* Maroon background */
-    -fx-border-color: #FFFFFF;    /* White border */
-    -fx-border-width: 2px;        /* Thinner border */
-    -fx-background-insets: 2;     /* Slight inset for the background */
-    -fx-padding: 2;               /* Reduced internal padding for text */
-    -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2); /* Inner shadow */
-    -fx-text-fill: white;         /* White text */
-    -fx-font-family: "Times New Roman BOLD"; /* Font style */
-    -fx-font-size: 16px;          /* Slightly smaller font size */
+    -fx-background-color: #860038;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-width: 2px;
+    -fx-border-radius: 5 ;
+    -fx-background-insets: 4;
+    -fx-padding: 4;
+    -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2);
+    -fx-text-fill: white;
+    -fx-font-family: "Times New Roman BOLD";
+    -fx-font-size: 16px;
 }
 
 .text-field:hover {
-    -fx-background-color: #990042; /* Slightly lighter maroon on hover */
-    -fx-border-color: #FF0055;     /* Bright maroon border */
+    -fx-background-color: #990042;
+    -fx-border-color: #ffffff;
 }
 
 .text-field:focused {
-    -fx-background-color: #B3004D; /* Lighter maroon on focus */
-    -fx-border-color: #FFFFFF;     /* White border when focused */
-    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 5, 0.0, 0, 0); /* Subtle glow */
+    -fx-background-color: #B3004D;
+    -fx-border-color: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 5, 0.0, 0, 0);
 }
 
 .password-field {
-    -fx-background-color: #860038; /* Maroon background */
-    -fx-border-color: #FFFFFF;    /* White border */
-    -fx-border-width: 2px;        /* Thinner border */
-    -fx-background-insets: 2;     /* Inset background */
-    -fx-padding: 2;               /* Reduced internal padding */
-    -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2); /* Inner shadow for depth */
-    -fx-text-fill: white;         /* White text */
-    -fx-font-family: "Times New Roman BOLD"; /* Font style */
-    -fx-font-size: 16px;          /* Slightly smaller font size */
+    -fx-background-color: #860038;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-width: 2px;
+    -fx-border-radius: 5;
+    -fx-background-insets: 2;
+    -fx-padding: 2;
+    -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2);
+    -fx-text-fill: white;
+    -fx-font-family: "Times New Roman BOLD";
+    -fx-font-size: 16px;
 }
 
 .password-field:hover {
-    -fx-background-color: #990042; /* Slightly lighter maroon on hover */
-    -fx-border-color: #FF0055;     /* Bright maroon border */
+    -fx-background-color: #990042;
+    -fx-border-color: #ffffff;
 }
 
 .password-field:focused {
-    -fx-background-color: #B3004D; /* Lighter maroon when focused */
-    -fx-border-color: #FFFFFF;     /* White border on focus */
-    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 5, 0.0, 0, 0); /* Subtle glow */
+    -fx-background-color: #B3004D;
+    -fx-border-color: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 5, 0.0, 0, 0);
 }
 
 .radio-button {
-    -fx-mark-color: #FFFFFF; /* White checkmark inside the circle */
-    -fx-text-fill: #FFFFFF;  /* White text color */
-    -fx-font-family: "Times New Roman BOLD"; /* Font style */
-    -fx-font-size: 16px;     /* Font size */
+    -fx-mark-color: #FFFFFF;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Times New Roman BOLD";
+    -fx-font-size: 16px;
 }
 
 .radio-button .radio {
-    -fx-background-color: #860038; /* Maroon background for the circle */
-    -fx-border-color: #FFFFFF;     /* White border around the circle */
-    -fx-border-width: 2px;         /* Border width */
-    -fx-padding: 3;                /* Padding inside the circle */
-    -fx-shape: "M 0.5 0 L 0.61 0.35 L 1 0.35 L 0.68 0.57 L 0.81 0.91 L 0.5 0.7 L 0.19 0.91 L 0.32 0.57 L 0 0.35 L 0.39 0.35 Z"; /* Keeps the default circular shape */
+    -fx-background-color: #860038;
+    -fx-border-color: #FFFFFF;
+    -fx-border-width: 2px;
+    -fx-padding: 3;
+    -fx-shape: "M 0.5 0 L 0.61 0.35 L 1 0.35 L 0.68 0.57 L 0.81 0.91 L 0.5 0.7 L 0.19 0.91 L 0.32 0.57 L 0 0.35 L 0.39 0.35 Z";
 }
 
 .radio-button:hover .radio {
-    -fx-background-color: #990042; /* Lighter maroon on hover */
-    -fx-border-color: #FF0055;     /* Bright maroon border */
+    -fx-background-color: #990042;
+    -fx-border-color: #FF0055;
 }
 
 .radio-button:focused .radio {
-    -fx-background-color: #B3004D; /* Lighter maroon when focused */
-    -fx-border-color: #FFFFFF;     /* White border */
-    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 5, 0.0, 0, 0); /* Subtle glow */
+    -fx-background-color: #B3004D;
+    -fx-border-color: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 5, 0.0, 0, 0);
 }
 
 .radio-button:selected {
-    -fx-mark-color: #FF0055; /* Change dot color to red */
+    -fx-mark-color: #FF0055;
 }
 
-/* Style the entire DialogPane */
 .dialog-pane {
-    -fx-background-color: #860038; /* Maroon background */
+    -fx-background-color: #860038;
     -fx-border-color: white;
     -fx-border-width: 2px;
     -fx-padding: 10px;
-    -fx-background-radius: 10px; /* Rounded corners */
+    -fx-background-radius: 10px;
 }
 
-/* Style the header panel */
 .dialog-pane .header-panel {
-    -fx-background-color: transparent; /* Make header background transparent */
-    -fx-padding: 10px; /* Add some padding if needed */
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
 }
 
-/* Header text style */
 .dialog-pane .header-panel .label {
-    -fx-text-fill: white; /* White header text */
+    -fx-text-fill: white;
     -fx-font-family: "Times New Roman BOLD";
     -fx-font-size: 14px;
 }
@@ -234,7 +239,7 @@
 .dialog-pane .content {
     -fx-text-fill: white; /* White content text */
     -fx-font-family: "Times New Roman";
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
 }
 
 /* Buttons in the alert */
@@ -250,15 +255,16 @@
 }
 
 .text-area {
-    -fx-background-color: #860038; /* Maroon background */
-    -fx-border-color: #FFFFFF;    /* White border */
-    -fx-border-width: 2px;        /* Thinner border */
-    -fx-background-insets: 2;     /* Inset background */
-    -fx-padding: 4;               /* Slightly larger padding for multi-line text */
-    -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2); /* Inner shadow for depth */
-    -fx-text-fill: white;         /* White text */
-    -fx-font-family: "Times New Roman BOLD"; /* Font style */
-    -fx-font-size: 12px;          /* Slightly smaller font size */
+    -fx-background-color: #860038;
+    -fx-border-color: #FFFFFF;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5 ;
+    -fx-background-insets: 2;
+    -fx-padding: 4;
+    -fx-effect: innershadow(two-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 2);
+    -fx-text-fill: white;
+    -fx-font-family: "Times New Roman BOLD";
+    -fx-font-size: 16px;
 }
 
 .text-area:hover {
@@ -271,3 +277,4 @@
     -fx-border-color: #FFFFFF;     /* White border on focus */
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 5, 0.0, 0, 0); /* Subtle glow */
 }
+

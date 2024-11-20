@@ -42,7 +42,7 @@ public class LoginController {
 
         // Validate input fields
         if (employeeID.isEmpty() || employeeID.equalsIgnoreCase("Enter Employee Username")) {
-            showAlert("Input Error", "Please enter an employee number.");
+            showAlert("Input Error", "Please enter an employee login.");
             return;
         }
 

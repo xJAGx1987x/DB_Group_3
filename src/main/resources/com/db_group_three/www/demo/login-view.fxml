@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="loginPane" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="286.0" prefWidth="400.0" style="-fx-background-color: #860038; -fx-border-color: #ffffff; -fx-border-width: 3;" stylesheets="@../../../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.db_group_three.www.demo.LoginController">
+<AnchorPane fx:id="loginPane" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="286.0" prefWidth="400.0" style="-fx-background-color: #860038; -fx-border-color: #ffffff; -fx-border-width: 3; -fx-border-radius: 5; " stylesheets="@../../../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.db_group_three.www.demo.LoginController">
     <children>
         <Label fx:id="falconLabel" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutY="22.0" prefHeight="55.0" prefWidth="400.0" text="Falcon Sports Cars" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="3.0">
             <font>
@@ -14,22 +14,13 @@
       <VBox layoutX="61.0" layoutY="91.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="60.60000000000002">
          <children>
               <TextField fx:id="usernameField" alignment="CENTER" prefHeight="30.0" prefWidth="278.0" promptText="Enter Employee Username">
-                  <font>
-                      <Font name="Times New Roman Bold" size="14.0" />
-                  </font>
               </TextField>
             <Separator focusTraversable="false" prefHeight="11.0" prefWidth="278.0" visible="false" />
               <PasswordField fx:id="passwordField" alignment="CENTER" focusTraversable="true" prefHeight="37.0" prefWidth="276.0" promptText="Enter Employee Password">
-                  <font>
-                      <Font name="Times New Roman Bold" size="14.0" />
-                  </font>
               </PasswordField>
          </children>
       </VBox>
         <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="214.0" mnemonicParsing="false" onAction="#handleLoginAction" prefHeight="33.0" prefWidth="101.0" text="Login" AnchorPane.leftAnchor="147.0" AnchorPane.rightAnchor="148.4">
-            <font>
-                <Font name="Times New Roman Bold" size="14.0" />
-            </font>
         </Button>
     </children>
 </AnchorPane>

@@ -8,7 +8,6 @@ public class Main {
         /*
         ******* Please don't remove yet.
         ******* We may still need this logic
-
             InventoryUpdater updater = new InventoryUpdater();
             Scanner scanner = new Scanner(System.in);
 
