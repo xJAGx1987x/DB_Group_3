@@ -102,6 +102,9 @@ public class DatabaseController {
     private TableView<Map<String, Object>> searchTableView;
 
     // Fields for add/update customers
+// Fields for customer details
+    @FXML
+    private TextField customerIDField;
     @FXML
     private TextField customerNameField;
     @FXML
@@ -116,6 +119,21 @@ public class DatabaseController {
     private TextField customerStateField;
     @FXML
     private TextField customerZipCodeField;
+
+    // TableView for customer look-up
+    @FXML
+    private TableView<?> customerLookUpTableView;
+
+    // Buttons for actions
+    @FXML
+    private Button addCustomerButton;
+    @FXML
+    private Button updateCustomerButton;
+    @FXML
+    private Button customerLookUpButton;
+    @FXML
+    private Button clearCustomerFormButton;
+
 
     private ToggleGroup vehicleTypeToggleGroup;
     private ToggleGroup newUsedToggleGroup;
@@ -674,6 +692,11 @@ public class DatabaseController {
     @FXML
     private void handleUpdateCustomer(){
         return ;
+    }
+
+    @FXML
+    private void handleCustomerLookUp(){
+        return;
     }
 
     @FXML

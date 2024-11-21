@@ -1,4 +1,3 @@
-/* Background color for tab header */
 .tab-pane .tab-header-background {
     -fx-background-color: #860038;
 }
@@ -8,22 +7,30 @@
     -fx-padding: 0 10px 0 10px; /* Space inside header area */
 }
 
+.tab {
+    -fx-padding: 5px; /* Padding inside each tab */
+}
+
 /* Default tab appearance */
 .tab-pane .tab-header-area .tab {
     -fx-background-color: #FFFFFF;
     -fx-border-radius: 5;
-    -fx-padding: 5px;
+    -fx-padding: 5px; /* Add padding inside tabs */
+    -fx-margin: 5 10 5 10; /* Adjust margin between tabs */
+    -fx-border-color: #860038;
+    -fx-border-width: 3px;
 }
 
 /* Default tab label styling */
 .tab-pane .tab-header-area .tab .tab-label {
     -fx-text-fill: #860038;
-    -fx-font-weight: bold;
+    -fx-font-weight: bold; /* Corrected font weight property */
     -fx-font-family: "Times New Roman";
-    -fx-font-size: 16pt;
+    -fx-font-size: 14pt;
+    -fx-border-radius: 5;
+    -fx-alignment: CENTER; /* Ensure labels are centered */
 }
 
-/* Selected tab appearance */
 .tab-pane .tab-header-area .tab:selected {
     -fx-background-color: linear-gradient(to bottom, #A00050, #860038); /* Gradient */
     -fx-border-color: #FFFFFF;
@@ -31,6 +38,8 @@
     -fx-border-radius: 5;
     -fx-padding: 10px; /* Larger padding for emphasis */
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.3, 0, 2); /* Shadow */
+    -fx-focus-color: transparent; /* Removes the blue focus box */
+    -fx-faint-focus-color: transparent; /* Removes the faint blue glow */
 }
 
 /* Selected tab label overrides */
@@ -39,19 +48,15 @@
     /* Font family and size are inherited if unchanged */
 }
 
+/* Adjust margins between tabs */
+.tab-pane .tab-header-area .tab {
+    -fx-margin: 5 10 5 10; /* Top, Right, Bottom, Left */
+}
+
+/* Drop-down button customization */
 .tab-pane .tab-down-button {
     -fx-background-color: transparent; /* Set the background of the button */
     -fx-text-fill: white; /* Change the arrow color */
-}
-
-.tab-pane .tab-down-button:hover {
-    -fx-background-color: #AA0033; /* Background color when hovered */
-    -fx-text-fill: yellow; /* Change the arrow color when hovered */
-}
-
-/* Adjust the size of the drop-down button */
-.tab-pane .tab-down-button {
-    -fx-background-color: transparent; /* Optional: keep background transparent */
     -fx-padding: 5px; /* Add padding to enlarge the button */
     -fx-min-width: 20px; /* Set minimum width */
     -fx-min-height: 20px; /* Set minimum height */
@@ -64,7 +69,16 @@
     -fx-scale-x: 1.5; /* Scale the arrow horizontally */
     -fx-scale-y: 1.5; /* Scale the arrow vertically */
     -fx-background-color: white; /* Arrow color */
-    -fx-shape: "M 0 0 L 6 0 L 3 3 Z"; /* Larger triangle shape */
+    -fx-shape: "M 0 0 L 5 5 L 10 0 L 8 0 L 5 3 L 2 0 Z M 0 6 L 5 11 L 10 6 L 8 6 L 5 9 L 2 6 Z";
+}
+
+/* Rotate arrows based on tab pane positioning */
+.tab-pane:left .tab-down-button .arrow {
+    -fx-rotate: 180; /* Rotate for left position */
+}
+
+.tab-pane:right .tab-down-button .arrow {
+    -fx-rotate: 0; /* Default for right position */
 }
 
 /* Add hover effect to make the arrow color change when hovered */
@@ -72,12 +86,10 @@
     -fx-background-color: yellow; /* Optional hover color */
 }
 
-
 /* Active state (when the drop-down button is pressed) */
 .tab-pane .tab-down-button:pressed .arrow {
     -fx-background-color: red; /* Change arrow color when clicked */
 }
-
 
 #searchTextArea {
     -fx-control-inner-background: #860038;
@@ -91,6 +103,8 @@
 .table-view {
     -fx-background-color: #860038;
     -fx-border-color: #FFFFFF;
+    -fx-border-width: 3px;
+    -fx-border-radius: 5;
 }
 
 .table-view .column-header-background {
