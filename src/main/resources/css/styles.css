@@ -39,6 +39,46 @@
     /* Font family and size are inherited if unchanged */
 }
 
+.tab-pane .tab-down-button {
+    -fx-background-color: transparent; /* Set the background of the button */
+    -fx-text-fill: white; /* Change the arrow color */
+}
+
+.tab-pane .tab-down-button:hover {
+    -fx-background-color: #AA0033; /* Background color when hovered */
+    -fx-text-fill: yellow; /* Change the arrow color when hovered */
+}
+
+/* Adjust the size of the drop-down button */
+.tab-pane .tab-down-button {
+    -fx-background-color: transparent; /* Optional: keep background transparent */
+    -fx-padding: 5px; /* Add padding to enlarge the button */
+    -fx-min-width: 20px; /* Set minimum width */
+    -fx-min-height: 20px; /* Set minimum height */
+    -fx-max-width: 25px; /* Optional: set maximum width */
+    -fx-max-height: 25px; /* Optional: set maximum height */
+}
+
+/* Adjust the size and shape of the arrow icon */
+.tab-pane .tab-down-button .arrow {
+    -fx-scale-x: 1.5; /* Scale the arrow horizontally */
+    -fx-scale-y: 1.5; /* Scale the arrow vertically */
+    -fx-background-color: white; /* Arrow color */
+    -fx-shape: "M 0 0 L 6 0 L 3 3 Z"; /* Larger triangle shape */
+}
+
+/* Add hover effect to make the arrow color change when hovered */
+.tab-pane .tab-down-button:hover .arrow {
+    -fx-background-color: yellow; /* Optional hover color */
+}
+
+
+/* Active state (when the drop-down button is pressed) */
+.tab-pane .tab-down-button:pressed .arrow {
+    -fx-background-color: red; /* Change arrow color when clicked */
+}
+
+
 #searchTextArea {
     -fx-control-inner-background: #860038;
     -fx-text-fill: white;

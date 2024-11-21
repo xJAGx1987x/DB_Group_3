@@ -174,7 +174,7 @@
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
                                     <children>
                                         <!-- Customer Input Form -->
-                                        <GridPane hgap="10" layoutX="6.0" layoutY="6.0" prefHeight="313.0" prefWidth="779.0" style="-fx-border-color: white; -fx-border-width: 2;" vgap="10" AnchorPane.bottomAnchor="155.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
+                                        <GridPane hgap="10" layoutX="6.0" layoutY="6.0" prefHeight="299.0" prefWidth="779.0" style="-fx-border-color: white; -fx-border-width: 2;" vgap="10" AnchorPane.bottomAnchor="169.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
                                             <columnConstraints>
                                                 <ColumnConstraints halignment="RIGHT" minWidth="100.0" />
                                                 <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
@@ -206,7 +206,7 @@
                                                 <TextField fx:id="customerAddressField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
                                                 <!-- City -->
-                                                <Label maxHeight="33.0" prefWidth="45.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="City:" GridPane.rowIndex="4" />
+                                                <Label maxHeight="33.0" prefHeight="32.0" prefWidth="48.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="City:" GridPane.rowIndex="4" />
                                                 <TextField fx:id="customerCityField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
                                                 <!-- State -->

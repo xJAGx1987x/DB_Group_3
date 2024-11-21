@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="loginPane" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="286.0" prefWidth="400.0" style="-fx-background-color: #860038; -fx-border-color: #ffffff; -fx-border-width: 3; -fx-border-radius: 5; " stylesheets="@../../../../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.db_group_three.www.demo.LoginController">
+<AnchorPane fx:id="loginPane" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="286.0" prefWidth="400.0" style="-fx-background-color: #860038; -fx-border-color: #ffffff; -fx-border-width: 3; -fx-border-radius: 5; " stylesheets="@../../../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.db_group_three.www.demo.LoginController">
     <children>
         <Label fx:id="falconLabel" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutY="22.0" prefHeight="55.0" prefWidth="400.0" text="Falcon Sports Cars" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="3.0">
             <font>
@@ -16,11 +16,15 @@
               <TextField fx:id="usernameField" alignment="CENTER" maxHeight="37.0" maxWidth="278.0" prefHeight="37.0" prefWidth="278.0" promptText="Enter Employee Username">
               </TextField>
             <Separator focusTraversable="false" prefHeight="11.0" prefWidth="278.0" visible="false" />
-              <PasswordField fx:id="passwordField" alignment="CENTER" focusTraversable="true" maxHeight="37.0" prefHeight="37.0" maxWidth="278.0"  prefWidth="278.0" promptText="Enter Employee Password">
+              <PasswordField fx:id="passwordField" alignment="CENTER" focusTraversable="true" maxHeight="37.0" maxWidth="278.0" prefHeight="37.0" prefWidth="278.0" promptText="Enter Employee Password">
               </PasswordField>
          </children>
       </VBox>
-        <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" layoutX="127.0" layoutY="214.0" mnemonicParsing="false" onAction="#handleLoginAction" maxHeight="33.0" prefWidth="146.0" text="Login" AnchorPane.leftAnchor="124.0" AnchorPane.rightAnchor="123.0">
+      <HBox alignment="CENTER" layoutX="7.0" layoutY="210.0" prefHeight="30.0" prefWidth="391.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="5.0">
+         <children>
+              <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="33.0" mnemonicParsing="false" onAction="#handleLoginAction" prefWidth="146.0" text="Login">
         </Button>
+         </children>
+      </HBox>
     </children>
 </AnchorPane>
