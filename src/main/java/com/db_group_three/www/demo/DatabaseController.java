@@ -101,6 +101,22 @@ public class DatabaseController {
     @FXML
     private TableView<Map<String, Object>> searchTableView;
 
+    // Fields for add/update customers
+    @FXML
+    private TextField customerNameField;
+    @FXML
+    private TextField customerEmailField;
+    @FXML
+    private TextField customerPhoneField;
+    @FXML
+    private TextField customerAddressField;
+    @FXML
+    private TextField customerCityField;
+    @FXML
+    private TextField customerStateField;
+    @FXML
+    private TextField customerZipCodeField;
+
     private ToggleGroup vehicleTypeToggleGroup;
     private ToggleGroup newUsedToggleGroup;
 
@@ -625,6 +641,97 @@ public class DatabaseController {
             showAlert("Database Error","Error accessing the database",
                     "An error occurred while querying the database: " + e.getMessage() );
         }
+    }
+
+    @FXML
+    private void handleAddCustomer() {
+        String name = customerNameField.getText();
+        String email = customerEmailField.getText();
+        String phone = customerPhoneField.getText();
+        String address = customerAddressField.getText();
+        String city = customerCityField.getText();
+        String state = customerStateField.getText();
+        String zipCode = customerZipCodeField.getText();
+
+        if (!validateInput(name, email, phone, address, city, state, zipCode)) {
+            showAlert("ERROR", "Please fill in all fields correctly!", "");
+            return;
+        }
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            conn.setAutoCommit(false); // Begin transaction
+
+            int personID = insertPerson(conn, name, email, phone, address, city, state, zipCode);
+            insertCustomer(conn, personID);
+
+            conn.commit(); // Commit transaction
+            showAlert("SUCCESS", "Customer added successfully!", name + " added!");
+            clearCustomerForm();
+        } catch (SQLException e) {
+            showAlert("ERROR", "Error adding customer", e.getMessage());
+        }
+    }
+    @FXML
+    private void handleUpdateCustomer(){
+        return ;
+    }
+
+    @FXML
+    public void handleClearCustomerForm() {
+        customerNameField.clear();
+        customerEmailField.clear();
+        customerPhoneField.clear();
+        customerAddressField.clear();
+        customerCityField.clear();
+        customerStateField.clear();
+        customerZipCodeField.clear();
+    }
+
+    private boolean validateInput(String name, String email, String phone, String address, String city, String state, String zipCode) {
+        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() ||
+                city.isEmpty() || state.isEmpty() || zipCode.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    private int insertPerson(Connection conn, String name, String email, String phone, String address, String city, String state, String zipCode) throws SQLException {
+        String insertPersonSQL = "INSERT INTO person (name, email, phoneNum, address, city, state, zipcode) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement personStmt = conn.prepareStatement(insertPersonSQL, Statement.RETURN_GENERATED_KEYS)) {
+            personStmt.setString(1, name);
+            personStmt.setString(2, email);
+            personStmt.setString(3, phone);
+            personStmt.setString(4, address);
+            personStmt.setString(5, city);
+            personStmt.setString(6, state);
+            personStmt.setString(7, zipCode);
+            personStmt.executeUpdate();
+
+            ResultSet rs = personStmt.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1); // Return generated personID
+            } else {
+                throw new SQLException("Failed to retrieve personID.");
+            }
+        }
+    }
+
+    private void insertCustomer(Connection conn, int personID) throws SQLException {
+        String insertCustomerSQL = "INSERT INTO customer (personID) VALUES (?)";
+        try (PreparedStatement customerStmt = conn.prepareStatement(insertCustomerSQL)) {
+            customerStmt.setInt(1, personID);
+            customerStmt.executeUpdate();
+        }
+    }
+
+    private void clearCustomerForm() {
+        customerNameField.clear();
+        customerEmailField.clear();
+        customerPhoneField.clear();
+        customerAddressField.clear();
+        customerCityField.clear();
+        customerStateField.clear();
+        customerZipCodeField.clear();
     }
 
     public void setDBUser(DBUser currentUser){
