@@ -347,11 +347,11 @@ public class DatabaseController {
 
     String query = "SELECT sp.personID, p.name, p.email, p.phoneNum, p.address, p.city, p.state, p.zipcode, " +
             "COUNT(r.stockNumber) AS numSales, " +
-            "SUM(CASE WHEN YEAR(r.dateOfPurchase) = YEAR(CURDATE()) - 1 THEN i.netSalePrice " +
+            "SUM(CASE WHEN YEAR(r.dateOfPurchase) >= YEAR(CURDATE()) - 1 THEN i.netSalePrice " +
             "* sp.commissionRate ELSE 0 END) AS totalCommission " +
             "FROM sales_person sp " +
             "JOIN person p ON sp.personID = p.personID " +
-            "LEFT JOIN records r ON sp.personID = r.salesPersonID AND YEAR(r.dateOfPurchase) = YEAR(CURDATE()) - 1 " +
+            "LEFT JOIN records r ON sp.personID = r.salesPersonID AND YEAR(r.dateOfPurchase) >= YEAR(CURDATE()) - 1 " +
             "LEFT JOIN inventory i ON r.stockNumber = i.stockNumber " +
             "GROUP BY sp.personID, p.name " +
             "ORDER BY numSales DESC";
@@ -710,7 +710,7 @@ public class DatabaseController {
     }
 
     private boolean validateInput(String name, String email, String phone, String address, String city, String state, String zipCode) {
-        if(name.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() ||
+        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() ||
                 city.isEmpty() || state.isEmpty() || zipCode.isEmpty()) {
             return false;
         }
