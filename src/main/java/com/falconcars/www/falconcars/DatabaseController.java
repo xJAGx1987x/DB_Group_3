@@ -710,7 +710,7 @@ public class DatabaseController {
     }
 
     private boolean validateInput(String name, String email, String phone, String address, String city, String state, String zipCode) {
-        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() ||
+        if(name.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() ||
                 city.isEmpty() || state.isEmpty() || zipCode.isEmpty()) {
             return false;
         }
