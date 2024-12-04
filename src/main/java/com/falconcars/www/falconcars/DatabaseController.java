@@ -185,6 +185,8 @@ public class DatabaseController {
         // Events for Customers Tab
         ctSearchButton.setOnAction(event -> handleCustomerSearch());
         ctClearButton.setOnAction(event -> handleCTClear() );
+        // Events for Add/Update Customer Tab
+        customerLookUpButton.setOnAction(event -> handleCustomerLookUp());
         // Events for Location Tab
         locationUpdateButton.setOnAction(event -> handleLocationSearch() );
         locationClearButton.setOnAction(event -> handleLocationClear() );
@@ -688,14 +690,45 @@ public class DatabaseController {
         }
     }
 
-    @FXML
-    private void handleUpdateCustomer(){
-        return ;
-    }
 
     @FXML
-    private void handleCustomerLookUp(){
-        return;
+    private void handleCustomerLookUp() {
+        if (!isCustomerLookUpInputValid()) {
+            showAlert("Input Error", "Missing Information",
+                    "Please enter at least one of the following: Customer ID, Name, or Email.");
+            return;
+        }
+
+        String query = "SELECT * FROM customer WHERE ";
+        if(!isCustomerLookUpInputValid()){
+            showAlert("ERROR", "Please fill in at least one field!",
+                    "Either Customer ID, Name, or Email must be filled in.");
+            return ;
+        }
+
+        boolean hasCondition = false;
+
+        if (!customerIDField.getText().trim().isEmpty()) {
+            query += "customerID = ? ";
+            hasCondition = true;
+        }
+        if (!customerNameField.getText().trim().isEmpty()) {
+            if (hasCondition) query += "OR ";
+            query += "name LIKE ? ";
+            hasCondition = true;
+        }
+        if (!customerEmailField.getText().trim().isEmpty()) {
+            if (hasCondition) query += "OR ";
+            query += "email LIKE ? ";
+        }
+
+        // Execute the query and handle the results
+    }
+
+    private boolean isCustomerLookUpInputValid() {
+        return !customerIDField.getText().trim().isEmpty() ||
+               !customerNameField.getText().trim().isEmpty() ||
+               !customerEmailField.getText().trim().isEmpty();
     }
 
     @FXML

@@ -183,36 +183,39 @@
                                                 <!-- Vertical Form -->
                                                 <VBox alignment="CENTER" maxWidth="Infinity" spacing="10.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 3; -fx-padding: 10; -fx-border-radius: 5px;" HBox.hgrow="ALWAYS">
                                                     <children>
+                                                        <Label alignment="CENTER"
+                                                               style="-fx-font-family: 'Times New Roman'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;"
+                                                               text="Search Customers by ID, Name, or Email Address" />
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="150.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Customer ID:" />
+                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Customer ID:" />
                                                             <TextField fx:id="customerIDField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="150.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Name:" />
+                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Name:" />
                                                             <TextField fx:id="customerNameField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="150.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Email:" />
+                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Email:" />
                                                             <TextField fx:id="customerEmailField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="150.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Phone:" />
+                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Phone:" />
                                                             <TextField fx:id="customerPhoneField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="150.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Address:" />
+                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Address:" />
                                                             <TextField fx:id="customerAddressField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="150.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="City:" />
+                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="City:" />
                                                             <TextField fx:id="customerCityField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="150.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="State:" />
+                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="State:" />
                                                             <TextField fx:id="customerStateField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="150.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Zipcode:" />
+                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Zipcode:" />
                                                             <TextField fx:id="customerZipCodeField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                     </children>
