@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -20,15 +21,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DatabaseController {
-    private final String styleSheet = "styles.css" ;
+    private final String styleSheet = "styles.css";
     // Field for define a successfully logged in user
-    private DBUser currentUser ;
+    private DBUser currentUser;
     @FXML
-    private TabPane dbTabPane ;
+    private TabPane dbTabPane;
     @FXML
-    private Tab locationTab ;
+    private Tab locationTab;
     @FXML
-    private Tab employeeTab ;
+    private Tab employeeTab;
     // Fields for Vehicle Trends tab
     @FXML
     private TextField makeField;
@@ -37,9 +38,9 @@ public class DatabaseController {
     @FXML
     private Button vSearchButton;
     @FXML
-    private Button vClearButton ;
+    private Button vClearButton;
     @FXML
-    private TableView<Map<String, Object>> vehicleTableView ;
+    private TableView<Map<String, Object>> vehicleTableView;
     @FXML
     private RadioButton yearRadioButton;
     @FXML
@@ -53,7 +54,7 @@ public class DatabaseController {
     @FXML
     private Button topSellersButton;
     @FXML
-    private Button clearTopSellersButton ;
+    private Button clearTopSellersButton;
     @FXML
     private TableView<Map<String, Object>> topSellersTableView;
 
@@ -65,15 +66,15 @@ public class DatabaseController {
     @FXML
     private Button ctSearchButton;
     @FXML
-    private Button ctClearButton ;
+    private Button ctClearButton;
     @FXML
     private TableView<Map<String, Object>> customerTableView;
 
     // Fields for Locations Tab
     @FXML
-    private Button locationUpdateButton ;
+    private Button locationUpdateButton;
     @FXML
-    private Button locationClearButton ;
+    private Button locationClearButton;
     @FXML
     private TableView<Map<String, Object>> locationTableView;
     @FXML
@@ -89,24 +90,24 @@ public class DatabaseController {
 
     // Fields for Employee tab
     @FXML
-    private Button employeeUpdateButton ;
+    private Button employeeUpdateButton;
     @FXML
-    private Button employeeClearButton ;
+    private Button employeeClearButton;
     @FXML
     private TableView<Map<String, Object>> employeeTableView;
 
     // Fields for input search tab
     @FXML
-    private Button inputSearchButton ;
+    private Button inputSearchButton;
     @FXML
-    private Button clearInputSearchButton ;
+    private Button clearInputSearchButton;
     @FXML
-    private TextArea searchTextArea ;
+    private TextArea searchTextArea;
     @FXML
     private TableView<Map<String, Object>> searchTableView;
 
     // Fields for add/update customers
-// Fields for customer details
+    // Fields for customer details
     @FXML
     private TextField customerIDField;
     @FXML
@@ -127,9 +128,7 @@ public class DatabaseController {
     // TableView for customer look-up
     @FXML
     private TableView<Map<String, Object>> customerLookUpTableView;
-
-    // Buttons for actions
-    private byte[] imageBytes;
+    // Buttons for add/update customers
     @FXML
     private Button addCustomerButton;
     @FXML
@@ -138,6 +137,39 @@ public class DatabaseController {
     private Button customerLookUpButton;
     @FXML
     private Button clearCustomerFormButton;
+
+
+    // Fields for add/sell vehicle
+    @FXML
+    private TextField asMakeField;
+    @FXML
+    private TextField asModelField;
+    @FXML
+    private TextField asYearField;
+    @FXML
+    private TextField asColorField;
+    // Buttons for actions
+    private byte[] imageBytes;
+    @FXML
+    private TextField asConditionField;
+    @FXML
+    private TextField asStatusField;
+    @FXML
+    private TextField asPriceField;
+    private int vehicleID ;
+
+    // Buttons for add/sell vehicle
+    @FXML
+    private Button asAddVehicleButton;
+    @FXML
+    private Button asSellVehicleButton;
+    @FXML
+    private Button asSearchVehicleButton;
+    @FXML
+    private Button asClearVehicleButton;
+    @FXML
+    private TableView<Map<String, Object>> asVehicleTableView;
+
 
     private ToggleGroup vehicleTypeToggleGroup;
     private ToggleGroup newUsedToggleGroup;
@@ -182,24 +214,24 @@ public class DatabaseController {
     private void setupEventHandlers() {
         // Events for Trends Tab
         vSearchButton.setOnAction(event -> handleVehicleSearch());
-        vClearButton.setOnAction(event -> clearVTableView() ) ;
+        vClearButton.setOnAction(event -> clearVTableView());
         // Events for Top Sellers Tabs
         topSellersButton.setOnAction(event -> handleTopSellersSearch());
-        clearTopSellersButton.setOnAction(event -> handleClearTopSellers() );
+        clearTopSellersButton.setOnAction(event -> handleClearTopSellers());
         // Events for Customers Tab
         ctSearchButton.setOnAction(event -> handleCustomerSearch());
-        ctClearButton.setOnAction(event -> handleCTClear() );
+        ctClearButton.setOnAction(event -> handleCTClear());
         // Events for Add/Update Customer Tab
         customerLookUpButton.setOnAction(event -> handleCustomerLookUp());
         // Events for Location Tab
-        locationUpdateButton.setOnAction(event -> handleLocationSearch() );
-        locationClearButton.setOnAction(event -> handleLocationClear() );
+        locationUpdateButton.setOnAction(event -> handleLocationSearch());
+        locationClearButton.setOnAction(event -> handleLocationClear());
         // Events for Employee Tab
-        employeeUpdateButton.setOnAction(event -> handleSalespersonUpdate() );
-        employeeClearButton.setOnAction(event -> handleEmployeeClear() );
+        employeeUpdateButton.setOnAction(event -> handleSalespersonUpdate());
+        employeeClearButton.setOnAction(event -> handleEmployeeClear());
         //Events for Search Tab
-        inputSearchButton.setOnAction(event -> handleInputSearch() ) ;
-        clearInputSearchButton.setOnAction(event -> handleClearInput() );
+        inputSearchButton.setOnAction(event -> handleInputSearch());
+        clearInputSearchButton.setOnAction(event -> handleClearInput());
     }
 
     private String getVehicleSearchQuery(String timePeriod) {
@@ -216,9 +248,9 @@ public class DatabaseController {
 
     @FXML
     private void handleClearInput() {
-        searchTableView.getItems().clear() ;
+        searchTableView.getItems().clear();
         searchTableView.getColumns().clear();
-        searchTextArea.setText(null) ;
+        searchTextArea.setText(null);
     }
 
     @FXML
@@ -226,7 +258,7 @@ public class DatabaseController {
         String query = searchTextArea.getText().trim();
 
         if (query.isEmpty() || query.equals("Enter a query")) {
-            showAlert("Input Error","Missing Information","Please enter a query before pressing search.");
+            showAlert("Input Error", "Missing Information", "Please enter a query before pressing search.");
             return;
         }
 
@@ -262,8 +294,8 @@ public class DatabaseController {
                 queryUpper.startsWith("REMOVE") ||
                 queryUpper.startsWith("DISABLE") ||
                 queryUpper.startsWith("ENABLE")) {
-            showAlert("Invalid Query","Only SELECT Queries Allowed","Please enter a valid SELECT query.");
-            searchTextArea.setText("") ;
+            showAlert("Invalid Query", "Only SELECT Queries Allowed", "Please enter a valid SELECT query.");
+            searchTextArea.setText("");
             return;
         }
 
@@ -351,16 +383,16 @@ public class DatabaseController {
     @FXML
     private void handleSalespersonUpdate() {
 
-    String query = "SELECT sp.personID, p.name, p.email, p.phoneNum, p.address, p.city, p.state, p.zipcode, " +
-            "COUNT(r.stockNumber) AS numSales, " +
-            "SUM(CASE WHEN YEAR(r.dateOfPurchase) >= YEAR(CURDATE()) - 1 THEN i.netSalePrice " +
-            "* sp.commissionRate ELSE 0 END) AS totalCommission " +
-            "FROM sales_person sp " +
-            "JOIN person p ON sp.personID = p.personID " +
-            "LEFT JOIN records r ON sp.personID = r.salesPersonID AND YEAR(r.dateOfPurchase) >= YEAR(CURDATE()) - 1 " +
-            "LEFT JOIN inventory i ON r.stockNumber = i.stockNumber " +
-            "GROUP BY sp.personID, p.name " +
-            "ORDER BY numSales DESC";
+        String query = "SELECT sp.personID, p.name, p.email, p.phoneNum, p.address, p.city, p.state, p.zipcode, " +
+                "COUNT(r.stockNumber) AS numSales, " +
+                "SUM(CASE WHEN YEAR(r.dateOfPurchase) >= YEAR(CURDATE()) - 1 THEN i.netSalePrice " +
+                "* sp.commissionRate ELSE 0 END) AS totalCommission " +
+                "FROM sales_person sp " +
+                "JOIN person p ON sp.personID = p.personID " +
+                "LEFT JOIN records r ON sp.personID = r.salesPersonID AND YEAR(r.dateOfPurchase) >= YEAR(CURDATE()) - 1 " +
+                "LEFT JOIN inventory i ON r.stockNumber = i.stockNumber " +
+                "GROUP BY sp.personID, p.name " +
+                "ORDER BY numSales DESC";
 
         // Clear existing data from the TableView
         employeeTableView.getItems().clear();
@@ -401,7 +433,7 @@ public class DatabaseController {
 
             // Check if no data was returned
             if (employeeTableView.getItems().isEmpty()) {
-                showAlert("No Data Found","No Salesperson Data Available",
+                showAlert("No Data Found", "No Salesperson Data Available",
                         "No data found for the past year.");
             }
 
@@ -460,7 +492,7 @@ public class DatabaseController {
             locationTableView.setItems(data);
 
             if (data.isEmpty()) {
-                showAlert("No Results","No Data Found",
+                showAlert("No Results", "No Data Found",
                         "No sales data found for the specified period.");
             }
         } catch (SQLException e) {
@@ -476,7 +508,7 @@ public class DatabaseController {
         String timePeriod = yearRadioButton.isSelected() ? "Yearly" : "Monthly";
 
         if (userMake.isEmpty() || userModel.isEmpty()) {
-            showAlert("Input Error", "Missing Information","Please fill in both 'Make' and 'Model' fields before searching.");
+            showAlert("Input Error", "Missing Information", "Please fill in both 'Make' and 'Model' fields before searching.");
             return;
         }
 
@@ -529,7 +561,7 @@ public class DatabaseController {
 
         } catch (SQLException e) {
             showAlert("Database Error", "Error accessing the database",
-                    "An error occurred while querying the database: " + e.getMessage() );
+                    "An error occurred while querying the database: " + e.getMessage());
         }
     }
 
@@ -558,8 +590,8 @@ public class DatabaseController {
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setString(1,"%"+make+"%");
-            pstmt.setString(2, "%"+model+"%");
+            pstmt.setString(1, "%" + make + "%");
+            pstmt.setString(2, "%" + model + "%");
 
             ResultSet rs = pstmt.executeQuery();
             ResultSetMetaData metaData = rs.getMetaData();
@@ -596,10 +628,11 @@ public class DatabaseController {
 
         } catch (SQLException e) {
             showAlert("Database Error", "Error accessing the database",
-                    "An error occurred while querying the database: " + e.getMessage() );
+                    "An error occurred while querying the database: " + e.getMessage());
         }
     }
 
+    // Search for top-selling vehicles by year or month
     @FXML
     private void handleTopSellersSearch() {
         topSellersTableView.getItems().clear();
@@ -626,7 +659,7 @@ public class DatabaseController {
                     "ORDER BY salesCount DESC";
             header = "Used Cars by Popularity:";
         } else {
-            showAlert("Selection Error","No Option Selected",
+            showAlert("Selection Error", "No Option Selected",
                     "Please select 'Top' or 'Used' before searching.");
             return;
         }
@@ -648,7 +681,7 @@ public class DatabaseController {
                     Object cellValue = row.get(columnName);
                     return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
                 });
-                column.setPrefWidth(metaData.getColumnName(i).length() * 20) ;
+                column.setPrefWidth(metaData.getColumnName(i).length() * 20);
                 topSellersTableView.getColumns().add(column);
             }
 
@@ -662,11 +695,12 @@ public class DatabaseController {
             }
 
         } catch (SQLException e) {
-            showAlert("Database Error","Error accessing the database",
-                    "An error occurred while querying the database: " + e.getMessage() );
+            showAlert("Database Error", "Error accessing the database",
+                    "An error occurred while querying the database: " + e.getMessage());
         }
     }
 
+    // Wrapper to streamline insert person-customer
     @FXML
     private void handleAddCustomer() {
         String name = customerNameField.getText();
@@ -696,6 +730,7 @@ public class DatabaseController {
         }
     }
 
+    // Handle the customer look up for Vehicle tab
     @FXML
     private void handleCustomerLookUp() {
         if (!isCustomerLookUpInputValid()) {
@@ -716,8 +751,8 @@ public class DatabaseController {
             if (hasCondition) query += "AND ";
             query += "p.email LIKE ? ";
         }
-        if(!customerPhoneField.getText().trim().isEmpty()){
-            if(hasCondition) query += "AND ";
+        if (!customerPhoneField.getText().trim().isEmpty()) {
+            if (hasCondition) query += "AND ";
             query += "p.phoneNum LIKE ? ";
         }
 
@@ -731,7 +766,7 @@ public class DatabaseController {
             if (!customerEmailField.getText().trim().isEmpty()) {
                 pstmt.setString(paramIndex++, "%" + customerEmailField.getText().trim() + "%");
             }
-            if( !customerPhoneField.getText().trim().isEmpty() ){
+            if (!customerPhoneField.getText().trim().isEmpty()) {
                 pstmt.setString(paramIndex++, "%" + customerPhoneField.getText().trim() + "%");
             }
 
@@ -796,12 +831,14 @@ public class DatabaseController {
         }
     }
 
+    // Helper to confirm customer look up input is valid
     private boolean isCustomerLookUpInputValid() {
         return !customerNameField.getText().trim().isEmpty() ||
-               !customerEmailField.getText().trim().isEmpty() ||
-                !customerPhoneField.getText().trim().isEmpty() ;
+                !customerEmailField.getText().trim().isEmpty() ||
+                !customerPhoneField.getText().trim().isEmpty();
     }
 
+    // clear the customer form
     @FXML
     public void handleClearCustomerForm() {
         customerIDField.clear();
@@ -815,12 +852,14 @@ public class DatabaseController {
         customerLookUpTableView.getColumns().clear();
     }
 
+    // Update existing customer in the database
     @FXML
     private void handleUpdateCustomer() {
 
-        return ;
+        return;
     }
 
+    // Helper to check for null values on input customer
     private boolean validateInput(String name, String email, String phone, String address, String city, String state, String zipCode) {
         if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() ||
                 city.isEmpty() || state.isEmpty() || zipCode.isEmpty()) {
@@ -829,6 +868,7 @@ public class DatabaseController {
         return true;
     }
 
+    // Insert a new person into the database
     private int insertPerson(Connection conn, String name, String email, String phone, String address, String city, String state, String zipCode) throws SQLException {
         String insertPersonSQL = "INSERT INTO person (name, email, phoneNum, address, city, state, zipcode) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement personStmt = conn.prepareStatement(insertPersonSQL, Statement.RETURN_GENERATED_KEYS)) {
@@ -850,6 +890,7 @@ public class DatabaseController {
         }
     }
 
+    // Insert a new customer into the database
     private void insertCustomer(Connection conn, int personID) throws SQLException {
         String insertCustomerSQL = "INSERT INTO customer (personID) VALUES (?)";
         try (PreparedStatement customerStmt = conn.prepareStatement(insertCustomerSQL)) {
@@ -858,6 +899,7 @@ public class DatabaseController {
         }
     }
 
+    // Clear the customer form
     private void clearCustomerForm() {
         customerNameField.clear();
         customerEmailField.clear();
@@ -868,8 +910,9 @@ public class DatabaseController {
         customerZipCodeField.clear();
     }
 
-    public void setDBUser(DBUser currentUser){
-        this.currentUser = currentUser ;
+    // Set the DBUser
+    public void setDBUser(DBUser currentUser) {
+        this.currentUser = currentUser;
         if (!this.currentUser.getIsManager()) {
             // Ensure dbTabPane is properly referenced
             if (dbTabPane != null) {
@@ -886,16 +929,18 @@ public class DatabaseController {
         }
     }
 
+    // Clear Vehicle Tab
     @FXML
-    private void clearVTableView(){
+    private void clearVTableView() {
         vehicleTableView.getItems().clear();
-        vehicleTableView.getColumns().clear() ;
+        vehicleTableView.getColumns().clear();
         vehicleTableView.getSelectionModel().clearSelection();
         vehicleTableView.refresh();
-        makeField.setText("") ;
-        modelField.setText("") ;
+        makeField.setText("");
+        modelField.setText("");
     }
 
+    // Clear Top Sellers Tab
     private void handleClearTopSellers() {
         topSellersTableView.getColumns().clear();
         vehicleTableView.getItems().clear();
@@ -903,7 +948,8 @@ public class DatabaseController {
         vehicleTableView.refresh();
     }
 
-    private void handleCTClear(){
+    // Clear Customer Tab
+    private void handleCTClear() {
 
         customerTableView.getColumns().clear();
         customerTableView.getItems().clear();
@@ -911,9 +957,10 @@ public class DatabaseController {
         customerTableView.refresh();
 
         ctMakeField.setText("");
-        ctModelField.setText("") ;
+        ctModelField.setText("");
     }
 
+    // Clear location Tab
     private void handleLocationClear() {
         locationTableView.getColumns().clear();
         locationTableView.getItems().clear();
@@ -921,6 +968,7 @@ public class DatabaseController {
         locationTableView.refresh();
     }
 
+    // Clear employee Tab
     private void handleEmployeeClear() {
         employeeTableView.getColumns().clear();
         employeeTableView.getItems().clear();
@@ -928,6 +976,7 @@ public class DatabaseController {
         employeeTableView.refresh();
     }
 
+    // Shows most alerts with three arguments
     private void showAlert(String title, String header, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -963,9 +1012,9 @@ public class DatabaseController {
                 alert.getButtonTypes().setAll(buttonYes, buttonNo);
 
                 alert.showAndWait().ifPresent(response -> {
-                if (response != buttonYes) {
-                    imageBytes = null;
-                }
+                    if (response != buttonYes) {
+                        imageBytes = null;
+                    }
                 });
             } catch (IOException e) {
                 showAlert("File Error", "Error reading file", e.getMessage());
@@ -980,4 +1029,202 @@ public class DatabaseController {
         dialogPane.getStyleClass().add("custom-alert");
         alert.showAndWait();
     }
-}
+
+    // Clear the Sell Vehicle Tab
+    @FXML
+    private void handleASClear(ActionEvent actionEvent) {
+        // Clear all text fields
+        asMakeField.clear();
+        asModelField.clear();
+        asYearField.clear();
+        asColorField.clear();
+        // Reset the imageBytes to null
+        imageBytes = null;
+        asConditionField.clear();
+        asStatusField.clear();
+        asPriceField.clear();
+        asVehicleTableView.getColumns().clear();
+    }
+    // Search on Vehicle Add/Sell Tab
+    @FXML
+    private void handleASSearch(ActionEvent actionEvent) {
+        String make = asMakeField.getText().trim();
+        String model = asModelField.getText().trim();
+        String year = asYearField.getText().trim();
+        String color = asColorField.getText().trim();
+        String condition = asConditionField.getText().trim();
+        String status = asStatusField.getText().trim();
+        String price = asPriceField.getText().trim();
+
+        if (make.isEmpty() && model.isEmpty() && year.isEmpty() && color.isEmpty() && condition.isEmpty() && status.isEmpty() && price.isEmpty()) {
+            showAlert("Input Error", "Missing Information", "Please fill in at least one field before searching.");
+            return;
+        }
+
+        String query = "SELECT * FROM inventory WHERE vehicleID =" + vehicleID + " ";
+        boolean hasCondition = false;
+
+        if (!make.isEmpty()) {
+            if (hasCondition) query += "AND ";
+            query += "LOWER(make) LIKE LOWER(?) ";
+            hasCondition = true;
+        }
+        if (!model.isEmpty()) {
+            if (hasCondition) query += "AND ";
+            query += "LOWER(model) LIKE LOWER(?) ";
+            hasCondition = true;
+        }
+        if (!year.isEmpty()) {
+            if (hasCondition) query += "AND ";
+            query += "YEAR = ? ";
+            hasCondition = true;
+        }
+        if (!color.isEmpty()) {
+            if (hasCondition) query += "AND ";
+            query += "LOWER(color) LIKE LOWER(?) ";
+            hasCondition = true;
+        }
+        if (!condition.isEmpty()) {
+            if (hasCondition) query += "AND ";
+            query += "LOWER(carCondition) LIKE LOWER(?) ";
+            hasCondition = true;
+        }
+        if (!status.isEmpty()) {
+            if (hasCondition) query += "AND ";
+            query += "LOWER(status) LIKE LOWER(?) ";
+            hasCondition = true;
+        }
+        if (!price.isEmpty()) {
+            if (hasCondition) query += "AND ";
+            query += "price = ? ";
+        }
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            int paramIndex = 1;
+            if (!make.isEmpty()) {
+                pstmt.setString(paramIndex++, "%" + make + "%");
+            }
+            if (!model.isEmpty()) {
+                pstmt.setString(paramIndex++, "%" + model + "%");
+            }
+            if (!year.isEmpty()) {
+                pstmt.setString(paramIndex++, year);
+            }
+            if (!color.isEmpty()) {
+                pstmt.setString(paramIndex++, "%" + color + "%");
+            }
+            if (!condition.isEmpty()) {
+                pstmt.setString(paramIndex++, "%" + condition + "%");
+            }
+            if (!status.isEmpty()) {
+                pstmt.setString(paramIndex++, "%" + status + "%");
+            }
+            if (!price.isEmpty()) {
+                pstmt.setString(paramIndex++, price);
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            // Dynamically create columns based on ResultSet metadata
+            for (int i = 1; i <= columnCount; i++) {
+                final String columnName = metaData.getColumnName(i).replaceAll("(?<!^)(?=[A-Z])", " ").toUpperCase();
+                TableColumn<Map<String, Object>, Object> column = new TableColumn<>(columnName);
+
+                column.setCellValueFactory(cellData -> {
+                    Map<String, Object> row = cellData.getValue();
+                    Object cellValue = row.get(columnName);
+                    if (cellValue instanceof byte[]) {
+                        byte[] imageBytes = (byte[]) cellValue;
+                        ImageView imageView = new ImageView(new Image(new ByteArrayInputStream(imageBytes)));
+                        imageView.setFitWidth(100);
+                        imageView.setFitHeight(100);
+                        return new SimpleObjectProperty<>(imageView);
+                    } else {
+                        return new SimpleObjectProperty(cellValue == null ? "NULL" : cellValue.toString());
+                    }
+                });
+                column.setPrefWidth(metaData.getColumnName(i).length() * 20);
+                asVehicleTableView.getColumns().add(column);
+            }
+
+            // Populate rows with ResultSet data
+            ObservableList<Map<String, Object>> data = FXCollections.observableArrayList();
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+                data.add(row);
+            }
+            asVehicleTableView.setItems(data);
+
+            // Add action listener to handle row selection
+            asVehicleTableView.setRowFactory(tv -> {
+                TableRow<Map<String, Object>> row = new TableRow<>();
+                row.setOnMouseClicked(event -> {
+                    if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                        Map<String, Object> rowData = row.getItem();
+                        vehicleID = (int) rowData.get("vehicleID");
+                        asMakeField.setText(rowData.get("make").toString());
+                        asModelField.setText(rowData.get("model").toString());
+                        asYearField.setText(rowData.get("year").toString());
+                        asColorField.setText(rowData.get("color").toString());
+                        asConditionField.setText(rowData.get("carCondition").toString());
+                        asStatusField.setText(rowData.get("status").toString());
+                        asPriceField.setText(rowData.get("price").toString());
+
+                        imageBytes = (byte[]) rowData.get("photo");
+                        if(imageBytes != null){
+                            // create a pop out to display larger image with details
+                            Image image = new Image(new ByteArrayInputStream(imageBytes));
+                            ImageView imageView = new ImageView(image);
+                            imageView.setFitWidth(400);
+                            imageView.setFitHeight(300);
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Vehicle Image");
+                            alert.setHeaderText("Vehicle Image");
+                            alert.setGraphic(imageView);
+                            styleAlert(alert);
+                        }
+                    }
+                });
+                return row;
+            });
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Sell on Vehicle Sell Tab
+    @FXML
+    private void handleASSellButton(ActionEvent actionEvent){
+        String make = asMakeField.getText().trim();
+        String model = asModelField.getText().trim();
+        String year = asYearField.getText().trim();
+        String color = asColorField.getText().trim();
+        String condition = asConditionField.getText().trim();
+        String status = asStatusField.getText().trim();
+        String price = asPriceField.getText().trim();
+
+        if (make.isEmpty() || model.isEmpty() || year.isEmpty() || color.isEmpty() || condition.isEmpty() || status.isEmpty() || price.isEmpty()) {
+            showAlert("Input Error", "Missing Information", "Please fill in all fields before selling.");
+            return;
+        }
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            conn.setAutoCommit(false); // Begin transaction
+
+
+            conn.commit(); // Commit transaction
+            showAlert("SUCCESS", "Vehicle sold successfully!", make + " " + model + " sold!");
+            handleASClear(actionEvent);
+        } catch (SQLException e) {
+            showAlert("ERROR", "Error selling vehicle", e.getMessage());
+        }
+    }
+
+
+}// End Class
