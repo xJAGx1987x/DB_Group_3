@@ -65,10 +65,11 @@ public class LoginController {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 int personID = resultSet.getInt("personID");
+                String locationID = resultSet.getString("locationID");
                 boolean isManager = resultSet.getBoolean("isManager");
                 String userType = isManager ? "Manager" : "Sales Person";
 
-                DBUser dbUser = new DBUser(personID, isManager);
+                DBUser dbUser = new DBUser(personID, locationID, isManager);
 
                 switchToMainView(event, dbUser);
 

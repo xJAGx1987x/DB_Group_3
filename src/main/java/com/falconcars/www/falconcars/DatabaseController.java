@@ -123,7 +123,7 @@ public class DatabaseController {
 
     // TableView for customer look-up
     @FXML
-    private TableView<?> customerLookUpTableView;
+    private TableView<Map<String, Object>> customerLookUpTableView;
 
     // Buttons for actions
     @FXML
@@ -699,30 +699,80 @@ public class DatabaseController {
             return;
         }
 
-        String query = "SELECT * FROM customer WHERE ";
-        if(!isCustomerLookUpInputValid()){
-            showAlert("ERROR", "Please fill in at least one field!",
-                    "Either Customer ID, Name, or Email must be filled in.");
-            return ;
-        }
-
+        String query = "SELECT * FROM customer c JOIN person p ON c.personID = p.personID WHERE ";
         boolean hasCondition = false;
 
         if (!customerIDField.getText().trim().isEmpty()) {
-            query += "customerID = ? ";
+            query += "c.personID = ? ";
             hasCondition = true;
         }
         if (!customerNameField.getText().trim().isEmpty()) {
-            if (hasCondition) query += "OR ";
-            query += "name LIKE ? ";
+            if (hasCondition) query += "AND ";
+            query += "p.name LIKE ? ";
             hasCondition = true;
         }
         if (!customerEmailField.getText().trim().isEmpty()) {
-            if (hasCondition) query += "OR ";
-            query += "email LIKE ? ";
+            if (hasCondition) query += "AND ";
+            query += "p.email LIKE ? ";
         }
 
-        // Execute the query and handle the results
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            int paramIndex = 1;
+            if (!customerIDField.getText().trim().isEmpty()) {
+                pstmt.setInt(paramIndex++, Integer.parseInt(customerIDField.getText().trim()));
+            }
+            if (!customerNameField.getText().trim().isEmpty()) {
+                pstmt.setString(paramIndex++, "%" + customerNameField.getText().trim() + "%");
+            }
+            if (!customerEmailField.getText().trim().isEmpty()) {
+                pstmt.setString(paramIndex++, "%" + customerEmailField.getText().trim() + "%");
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            // Clear previous data and columns
+            customerLookUpTableView.getItems().clear();
+            customerLookUpTableView.getColumns().clear();
+
+            // Dynamically create columns based on ResultSet metadata
+            for (int i = 1; i <= columnCount; i++) {
+                final String columnName = metaData.getColumnName(i);
+                TableColumn<Map<String, Object>, String> column = new TableColumn<>(columnName);
+
+                column.setCellValueFactory(cellData -> {
+                    Map<String, Object> row = cellData.getValue();
+                    Object cellValue = row.get(columnName);
+                    return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
+                });
+
+                customerLookUpTableView.getColumns().add(column);
+            }
+
+            // Populate rows
+            ObservableList<Map<String, Object>> results = FXCollections.observableArrayList();
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+                results.add(row);
+            }
+            customerLookUpTableView.setItems(results);
+
+            // Check if no data was found
+            if (results.isEmpty()) {
+                showAlert("No Results", "No Data Found",
+                        "No customers found for the specified criteria.");
+            }
+
+        } catch (SQLException e) {
+            showAlert("Database Error", "Error accessing the database",
+                    "An error occurred while querying the database: " + e.getMessage());
+        }
     }
 
     private boolean isCustomerLookUpInputValid() {
