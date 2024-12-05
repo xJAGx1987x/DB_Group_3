@@ -169,8 +169,6 @@ public class DatabaseController {
     private Button asClearVehicleButton;
     @FXML
     private TableView<Map<String, Object>> asTableView;
-
-
     private ToggleGroup vehicleTypeToggleGroup;
     private ToggleGroup newUsedToggleGroup;
 
@@ -1148,7 +1146,7 @@ public class DatabaseController {
 
             // Dynamically create columns based on ResultSet metadata
             for (int i = 1; i <= columnCount; i++) {
-                final String columnName = metaData.getColumnName(i);
+                final String columnName = metaData.getColumnName(i).replaceAll("(?<!^)(?=[A-Z])", " ").toUpperCase();
                 TableColumn<Map<String, Object>, Object> column = new TableColumn<>(columnName);
 
                 column.setCellValueFactory(cellData -> {
@@ -1165,7 +1163,7 @@ public class DatabaseController {
                             return new SimpleObjectProperty<>("No Image");
                         }
                     } else {
-                        return new SimpleObjectProperty(cellValue == null ? "NULL" : cellValue.toString().replaceAll("(?<!^)(?=[A-Z])", " ").toUpperCase());
+                        return new SimpleObjectProperty(cellValue == null ? "NULL" : cellValue.toString());
                     }
                 });
                 column.setPrefWidth(metaData.getColumnName(i).length() * 20);
