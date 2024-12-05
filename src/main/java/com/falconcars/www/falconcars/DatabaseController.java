@@ -830,8 +830,31 @@ public class DatabaseController {
     // Update existing customer in the database
     @FXML
     private void handleUpdateCustomer() {
+        String name = customerNameField.getText();
+        String email = customerEmailField.getText();
+        String phone = customerPhoneField.getText();
+        String address = customerAddressField.getText();
+        String city = customerCityField.getText();
+        String state = customerStateField.getText();
+        String zipCode = customerZipCodeField.getText();
+        String id = customerIDField.getText();
 
-        return;
+        if (!validateInput(name, email, phone, address, city, state, zipCode)) {
+            showAlert("ERROR", "Please fill in all fields correctly!", "");
+            return;
+        }
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            conn.setAutoCommit(false); // Begin transaction
+
+            updatePerson(conn, name, email, phone, address, city, state, zipCode, id);
+
+            conn.commit(); // Commit transaction
+            showAlert("SUCCESS", "Customer added successfully!", name + " added!");
+            clearCustomerForm();
+        } catch (SQLException e) {
+            showAlert("ERROR", "Error adding customer", e.getMessage());
+        }
     }
 
     // Helper to check for null values on input customer
@@ -862,6 +885,22 @@ public class DatabaseController {
             } else {
                 throw new SQLException("Failed to retrieve personID.");
             }
+        }
+    }
+
+    // Updates current Customer Selected
+    private void updatePerson(Connection conn, String name, String email, String phone, String address, String city, String state, String zipCode, String personID) throws SQLException {
+        String insertPersonSQL = "UPDATE person SET name = ?, email = ?, phoneNum = ?, address = ?, city = ?, state = ?, zipCode = ? WHERE personID = ?";
+        try (PreparedStatement personStmt = conn.prepareStatement(insertPersonSQL, Statement.RETURN_GENERATED_KEYS)) {
+            personStmt.setString(1, name);
+            personStmt.setString(2, email);
+            personStmt.setString(3, phone);
+            personStmt.setString(4, address);
+            personStmt.setString(5, city);
+            personStmt.setString(6, state);
+            personStmt.setString(7, zipCode);
+            personStmt.setString(8, personID);
+            personStmt.executeUpdate();
         }
     }
 
