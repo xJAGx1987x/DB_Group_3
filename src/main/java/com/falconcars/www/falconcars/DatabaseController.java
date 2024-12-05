@@ -719,7 +719,10 @@ public class DatabaseController {
             return;
         }
 
-        String query = "SELECT * FROM customer c JOIN person p ON c.personID = p.personID WHERE ";
+        String query = "SELECT p.personID, p.name, p.email, p.phoneNum, p.address, p.city, p.state, p.zipcode " +
+                "FROM customer c " +
+                "JOIN person p ON c.personID = p.personID " +
+                "WHERE ";
         boolean hasCondition = false;
 
         if (!customerNameField.getText().trim().isEmpty()) {
@@ -760,7 +763,7 @@ public class DatabaseController {
 
             // Dynamically create columns based on ResultSet metadata
             for (int i = 1; i <= columnCount; i++) {
-                final String columnName = metaData.getColumnName(i);
+                final String columnName = metaData.getColumnName(i).replaceFirst("(?<=[a-z])(?=[A-Z])", " ").toUpperCase();
                 TableColumn<Map<String, Object>, String> column = new TableColumn<>(columnName);
 
                 column.setCellValueFactory(cellData -> {
@@ -768,7 +771,7 @@ public class DatabaseController {
                     Object cellValue = row.get(columnName);
                     return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
                 });
-
+                column.setPrefWidth(metaData.getColumnName(i).length() * 20);
                 customerLookUpTableView.getColumns().add(column);
             }
 
@@ -777,7 +780,7 @@ public class DatabaseController {
             while (rs.next()) {
                 Map<String, Object> row = new HashMap<>();
                 for (int i = 1; i <= columnCount; i++) {
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                    row.put(metaData.getColumnName(i).replaceFirst("(?<=[a-z])(?=[A-Z])", " ").toUpperCase(), rs.getObject(i));
                 }
                 results.add(row);
             }
@@ -787,14 +790,14 @@ public class DatabaseController {
                 if (event.getClickCount() == 2) { // Double-click event
                     Map<String, Object> selectedItem = customerLookUpTableView.getSelectionModel().getSelectedItem();
                     if (selectedItem != null) {
-                        customerIDField.setText(selectedItem.get("personID").toString());
-                        customerNameField.setText(selectedItem.get("name").toString());
-                        customerEmailField.setText(selectedItem.get("email").toString());
-                        customerPhoneField.setText(selectedItem.get("phoneNum").toString());
-                        customerAddressField.setText(selectedItem.get("address").toString());
-                        customerCityField.setText(selectedItem.get("city").toString());
-                        customerStateField.setText(selectedItem.get("state").toString());
-                        customerZipCodeField.setText(selectedItem.get("zipcode").toString());
+                        customerIDField.setText(selectedItem.get("PERSON ID").toString());
+                        customerNameField.setText(selectedItem.get("NAME").toString());
+                        customerEmailField.setText(selectedItem.get("EMAIL").toString());
+                        customerPhoneField.setText(selectedItem.get("PHONE NUM").toString());
+                        customerAddressField.setText(selectedItem.get("ADDRESS").toString());
+                        customerCityField.setText(selectedItem.get("CITY").toString());
+                        customerStateField.setText(selectedItem.get("STATE").toString());
+                        customerZipCodeField.setText(selectedItem.get("ZIPCODE").toString());
                     }
                 }
             });
