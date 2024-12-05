@@ -1146,12 +1146,13 @@ public class DatabaseController {
 
             // Dynamically create columns based on ResultSet metadata
             for (int i = 1; i <= columnCount; i++) {
+                final String columnNameReal = metaData.getColumnName(i);
                 final String columnName = metaData.getColumnName(i).replaceAll("(?<!^)(?=[A-Z])", " ").toUpperCase();
                 TableColumn<Map<String, Object>, Object> column = new TableColumn<>(columnName);
 
                 column.setCellValueFactory(cellData -> {
                     Map<String, Object> row = cellData.getValue();
-                    Object cellValue = row.get(columnName);
+                    Object cellValue = row.get(columnNameReal);
                     if (cellValue instanceof byte[]) {
                         byte[] imageBytes = (byte[]) cellValue;
                         if (imageBytes != null) {
