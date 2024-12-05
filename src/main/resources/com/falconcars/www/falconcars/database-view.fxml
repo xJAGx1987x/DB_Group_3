@@ -28,7 +28,7 @@
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 3px; -fx-border-radius: 5;">
                                     <children>
                                         <!-- Input Section -->
-                                        <VBox alignment="TOP_CENTER" prefHeight="168.0" prefWidth="765.0" spacing="10.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 3px; -fx-border-radius: 5;" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+                                        <VBox alignment="TOP_CENTER" prefHeight="168.0" prefWidth="765.0" spacing="10.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 3px; -fx-border-radius: 5;" AnchorPane.bottomAnchor="308.8" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
                                             <children>
                                                 <!-- Make Input -->
                                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
@@ -75,7 +75,7 @@
                                         </VBox>
 
                                         <!-- TableView Section -->
-                                        <TableView fx:id="vehicleTableView" layoutX="16.0" layoutY="183.0" prefHeight="298.0" prefWidth="765.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="185.0" />
+                                        <TableView fx:id="vehicleTableView" layoutX="16.0" layoutY="183.0" prefHeight="298.0" prefWidth="765.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="178.0" />
                                     </children>
                                 </AnchorPane>
                             </content>
