@@ -8,9 +8,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -125,6 +129,7 @@ public class DatabaseController {
     private TableView<Map<String, Object>> customerLookUpTableView;
 
     // Buttons for actions
+    private byte[] imageBytes;
     @FXML
     private Button addCustomerButton;
     @FXML
@@ -881,6 +886,7 @@ public class DatabaseController {
         }
     }
 
+    @FXML
     private void clearVTableView(){
         vehicleTableView.getItems().clear();
         vehicleTableView.getColumns().clear() ;
@@ -928,6 +934,43 @@ public class DatabaseController {
         alert.setHeaderText(header);
         alert.setContentText(message);
         styleAlert(alert);
+    }
+
+    @FXML
+    private void handleSelectFile() {
+        imageBytes = null;
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("db/photos"));
+        fileChooser.setTitle("Select File");
+        File selectedFile = fileChooser.showOpenDialog(null);
+
+        if (selectedFile != null) {
+            try {
+                imageBytes = Files.readAllBytes(selectedFile.toPath());
+                Image image = new Image(new ByteArrayInputStream(imageBytes));
+                ImageView imageView = new ImageView(image);
+                imageView.setFitWidth(300);
+                imageView.setFitHeight(300);
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirm Image");
+                alert.setHeaderText("Do you want to use this image?");
+                alert.setGraphic(imageView);
+                styleAlert(alert);
+
+                ButtonType buttonYes = new ButtonType("Yes");
+                ButtonType buttonNo = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+                alert.getButtonTypes().setAll(buttonYes, buttonNo);
+
+                alert.showAndWait().ifPresent(response -> {
+                if (response != buttonYes) {
+                    imageBytes = null;
+                }
+                });
+            } catch (IOException e) {
+                showAlert("File Error", "Error reading file", e.getMessage());
+            }
+        }
     }
 
     // Styling function to apply consistent styles

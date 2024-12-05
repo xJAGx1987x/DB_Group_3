@@ -62,9 +62,9 @@
                                                 <HBox alignment="CENTER" maxHeight="50.0" prefHeight="50.0" spacing="20.0">
                                                     <children>
                                                         <Region HBox.hgrow="ALWAYS" />
-                                                        <Button fx:id="vSearchButton" maxHeight="45.0" prefHeight="45.0" prefWidth="150.0" text="Search" textFill="WHITE" />
+                                                        <Button fx:id="vSearchButton" maxHeight="45.0" onAction="#handleVehicleSearch" prefHeight="45.0" prefWidth="150.0" text="Search" textFill="WHITE" />
                                                         <Region prefWidth="20.0" HBox.hgrow="SOMETIMES" />
-                                                        <Button fx:id="vClearButton" maxHeight="45.0" prefHeight="45.0" prefWidth="150.0" text="Clear" textFill="WHITE" />
+                                                        <Button fx:id="vClearButton" maxHeight="45.0" onAction="#clearVTableView" prefHeight="45.0" prefWidth="150.0" text="Clear" textFill="WHITE" />
                                                         <Region HBox.hgrow="ALWAYS" />
                                                     </children>
                                                 </HBox>
@@ -253,46 +253,48 @@
                                         <HBox alignment="CENTER" prefHeight="400.0" prefWidth="780.0" spacing="10.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
                                             <children>
                                                 <!-- TableView -->
-                                                <TableView maxWidth="Infinity" prefHeight="400.0" prefWidth="390.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                                                <TableView fx:id="asTableView" maxWidth="Infinity" prefHeight="400.0" prefWidth="390.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
 
                                                 <!-- Vertical Separator -->
                                                 <Separator orientation="VERTICAL" prefHeight="400.0" prefWidth="10.0" visible="false" />
 
                                                 <!-- Vertical Form -->
-                                                <VBox alignment="CENTER" maxWidth="Infinity" spacing="10.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 3; -fx-padding: 10; -fx-border-radius: 5px;" HBox.hgrow="ALWAYS">
+                                                <VBox alignment="CENTER" maxWidth="Infinity" spacing="7.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 3; -fx-padding: 10; -fx-border-radius: 5px;" HBox.hgrow="ALWAYS">
                                                     <children>
-                                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="289.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;" HBox.hgrow="ALWAYS" />
+                                                        <Label alignment="CENTER" prefHeight="36.0" prefWidth="290.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;" text="Add requires all fields. Search Vehicle to sell." HBox.hgrow="ALWAYS" />
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Make:" />
-                                                            <TextField editable="false" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Make:" />
+                                                            <TextField fx:id="asMakeField" editable="false" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Name:" />
-                                                            <TextField maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                            <Label alignment="CENTER" prefHeight="28.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Model:" />
+                                                            <TextField fx:id="asModelField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Email:" />
-                                                            <TextField maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Year:" />
+                                                            <TextField fx:id="asYearField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Phone:" />
-                                                            <TextField maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                            <Label alignment="CENTER" prefHeight="25.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text=" Color:" />
+                                                            <TextField fx:id="asColorField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" maxHeight="40.0" prefHeight="40.0" spacing="10.0">
+                                                            <Label alignment="CENTER" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Image:" />
+                                                            <Region HBox.hgrow="ALWAYS" />
+                                                            <Button fx:id="imageSelectButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="20.0" onAction="#handleSelectFile" prefHeight="20.0" prefWidth="150.0" text="Select File" />
+                                                            <Region HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Address:" />
-                                                            <TextField maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                            <Label alignment="CENTER" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Condition:" />
+                                                            <TextField fx:id="asConditionField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="City:" />
-                                                            <TextField maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                            <Label alignment="CENTER" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Price:" />
+                                                            <TextField fx:id="asPriceField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="State:" />
-                                                            <TextField maxWidth="Infinity" HBox.hgrow="ALWAYS" />
-                                                        </HBox>
-                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <Label alignment="CENTER_RIGHT" prefWidth="100.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Zipcode:" />
-                                                            <TextField maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                            <Label alignment="CENTER" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Status:" />
+                                                            <TextField fx:id="asStatusField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
                                                         </HBox>
                                                     </children>
                                                 </VBox>
@@ -306,13 +308,13 @@
                                         <HBox alignment="CENTER" layoutX="16.0" prefHeight="47.0" prefWidth="765.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                                             <children>
                                                 <Region HBox.hgrow="ALWAYS" />
-                                                <Button prefWidth="150.0" text="Add Customer" />
+                                                <Button fx:id="asAddVehicleButton" prefWidth="150.0" text="Add Vehicle" />
                                                 <Region HBox.hgrow="SOMETIMES" />
-                                                <Button prefWidth="150.0" text="Update Customer" />
+                                                <Button fx:id="asSellVehicleButton" prefWidth="150.0" text="Sell Vehicle" />
                                                 <Region HBox.hgrow="SOMETIMES" />
-                                                <Button prefWidth="150.0" text="Search" />
+                                                <Button fx:id="asSearchButton" prefWidth="150.0" text="Search" />
                                                 <Region HBox.hgrow="SOMETIMES" />
-                                                <Button prefWidth="150.0" text="Clear" />
+                                                <Button fx:id="asClearButton" onAction="#handleASClear" prefWidth="150.0" text="Clear" />
                                                 <Region HBox.hgrow="ALWAYS" />
                                             </children>
                                         </HBox>
