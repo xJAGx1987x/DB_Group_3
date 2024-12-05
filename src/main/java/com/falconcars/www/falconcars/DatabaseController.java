@@ -31,6 +31,9 @@ public class DatabaseController {
     private Tab locationTab;
     @FXML
     private Tab employeeTab;
+    @FXML
+    private Tab searchTab ;
+
     // Fields for Vehicle Trends tab
     @FXML
     private TextField makeField;
@@ -929,6 +932,10 @@ public class DatabaseController {
     // Set the DBUser
     public void setDBUser(DBUser currentUser) {
         this.currentUser = currentUser;
+        if(dbTabPane != null){
+            dbTabPane.getTabs().remove(searchTab) ;
+        }
+
         if (!this.currentUser.getIsManager()) {
             // Ensure dbTabPane is properly referenced
             if (dbTabPane != null) {
