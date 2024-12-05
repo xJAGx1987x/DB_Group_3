@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -162,11 +163,14 @@ public class DatabaseController {
     @FXML
     private Button asAddVehicleButton;
     @FXML
-    private Button asSellVehicleButton;
-    @FXML
     private Button asSearchVehicleButton;
     @FXML
     private Button asClearVehicleButton;
+
+    @FXML
+    private TextField sellVehicleIDField ;
+    @FXML
+    private TextField sellCustomerIDField ;
     @FXML
     private TableView<Map<String, Object>> asTableView;
     private ToggleGroup vehicleTypeToggleGroup;
@@ -1188,16 +1192,7 @@ public class DatabaseController {
                 row.setOnMouseClicked(event -> {
                     if (event.getClickCount() == 2 && (!row.isEmpty())) {
                         Map<String, Object> rowData = row.getItem();
-                        vehicleID = (int) rowData.get("vehicleID");
-                        asMakeField.setText(rowData.get("make").toString());
-                        asModelField.setText(rowData.get("model").toString());
-                        asYearField.setText(rowData.get("year").toString());
-                        asColorField.setText(rowData.get("color").toString());
-                        asConditionField.setText(rowData.get("carCondition").toString());
-                        asStatusField.setText(rowData.get("status").toString());
-                        asPriceField.setText(rowData.get("netSalePrice").toString());
-
-                        imageBytes = (byte[]) rowData.get("photo");
+                        imageBytes = (byte[]) rowData.get("image");
                         if (imageBytes != null) {
                             // create a pop out to display larger image with details
                             Image image = new Image(new ByteArrayInputStream(imageBytes));
@@ -1221,33 +1216,52 @@ public class DatabaseController {
         }
     }
 
-    // Sell on Vehicle Sell Tab
     @FXML
-    private void handleASSellButton(ActionEvent actionEvent){
-        String make = asMakeField.getText().trim();
-        String model = asModelField.getText().trim();
-        String year = asYearField.getText().trim();
-        String color = asColorField.getText().trim();
-        String condition = asConditionField.getText().trim();
-        String status = asStatusField.getText().trim();
-        String price = asPriceField.getText().trim();
+    public void handleSellVehicle(ActionEvent actionEvent) {
+        try {
+            // Get and validate inputs
+            String tempStockNumber = sellVehicleIDField.getText().trim();
+            int stockNum = Integer.parseInt(tempStockNumber);
+            String tempCustomerID = sellCustomerIDField.getText().trim();
+            int customerID = Integer.parseInt(tempCustomerID);
+            int salesPersonID = this.currentUser.getPersonID(); // Get the current user's personID
+            String tempLocation = this.currentUser.getLocation();
+            int locationID = Integer.parseInt(tempLocation);
 
-        if (make.isEmpty() || model.isEmpty() || year.isEmpty() || color.isEmpty() || condition.isEmpty() || status.isEmpty() || price.isEmpty()) {
-            showAlert("Input Error", "Missing Information", "Please fill in all fields before selling.");
-            return;
-        }
+            // Get current date
+            LocalDate dateOfPurchase = LocalDate.now();
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-            conn.setAutoCommit(false); // Begin transaction
+            // Prepare SQL INSERT
+            String sql = "INSERT INTO records (stockNumber, salesPersonID, customerID, locationID, dateOfPurchase) " +
+                    "VALUES (?, ?, ?, ?, ?)";
+            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+                pstmt.setInt(1, stockNum); // stockNumber
+                pstmt.setInt(2, salesPersonID); // salesPersonID
+                pstmt.setInt(3, customerID); // customerID
+                pstmt.setInt(4, locationID); // locationID
+                pstmt.setDate(5, Date.valueOf(dateOfPurchase)); // dateOfPurchase as java.sql.Date
 
-            conn.commit(); // Commit transaction
-            showAlert("SUCCESS", "Vehicle sold successfully!", make + " " + model + " sold!");
-            handleASClear(actionEvent);
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    showAlert("Success", "Vehicle Sold", "The vehicle sale has been successfully recorded!");
+                } else {
+                    showAlert("Error", "Operation Failed", "Failed to record the sale. Please try again.");
+                }
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Error", "Invalid Input", "Please enter valid numeric values for all fields.");
         } catch (SQLException e) {
-            showAlert("ERROR", "Error selling vehicle", e.getMessage());
+            showAlert("Error", "Database Error", "An error occurred while accessing the database: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
+    @FXML
+    public void handleSellClear(ActionEvent actionEvent) {
+        sellVehicleIDField.clear();
+        sellCustomerIDField.clear();
+    }
 
 }// End Class
