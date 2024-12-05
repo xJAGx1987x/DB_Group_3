@@ -1146,7 +1146,7 @@ public class DatabaseController {
 
             // Dynamically create columns based on ResultSet metadata
             for (int i = 1; i <= columnCount; i++) {
-                final String columnName = metaData.getColumnName(i).replaceAll("(?<!^)(?=[A-Z])", " ").toUpperCase();
+                final String columnName = metaData.getColumnName(i);
                 TableColumn<Map<String, Object>, Object> column = new TableColumn<>(columnName);
 
                 column.setCellValueFactory(cellData -> {
@@ -1159,12 +1159,10 @@ public class DatabaseController {
                             imageView.setFitWidth(100);
                             imageView.setFitHeight(100);
                             return new SimpleObjectProperty<>(imageView);
-                        } else {
-                            return new SimpleObjectProperty<>("No Image");
                         }
-                    } else {
-                        return new SimpleObjectProperty(cellValue == null ? "NULL" : cellValue.toString());
                     }
+
+                    return new SimpleObjectProperty(cellValue == null ? "NULL" : cellValue.toString());
                 });
                 column.setPrefWidth(metaData.getColumnName(i).length() * 20);
                 asTableView.getColumns().add(column);
