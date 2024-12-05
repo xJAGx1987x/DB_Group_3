@@ -168,7 +168,7 @@ public class DatabaseController {
     @FXML
     private Button asClearVehicleButton;
     @FXML
-    private TableView<Map<String, Object>> asVehicleTableView;
+    private TableView<Map<String, Object>> asTableView;
 
 
     private ToggleGroup vehicleTypeToggleGroup;
@@ -1043,7 +1043,7 @@ public class DatabaseController {
         asConditionField.clear();
         asStatusField.clear();
         asPriceField.clear();
-        asVehicleTableView.getColumns().clear();
+        asTableView.getColumns().clear();
     }
 
     // Search on Vehicle Add/Sell Tab
@@ -1097,7 +1097,7 @@ public class DatabaseController {
         }
         if (!price.isEmpty()) {
             if (hasCondition) queryBuilder.append("AND ");
-            queryBuilder.append("price = ? ");
+            queryBuilder.append("netSalePrice = ? ");
         }
 
         String query = queryBuilder.toString();
@@ -1134,7 +1134,7 @@ public class DatabaseController {
 
             // Dynamically create columns based on ResultSet metadata
             for (int i = 1; i <= columnCount; i++) {
-                final String columnName = metaData.getColumnName(i).replaceAll("(?<!^)(?=[A-Z])", " ").toUpperCase();
+                final String columnName = metaData.getColumnName(i);
                 TableColumn<Map<String, Object>, Object> column = new TableColumn<>(columnName);
 
                 column.setCellValueFactory(cellData -> {
@@ -1155,7 +1155,7 @@ public class DatabaseController {
                     }
                 });
                 column.setPrefWidth(metaData.getColumnName(i).length() * 20);
-                asVehicleTableView.getColumns().add(column);
+                asTableView.getColumns().add(column);
             }
 
             // Populate rows with ResultSet data
@@ -1167,10 +1167,10 @@ public class DatabaseController {
                 }
                 data.add(row);
             }
-            asVehicleTableView.setItems(data);
+            asTableView.setItems(data);
 
             // Add action listener to handle row selection
-            asVehicleTableView.setRowFactory(tv -> {
+            asTableView.setRowFactory(tv -> {
                 TableRow<Map<String, Object>> row = new TableRow<>();
                 row.setOnMouseClicked(event -> {
                     if (event.getClickCount() == 2 && (!row.isEmpty())) {
@@ -1182,7 +1182,7 @@ public class DatabaseController {
                         asColorField.setText(rowData.get("color").toString());
                         asConditionField.setText(rowData.get("carCondition").toString());
                         asStatusField.setText(rowData.get("status").toString());
-                        asPriceField.setText(rowData.get("price").toString());
+                        asPriceField.setText(rowData.get("netSalePrice").toString());
 
                         imageBytes = (byte[]) rowData.get("photo");
                         if (imageBytes != null) {
