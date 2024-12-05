@@ -1045,6 +1045,7 @@ public class DatabaseController {
         asPriceField.clear();
         asVehicleTableView.getColumns().clear();
     }
+
     // Search on Vehicle Add/Sell Tab
     @FXML
     private void handleASSearch(ActionEvent actionEvent) {
@@ -1061,43 +1062,45 @@ public class DatabaseController {
             return;
         }
 
-        String query = "SELECT * FROM inventory WHERE vehicleID =" + vehicleID + " ";
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM inventory WHERE ");
         boolean hasCondition = false;
 
         if (!make.isEmpty()) {
-            if (hasCondition) query += "AND ";
-            query += "LOWER(make) LIKE LOWER(?) ";
+            if (hasCondition) queryBuilder.append("AND ");
+            queryBuilder.append("LOWER(make) LIKE LOWER(?) ");
             hasCondition = true;
         }
         if (!model.isEmpty()) {
-            if (hasCondition) query += "AND ";
-            query += "LOWER(model) LIKE LOWER(?) ";
+            if (hasCondition) queryBuilder.append("AND ");
+            queryBuilder.append("LOWER(model) LIKE LOWER(?) ");
             hasCondition = true;
         }
         if (!year.isEmpty()) {
-            if (hasCondition) query += "AND ";
-            query += "YEAR = ? ";
+            if (hasCondition) queryBuilder.append("AND ");
+            queryBuilder.append("YEAR = ? ");
             hasCondition = true;
         }
         if (!color.isEmpty()) {
-            if (hasCondition) query += "AND ";
-            query += "LOWER(color) LIKE LOWER(?) ";
+            if (hasCondition) queryBuilder.append("AND ");
+            queryBuilder.append("LOWER(color) LIKE LOWER(?) ");
             hasCondition = true;
         }
         if (!condition.isEmpty()) {
-            if (hasCondition) query += "AND ";
-            query += "LOWER(carCondition) LIKE LOWER(?) ";
+            if (hasCondition) queryBuilder.append("AND ");
+            queryBuilder.append("LOWER(carCondition) LIKE LOWER(?) ");
             hasCondition = true;
         }
         if (!status.isEmpty()) {
-            if (hasCondition) query += "AND ";
-            query += "LOWER(status) LIKE LOWER(?) ";
+            if (hasCondition) queryBuilder.append("AND ");
+            queryBuilder.append("LOWER(status) LIKE LOWER(?) ");
             hasCondition = true;
         }
         if (!price.isEmpty()) {
-            if (hasCondition) query += "AND ";
-            query += "price = ? ";
+            if (hasCondition) queryBuilder.append("AND ");
+            queryBuilder.append("price = ? ");
         }
+
+        String query = queryBuilder.toString();
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -1139,10 +1142,14 @@ public class DatabaseController {
                     Object cellValue = row.get(columnName);
                     if (cellValue instanceof byte[]) {
                         byte[] imageBytes = (byte[]) cellValue;
-                        ImageView imageView = new ImageView(new Image(new ByteArrayInputStream(imageBytes)));
-                        imageView.setFitWidth(100);
-                        imageView.setFitHeight(100);
-                        return new SimpleObjectProperty<>(imageView);
+                        if (imageBytes != null) {
+                            ImageView imageView = new ImageView(new Image(new ByteArrayInputStream(imageBytes)));
+                            imageView.setFitWidth(100);
+                            imageView.setFitHeight(100);
+                            return new SimpleObjectProperty<>(imageView);
+                        } else {
+                            return new SimpleObjectProperty<>("No Image");
+                        }
                     } else {
                         return new SimpleObjectProperty(cellValue == null ? "NULL" : cellValue.toString());
                     }
@@ -1178,7 +1185,7 @@ public class DatabaseController {
                         asPriceField.setText(rowData.get("price").toString());
 
                         imageBytes = (byte[]) rowData.get("photo");
-                        if(imageBytes != null){
+                        if (imageBytes != null) {
                             // create a pop out to display larger image with details
                             Image image = new Image(new ByteArrayInputStream(imageBytes));
                             ImageView imageView = new ImageView(image);
@@ -1189,6 +1196,8 @@ public class DatabaseController {
                             alert.setHeaderText("Vehicle Image");
                             alert.setGraphic(imageView);
                             styleAlert(alert);
+                        } else {
+                            showAlert("No Image", "No Image Available", "This vehicle does not have an image.");
                         }
                     }
                 });
@@ -1198,6 +1207,7 @@ public class DatabaseController {
             throw new RuntimeException(e);
         }
     }
+
     // Sell on Vehicle Sell Tab
     @FXML
     private void handleASSellButton(ActionEvent actionEvent){
