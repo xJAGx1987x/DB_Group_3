@@ -1151,7 +1151,7 @@ public class DatabaseController {
                             return new SimpleObjectProperty<>("No Image");
                         }
                     } else {
-                        return new SimpleObjectProperty(cellValue == null ? "NULL" : cellValue.toString());
+                        return new SimpleObjectProperty(cellValue == null ? "NULL" : cellValue.toString().replaceAll("(?<!^)(?=[A-Z])", " ").toUpperCase());
                     }
                 });
                 column.setPrefWidth(metaData.getColumnName(i).length() * 20);
