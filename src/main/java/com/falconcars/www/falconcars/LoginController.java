@@ -29,7 +29,6 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
-    private final String DB_STYLESHEET = "styles.css";
     private final String DB_URL = DatabaseConfig.getDbUrl(); // Static call
     private final String DB_USER = DatabaseConfig.getDbUser(); // Static call
     private final String DB_PASSWORD = DatabaseConfig.getDbPassword(); // Static call
@@ -52,7 +51,7 @@ public class LoginController {
         }
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-            String query = "SELECT p.name, s.personID, le.isManager " +
+            String query = "SELECT p.name, s.personID, le.isManager, le.locationID " +
                     "FROM sales_person s " +
                     "JOIN person p ON s.personID = p.personID " +
                     "JOIN location_employee le ON s.personID = le.personID " +
@@ -87,7 +86,7 @@ public class LoginController {
 
     private void switchToMainView(ActionEvent event, DBUser dbUser) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(DB_STYLESHEET));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("database-view.fxml"));
             Parent mainRoot = loader.load();
 
             DatabaseController dbController = loader.getController();
@@ -113,7 +112,7 @@ public class LoginController {
         alert.setContentText(message);
 
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        dialogPane.getStylesheets().add(getClass().getResource("/com/falconcars/www/falconcars/styles.css").toExternalForm());
         dialogPane.getStyleClass().add("custom-alert");
         alert.showAndWait();
     }

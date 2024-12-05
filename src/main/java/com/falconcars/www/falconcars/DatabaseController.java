@@ -25,7 +25,6 @@ public class DatabaseController {
     private Tab locationTab ;
     @FXML
     private Tab employeeTab ;
-
     // Fields for Vehicle Trends tab
     @FXML
     private TextField makeField;
@@ -493,7 +492,7 @@ public class DatabaseController {
             // Dynamically create columns based on ResultSet metadata
             for (int i = 1; i <= columnCount; i++) {
                 final int columnIndex = i;
-                TableColumn<Map<String, Object>, String> column = new TableColumn<>(metaData.getColumnName(i));
+                TableColumn<Map<String, Object>, String> column = new TableColumn<>(metaData.getColumnName(i).replaceAll("(?<!^)(?=[A-Z])", " ").toUpperCase());
                 column.setCellValueFactory(cellData -> {
                     Map<String, Object> row = cellData.getValue();
                     Object cellValue = null;
@@ -504,6 +503,7 @@ public class DatabaseController {
                     }
                     return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
                 });
+                column.setPrefWidth(metaData.getColumnName(i).length() * 20);
                 vehicleTableView.getColumns().add(column);
             }
 
@@ -636,13 +636,14 @@ public class DatabaseController {
 
             // Dynamically add columns based on query result
             for (int i = 1; i <= columnCount; i++) {
-                TableColumn<Map<String, Object>, String> column = new TableColumn<>(metaData.getColumnName(i));
+                TableColumn<Map<String, Object>, String> column = new TableColumn<>(metaData.getColumnName(i).replaceAll("(?<!^)(?=[A-Z])", " ").toUpperCase());
                 final String columnName = metaData.getColumnName(i); // make columnName effectively final
                 column.setCellValueFactory(cellData -> {
                     Map<String, Object> row = cellData.getValue();
                     Object cellValue = row.get(columnName);
                     return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
                 });
+                column.setPrefWidth(metaData.getColumnName(i).length() * 20) ;
                 topSellersTableView.getColumns().add(column);
             }
 
@@ -690,7 +691,6 @@ public class DatabaseController {
         }
     }
 
-
     @FXML
     private void handleCustomerLookUp() {
         if (!isCustomerLookUpInputValid()) {
@@ -702,10 +702,6 @@ public class DatabaseController {
         String query = "SELECT * FROM customer c JOIN person p ON c.personID = p.personID WHERE ";
         boolean hasCondition = false;
 
-        if (!customerIDField.getText().trim().isEmpty()) {
-            query += "c.personID = ? ";
-            hasCondition = true;
-        }
         if (!customerNameField.getText().trim().isEmpty()) {
             if (hasCondition) query += "AND ";
             query += "p.name LIKE ? ";
@@ -715,19 +711,23 @@ public class DatabaseController {
             if (hasCondition) query += "AND ";
             query += "p.email LIKE ? ";
         }
+        if(!customerPhoneField.getText().trim().isEmpty()){
+            if(hasCondition) query += "AND ";
+            query += "p.phoneNum LIKE ? ";
+        }
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             int paramIndex = 1;
-            if (!customerIDField.getText().trim().isEmpty()) {
-                pstmt.setInt(paramIndex++, Integer.parseInt(customerIDField.getText().trim()));
-            }
             if (!customerNameField.getText().trim().isEmpty()) {
                 pstmt.setString(paramIndex++, "%" + customerNameField.getText().trim() + "%");
             }
             if (!customerEmailField.getText().trim().isEmpty()) {
                 pstmt.setString(paramIndex++, "%" + customerEmailField.getText().trim() + "%");
+            }
+            if( !customerPhoneField.getText().trim().isEmpty() ){
+                pstmt.setString(paramIndex++, "%" + customerPhoneField.getText().trim() + "%");
             }
 
             ResultSet rs = pstmt.executeQuery();
@@ -761,7 +761,23 @@ public class DatabaseController {
                 }
                 results.add(row);
             }
+
             customerLookUpTableView.setItems(results);
+            customerLookUpTableView.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) { // Double-click event
+                    Map<String, Object> selectedItem = customerLookUpTableView.getSelectionModel().getSelectedItem();
+                    if (selectedItem != null) {
+                        customerIDField.setText(selectedItem.get("personID").toString());
+                        customerNameField.setText(selectedItem.get("name").toString());
+                        customerEmailField.setText(selectedItem.get("email").toString());
+                        customerPhoneField.setText(selectedItem.get("phoneNum").toString());
+                        customerAddressField.setText(selectedItem.get("address").toString());
+                        customerCityField.setText(selectedItem.get("city").toString());
+                        customerStateField.setText(selectedItem.get("state").toString());
+                        customerZipCodeField.setText(selectedItem.get("zipcode").toString());
+                    }
+                }
+            });
 
             // Check if no data was found
             if (results.isEmpty()) {
@@ -776,13 +792,14 @@ public class DatabaseController {
     }
 
     private boolean isCustomerLookUpInputValid() {
-        return !customerIDField.getText().trim().isEmpty() ||
-               !customerNameField.getText().trim().isEmpty() ||
-               !customerEmailField.getText().trim().isEmpty();
+        return !customerNameField.getText().trim().isEmpty() ||
+               !customerEmailField.getText().trim().isEmpty() ||
+                !customerPhoneField.getText().trim().isEmpty() ;
     }
 
     @FXML
     public void handleClearCustomerForm() {
+        customerIDField.clear();
         customerNameField.clear();
         customerEmailField.clear();
         customerPhoneField.clear();
@@ -790,6 +807,13 @@ public class DatabaseController {
         customerCityField.clear();
         customerStateField.clear();
         customerZipCodeField.clear();
+        customerLookUpTableView.getColumns().clear();
+    }
+
+    @FXML
+    private void handleUpdateCustomer() {
+
+        return ;
     }
 
     private boolean validateInput(String name, String email, String phone, String address, String city, String state, String zipCode) {
