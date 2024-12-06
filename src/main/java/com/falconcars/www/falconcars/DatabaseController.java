@@ -1108,7 +1108,7 @@ public class DatabaseController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("db/photos"));
         fileChooser.setTitle("Select File");
-        File selectedFile = fileChooser.showOpenDialog(null);
+        File selectedFile = fileChooser.showOpenDialog(dbTabPane.getScene().getWindow());
 
         if (selectedFile != null) {
             try {
