@@ -33,6 +33,10 @@ public class DatabaseController {
     private Tab employeeTab;
     @FXML
     private Tab searchTab ;
+    @FXML
+    private Tab addVehicleTab;
+    @FXML
+    private Tab sellVehicleTab;
 
     // Fields for Vehicle Trends tab
     @FXML
@@ -174,6 +178,9 @@ public class DatabaseController {
     private TextField sellVehicleIDField ;
     @FXML
     private TextField sellCustomerIDField ;
+    @FXML
+    private TextField salesPersonTextField ;
+
     @FXML
     private TableView<Map<String, Object>> asTableView;
     private ToggleGroup vehicleTypeToggleGroup;
@@ -990,6 +997,14 @@ public class DatabaseController {
                 if (dbTabPane.getTabs().contains(employeeTab)) {
                     dbTabPane.getTabs().remove(employeeTab);
                 }
+
+                if(dbTabPane.getTabs().contains(addVehicleTab)){
+                    dbTabPane.getTabs().remove(addVehicleTab);
+                }
+
+                if(dbTabPane.getTabs().contains(sellVehicleTab)){
+                    dbTabPane.getTabs().remove(sellVehicleTab);
+                }
             }
         }
     }
@@ -1273,7 +1288,8 @@ public class DatabaseController {
             int stockNum = Integer.parseInt(tempStockNumber);
             String tempCustomerID = sellCustomerIDField.getText().trim();
             int customerID = Integer.parseInt(tempCustomerID);
-            int salesPersonID = this.currentUser.getPersonID(); // Get the current user's personID
+            String tempSalesPersonID = salesPersonTextField.getText().trim();
+            int salesPersonID = Integer.parseInt(tempSalesPersonID);
             String tempLocation = this.currentUser.getLocation();
             int locationID = Integer.parseInt(tempLocation);
 
