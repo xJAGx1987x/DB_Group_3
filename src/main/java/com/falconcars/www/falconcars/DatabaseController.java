@@ -1466,7 +1466,6 @@ public class DatabaseController {
                         employeeCityField.setText(selectedItem.get("city").toString());
                         employeeStateField.setText(selectedItem.get("state").toString());
                         employeeZipCodeField.setText(selectedItem.get("zipcode").toString());
-                        employeeRoleField.setText(selectedItem.get("role").toString());
                     }
                 }
             });
@@ -1520,7 +1519,6 @@ public class DatabaseController {
 
         result = dialog.showAndWait();
 
-
         if (result.isEmpty()) {
             return; // Exit the method if the user cancels the dialog
         }
@@ -1533,9 +1531,9 @@ public class DatabaseController {
             insertSalesPerson(conn, personID, username, password);
 
             if (role.equalsIgnoreCase("manager")) {
-                insertManager(conn, personID);
+                insertManager(conn, personID); // Insert into manager table
             }
-            insertSalesPerson(conn, personID, username, password);
+
             conn.commit(); // Commit transaction
             showAlert("SUCCESS", "Employee added successfully!", name + " added!");
             clearEmployeeForm();
@@ -1596,7 +1594,14 @@ public class DatabaseController {
             deletePerson(conn, personID);
 
             conn.commit(); // Commit transaction
+
             showAlert("SUCCESS", "Employee deleted successfully!", personID + " deleted!");
+            if(role.equalsIgnoreCase("salesperson")) {
+                deleteEmployee(conn, personID);
+            }
+            if(role.equalsIgnoreCase("manager")){
+                deleteManager(conn, personID);
+            }
             clearEmployeeForm();
         } catch (SQLException e) {
             showAlert("ERROR", "Error deleting employee", e.getMessage());
@@ -1612,7 +1617,7 @@ public class DatabaseController {
     }
 
     private void deleteEmployee(Connection conn, String personID) throws SQLException {
-        String deleteEmployeeSQL = "DELETE FROM employee WHERE personID = ?";
+        String deleteEmployeeSQL = "DELETE FROM sales_person WHERE personID = ?";
         try (PreparedStatement employeeStmt = conn.prepareStatement(deleteEmployeeSQL)) {
             employeeStmt.setString(1, personID);
             employeeStmt.executeUpdate();
