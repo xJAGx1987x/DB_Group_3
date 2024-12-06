@@ -458,24 +458,52 @@ public class DatabaseController {
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
 
-            // Populate TableView with the query result
+            // Dynamically create columns based on ResultSet metadata
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            // Clear existing columns before adding new ones
+            locationTableView.getColumns().clear();
+
+            for (int i = 1; i <= columnCount; i++) {
+                final String columnName = metaData.getColumnName(i);
+                final String formattedColumnName = columnName
+                        .replaceFirst("(?<=[a-z])(?=[A-Z])", " ") // Split at first capital letter
+                        .toUpperCase();
+
+                TableColumn<Map<String, Object>, String> column = new TableColumn<>(formattedColumnName);
+
+                column.setCellValueFactory(cellData -> {
+                    Map<String, Object> row = cellData.getValue();
+                    Object cellValue = row.get(columnName); // Use original column name as key
+                    if ("totalSales".equals(columnName) && cellValue instanceof Double) {
+                        // Format totalSales as currency
+                        return new SimpleStringProperty(String.format("$%,.2f", cellValue));
+                    }
+                    return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
+                });
+
+                locationTableView.getColumns().add(column);
+            }
+
+            // Populate data into TableView rows
             ObservableList<Map<String, Object>> data = FXCollections.observableArrayList();
             while (rs.next()) {
                 Map<String, Object> row = new HashMap<>();
-                row.put("locationID", rs.getInt("locationID"));
-                row.put("address", rs.getString("address"));
-                row.put("city", rs.getString("city"));
-                row.put("state", rs.getString("state"));
-                row.put("totalSales", String.format("$%,.2f", rs.getDouble("totalSales")));
+                for (int i = 1; i <= columnCount; i++) {
+                    String columnName = metaData.getColumnName(i);
+                    row.put(columnName, rs.getObject(columnName)); // Use column name as key
+                }
                 data.add(row);
             }
             locationTableView.setItems(data);
 
+            // Show alert if no data is found
             if (data.isEmpty()) {
-                showAlert("No Results", "No Data Found",
-                        "No sales data found for the specified period.");
+                showAlert("No Results", "No Data Found", "No sales data found for the specified period.");
             }
         } catch (SQLException e) {
+            // Handle database errors gracefully
             showAlert("Database Error", "Error accessing the database",
                     "An error occurred while querying the database: " + e.getMessage());
         }
@@ -577,28 +605,36 @@ public class DatabaseController {
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount = metaData.getColumnCount();
 
-            // Create columns dynamically based on ResultSet metadata
+// Create columns dynamically based on ResultSet metadata
             for (int i = 1; i <= columnCount; i++) {
-                final String columnName = metaData.getColumnName(i);
-                TableColumn<Map<String, Object>, String> column = new TableColumn<>(columnName);
+                // Get column name and format it (split at the first capital letter)
+                final String originalColumnName = metaData.getColumnName(i);
+                final String formattedColumnName = originalColumnName
+                        .replaceFirst("(?<=[a-z])(?=[A-Z])", " ")
+                        .toUpperCase(); // Add space before the first capital and convert to uppercase
 
+                // Create table column with the formatted name
+                TableColumn<Map<String, Object>, String> column = new TableColumn<>(formattedColumnName);
+
+                // Set cell value factory to populate column cells with corresponding row data
                 column.setCellValueFactory(cellData -> {
                     Map<String, Object> row = cellData.getValue();
-                    Object cellValue = row.get(columnName);
+                    Object cellValue = row.get(originalColumnName); // Use original column name for the key
                     return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
                 });
-
+                column.setPrefWidth(metaData.getColumnName(i).length() * 20);
                 customerTableView.getColumns().add(column);
             }
 
-            // Populate rows
+            // Populate rows dynamically
             while (rs.next()) {
                 Map<String, Object> row = new HashMap<>();
                 for (int i = 1; i <= columnCount; i++) {
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                    row.put(metaData.getColumnName(i), rs.getObject(i)); // Use original column name as key
                 }
                 customerTableView.getItems().add(row);
             }
+
 
             // Check if no data was found
             if (customerTableView.getItems().isEmpty()) {
@@ -652,16 +688,17 @@ public class DatabaseController {
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount = metaData.getColumnCount();
 
-            // Dynamically add columns based on query result
             for (int i = 1; i <= columnCount; i++) {
-                TableColumn<Map<String, Object>, String> column = new TableColumn<>(metaData.getColumnName(i).replaceAll("(?<!^)(?=[A-Z])", " ").toUpperCase());
-                final String columnName = metaData.getColumnName(i); // make columnName effectively final
+                String columnName = metaData.getColumnName(i);
+                String formattedColumnName = columnName.replaceFirst("(?<=[a-z])(?=[A-Z])", " ").toUpperCase();
+
+                TableColumn<Map<String, Object>, String> column = new TableColumn<>(formattedColumnName);
                 column.setCellValueFactory(cellData -> {
                     Map<String, Object> row = cellData.getValue();
-                    Object cellValue = row.get(columnName);
+                    Object cellValue = row.get(columnName); // Use unmodified column name as key
                     return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
                 });
-                column.setPrefWidth(metaData.getColumnName(i).length() * 20);
+                column.setPrefWidth(formattedColumnName.length() * 20);
                 topSellersTableView.getColumns().add(column);
             }
 
@@ -669,7 +706,8 @@ public class DatabaseController {
             while (rs.next()) {
                 Map<String, Object> row = new HashMap<>();
                 for (int i = 1; i <= columnCount; i++) {
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                    String columnName = metaData.getColumnName(i); // Use unmodified column name
+                    row.put(columnName, rs.getObject(i));
                 }
                 topSellersTableView.getItems().add(row);
             }
@@ -679,6 +717,7 @@ public class DatabaseController {
                     "An error occurred while querying the database: " + e.getMessage());
         }
     }
+
 
     // Wrapper to streamline insert person-customer
     @FXML
