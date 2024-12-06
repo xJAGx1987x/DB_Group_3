@@ -391,7 +391,7 @@
                                         <HBox alignment="CENTER" layoutX="16.0" prefHeight="47.0" prefWidth="765.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                                             <children>
                                                 <Region HBox.hgrow="ALWAYS" />
-                                                <Button fx:id="asAddVehicleButton" prefWidth="150.0" text="Add Vehicle" />
+                                                <Button fx:id="asAddVehicleButton" onAction="#handleAddVehicle" prefWidth="150.0" text="Add Vehicle" />
                                                 <Region HBox.hgrow="SOMETIMES" />
                                                 <Region HBox.hgrow="SOMETIMES" />
                                                 <Button fx:id="asSearchButton" onAction="#handleASSearch" prefWidth="150.0" text="Search" />

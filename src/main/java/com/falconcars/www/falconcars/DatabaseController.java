@@ -1364,6 +1364,7 @@ public class DatabaseController {
     private void handleSellClear(ActionEvent actionEvent) {
         sellVehicleIDField.clear();
         sellCustomerIDField.clear();
+        salesPersonTextField.clear();
     }
 
     @FXML
@@ -1629,6 +1630,56 @@ public class DatabaseController {
         try (PreparedStatement managerStmt = conn.prepareStatement(deleteManagerSQL)) {
             managerStmt.setString(1, personID);
             managerStmt.executeUpdate();
+        }
+    }
+
+    @FXML
+    private void handleAddVehicle(ActionEvent actionEvent){
+        String make = asMakeField.getText().trim();
+        String model = asModelField.getText().trim();
+        String year = asYearField.getText().trim();
+        String color = asColorField.getText().trim();
+        String condition = asConditionField.getText().trim();
+        String status = asStatusField.getText().trim();
+        String price = asPriceField.getText().trim();
+
+        if(make.isEmpty() || model.isEmpty() || year.isEmpty() || color.isEmpty() || condition.isEmpty() || status.isEmpty() || price.isEmpty()){
+            showAlert("ERROR", "Please fill in all fields correctly!", "");
+            return;
+        }
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            conn.setAutoCommit(false); // Begin transaction
+
+            int stockNumber = insertInventory(conn, make, model, year, color, condition, status, price, imageBytes);
+
+            conn.commit(); // Commit transaction
+            showAlert("SUCCESS", "Vehicle added successfully!", make + " " + model + " added!");
+            handleASClear(actionEvent); // Clear the form
+        } catch (SQLException e) {
+            showAlert("ERROR", "Error adding vehicle", e.getMessage());
+        }
+    }
+
+    private int insertInventory(Connection conn, String make, String model, String year, String color, String condition, String status, String price, byte[] imageBytes) throws SQLException {
+        String insertInventorySQL = "INSERT INTO inventory (make, model, year, color, carCondition, status, netSalePrice, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement inventoryStmt = conn.prepareStatement(insertInventorySQL, Statement.RETURN_GENERATED_KEYS)) {
+            inventoryStmt.setString(1, make);
+            inventoryStmt.setString(2, model);
+            inventoryStmt.setString(3, year);
+            inventoryStmt.setString(4, color);
+            inventoryStmt.setString(5, condition);
+            inventoryStmt.setString(6, status);
+            inventoryStmt.setString(7, price);
+            inventoryStmt.setBytes(8, imageBytes);
+            inventoryStmt.executeUpdate();
+
+            ResultSet rs = inventoryStmt.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1); // Return generated stockNumber
+            } else {
+                throw new SQLException("Failed to retrieve stockNumber.");
+            }
         }
     }
 
