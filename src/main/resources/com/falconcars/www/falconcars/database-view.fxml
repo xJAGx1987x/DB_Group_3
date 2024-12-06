@@ -261,7 +261,7 @@
                                                 <!-- Vertical Form -->
                                                 <VBox alignment="CENTER" maxWidth="Infinity" prefHeight="423.0" prefWidth="343.0" spacing="5.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 3; -fx-padding: 5; -fx-border-radius: 5px;" HBox.hgrow="ALWAYS">
                                                     <children>
-                                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="289.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;" text="Search by Name, Role, or Email" HBox.hgrow="ALWAYS">
+                                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="289.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;" text="Search Return All Employees" HBox.hgrow="ALWAYS">
                                                         </Label>
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                                                             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="ID:" />

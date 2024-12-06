@@ -1528,7 +1528,7 @@ public class DatabaseController {
             conn.setAutoCommit(false); // Begin transaction
 
             int personID = insertPerson(conn, name, email, phone, address, city, state, zipCode);
-            insertSalesPerson(conn, personID, username, password);
+            insertSalesPerson(conn, personID, username, password, 0.05);
 
             if (role.equalsIgnoreCase("manager")) {
                 insertManager(conn, personID); // Insert into manager table
@@ -1542,12 +1542,13 @@ public class DatabaseController {
         }
     }
 
-    private void insertSalesPerson(Connection conn, int personID, String username, String password) throws SQLException {
-        String insertSalesPersonSQL = "INSERT INTO sales_person (personID, username, password) VALUES (?, ?, ?)";
+    private void insertSalesPerson(Connection conn, int personID, String username, String password, double commisionRate) throws SQLException {
+        String insertSalesPersonSQL = "INSERT INTO sales_person (personID, username, password, commissionRate) VALUES (?, ?, ?, ?)";
         try (PreparedStatement salesPersonStmt = conn.prepareStatement(insertSalesPersonSQL)) {
             salesPersonStmt.setInt(1, personID);
             salesPersonStmt.setString(2, username);
             salesPersonStmt.setString(3, password);
+            salesPersonStmt.setDouble(4, commisionRate);
             salesPersonStmt.executeUpdate();
         }
     }
@@ -1590,19 +1591,12 @@ public class DatabaseController {
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
             conn.setAutoCommit(false); // Begin transaction
-
-            deletePerson(conn, personID);
+            deleteEmployee(conn, personID); // Delete from sales_person or manager first
+            deletePerson(conn, personID);  // Then delete from person table
 
             conn.commit(); // Commit transaction
-
             showAlert("SUCCESS", "Employee deleted successfully!", personID + " deleted!");
-            if(role.equalsIgnoreCase("salesperson")) {
-                deleteEmployee(conn, personID);
-            }
-            if(role.equalsIgnoreCase("manager")){
-                deleteManager(conn, personID);
-            }
-            clearEmployeeForm();
+            clearEmployeeForm(); // Clear the form
         } catch (SQLException e) {
             showAlert("ERROR", "Error deleting employee", e.getMessage());
         }
