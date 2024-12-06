@@ -1505,6 +1505,11 @@ public class DatabaseController {
         dialog.setTitle("Create Account");
         dialog.setHeaderText("Enter Username");
         dialog.setContentText("Username:");
+
+        // Apply custom stylesheet
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        dialog.getDialogPane().getStyleClass().add("dialog-pane");
+
         Optional<String> result = dialog.showAndWait();
         if (result.isEmpty()) {
             return; // Exit the method if the user cancels the dialog
@@ -1513,7 +1518,10 @@ public class DatabaseController {
 
         dialog.setHeaderText("Enter Password");
         dialog.setContentText("Password:");
+
         result = dialog.showAndWait();
+
+
         if (result.isEmpty()) {
             return; // Exit the method if the user cancels the dialog
         }
@@ -1557,13 +1565,7 @@ public class DatabaseController {
 
     @FXML
     private void handleClearEmployeeForm(ActionEvent actionEvent){
-        employeeNameField.clear();
-        employeeEmailField.clear();
-        employeePhoneField.clear();
-        employeeAddressField.clear();
-        employeeCityField.clear();
-        employeeStateField.clear();
-        employeeZipCodeField.clear();
+        clearEmployeeForm();
     }
 
     private void clearEmployeeForm() {
@@ -1575,6 +1577,8 @@ public class DatabaseController {
         employeeStateField.clear();
         employeeZipCodeField.clear();
         employeeRoleField.clear();
+
+        employeeLookUpTableView.getColumns().clear();
     }
 
     @FXML
