@@ -1,5 +1,6 @@
 package com.falconcars.www.falconcars;
 
+import com.almasb.fxgl.entity.action.Action;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -15,11 +16,13 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class DatabaseController {
     private final String styleSheet = "styles.css";
@@ -181,7 +184,36 @@ public class DatabaseController {
     @FXML
     private TextField salesPersonTextField ;
 
+    // Manage Employee Tab fields
     @FXML
+    private TextField employeeIDField;
+    @FXML
+    private TextField employeeNameField;
+    @FXML
+    private TextField employeeEmailField;
+    @FXML
+    private TextField employeePhoneField;
+    @FXML
+    private TextField employeeAddressField;
+    @FXML
+    private TextField employeeCityField;
+    @FXML
+    private TextField employeeStateField;
+    @FXML
+    private TextField employeeZipCodeField;
+    @FXML
+    private TextField employeeRoleField;
+    @FXML
+    private Button employeeLookUpButton;
+    @FXML
+    private Button employeeAddButton;
+    @FXML
+    private Button employeeSearchButton;
+    @FXML
+    private Button clearEmployeeFieldsButton;
+    @FXML
+    private TableView<Map<String, Object>> employeeLookUpTableView ;
+
     private TableView<Map<String, Object>> asTableView;
     private ToggleGroup vehicleTypeToggleGroup;
     private ToggleGroup newUsedToggleGroup;
@@ -1281,7 +1313,7 @@ public class DatabaseController {
     }
 
     @FXML
-    public void handleSellVehicle(ActionEvent actionEvent) {
+    private void handleSellVehicle(ActionEvent actionEvent) {
         try {
             // Get and validate inputs
             String tempStockNumber = sellVehicleIDField.getText().trim();
@@ -1324,9 +1356,271 @@ public class DatabaseController {
     }
 
     @FXML
-    public void handleSellClear(ActionEvent actionEvent) {
+    private void handleSellClear(ActionEvent actionEvent) {
         sellVehicleIDField.clear();
         sellCustomerIDField.clear();
+    }
+
+    @FXML
+    private void handleEmployeeLookUp(ActionEvent actionEvent) {
+        String query = "SELECT * FROM employee e JOIN person p ON e.personID = p.personID";
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            // Dynamically create columns based on ResultSet metadata
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            // Clear existing columns before adding new ones
+            employeeTableView.getColumns().clear();
+
+            for (int i = 1; i <= columnCount; i++) {
+                final String columnName = metaData.getColumnName(i);
+                final String formattedColumnName = columnName
+                        .replaceFirst("(?<=[a-z])(?=[A-Z])", " ") // Split at first capital letter
+                        .toUpperCase();
+
+                TableColumn<Map<String, Object>, String> column = new TableColumn<>(formattedColumnName);
+
+                column.setCellValueFactory(cellData -> {
+                    Map<String, Object> row = cellData.getValue();
+                    Object cellValue = row.get(columnName); // Use original column name as key
+                    return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
+                });
+
+                employeeTableView.getColumns().add(column);
+            }
+
+            // Populate data into TableView rows
+            ObservableList<Map<String, Object>> data = FXCollections.observableArrayList();
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    String columnName = metaData.getColumnName(i);
+                    row.put(columnName, rs.getObject(columnName)); // Use column name as key
+                }
+                data.add(row);
+            }
+            employeeTableView.setItems(data);
+
+            // Show alert if no data is found
+            if (data.isEmpty()) {
+                showAlert("No Results", "No Data Found", "No sales data found for the specified period.");
+            }
+
+        } catch (SQLException e) {
+            // Handle database errors gracefully
+            showAlert("Database Error", "Error accessing the database",
+                    "An error occurred while querying the database: " + e.getMessage());
+        }
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            // Dynamically create columns based on ResultSet metadata
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            // Clear existing columns before adding new ones
+            employeeLookUpTableView.getColumns().clear();
+
+            for (int i = 1; i <= columnCount; i++) {
+                final String columnName = metaData.getColumnName(i);
+                final String formattedColumnName = columnName
+                        .replaceFirst("(?<=[a-z])(?=[A-Z])", " ") // Split at first capital letter
+                        .toUpperCase();
+
+                TableColumn<Map<String, Object>, String> column = new TableColumn<>(formattedColumnName);
+
+                column.setCellValueFactory(cellData -> {
+                    Map<String, Object> row = cellData.getValue();
+                    Object cellValue = row.get(columnName); // Use original column name as key
+                    return new SimpleStringProperty(cellValue == null ? "NULL" : cellValue.toString());
+                });
+
+                employeeLookUpTableView.getColumns().add(column);
+            }
+
+            // Populate data into TableView rows
+            ObservableList<Map<String, Object>> data = FXCollections.observableArrayList();
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    String columnName = metaData.getColumnName(i);
+                    row.put(columnName, rs.getObject(columnName)); // Use column name as key
+                }
+                data.add(row);
+            }
+            employeeLookUpTableView.setItems(data);
+
+            // Action listener on table to load data into text fields
+            employeeLookUpTableView.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) {
+                    Map<String, Object> selectedItem = employeeLookUpTableView.getSelectionModel().getSelectedItem();
+                    if (selectedItem != null) {
+                        employeeIDField.setText(selectedItem.get("PERSONID").toString());
+                        employeeNameField.setText(selectedItem.get("NAME").toString());
+                        employeeEmailField.setText(selectedItem.get("EMAIL").toString());
+                        employeePhoneField.setText(selectedItem.get("PHONENUM").toString());
+                        employeeAddressField.setText(selectedItem.get("ADDRESS").toString());
+                        employeeCityField.setText(selectedItem.get("CITY").toString());
+                        employeeStateField.setText(selectedItem.get("STATE").toString());
+                        employeeZipCodeField.setText(selectedItem.get("ZIPCODE").toString());
+                        employeeRoleField.setText(selectedItem.get("ROLE").toString());
+                    }
+                }
+            });
+
+            // Show alert if no data is found
+            if (data.isEmpty()) {
+                showAlert("No Results", "No Data Found", "No sales data found for the specified period.");
+            }
+
+        } catch (SQLException e) {
+            // Handle database errors gracefully
+            showAlert("Database Error", "Error accessing the database",
+                    "An error occurred while querying the database: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleAddEmployee(ActionEvent actionEvent) {
+        String name = employeeNameField.getText();
+        String email = employeeEmailField.getText();
+        String phone = employeePhoneField.getText();
+        String address = employeeAddressField.getText();
+        String city = employeeCityField.getText();
+        String state = employeeStateField.getText();
+        String zipCode = employeeZipCodeField.getText();
+        String role = employeeRoleField.getText(); // Position
+
+        if(name.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() || city.isEmpty() || state.isEmpty() || zipCode.isEmpty() || role.isEmpty()){
+            showAlert("ERROR", "Please fill in all fields correctly!", "");
+            return;
+        }
+
+        // if valid, prompt for username and password
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Create Account");
+        dialog.setHeaderText("Enter Username");
+        dialog.setContentText("Username:");
+        Optional<String> result = dialog.showAndWait();
+        if (result.isEmpty()) {
+            return; // Exit the method if the user cancels the dialog
+        }
+        String username = result.get();
+
+        dialog.setHeaderText("Enter Password");
+        dialog.setContentText("Password:");
+        result = dialog.showAndWait();
+        if (result.isEmpty()) {
+            return; // Exit the method if the user cancels the dialog
+        }
+        String password = result.get();
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            conn.setAutoCommit(false); // Begin transaction
+
+            int personID = insertPerson(conn, name, email, phone, address, city, state, zipCode);
+            insertSalesPerson(conn, personID, username, password);
+
+            if (role.equalsIgnoreCase("manager")) {
+                insertManager(conn, personID);
+            }
+            insertSalesPerson(conn, personID, username, password);
+            conn.commit(); // Commit transaction
+            showAlert("SUCCESS", "Employee added successfully!", name + " added!");
+            clearEmployeeForm();
+        } catch (SQLException e) {
+            showAlert("ERROR", "Error adding employee", e.getMessage());
+        }
+    }
+
+    private void insertSalesPerson(Connection conn, int personID, String username, String password) throws SQLException {
+        String insertSalesPersonSQL = "INSERT INTO sales_person (personID, username, password) VALUES (?, ?, ?)";
+        try (PreparedStatement salesPersonStmt = conn.prepareStatement(insertSalesPersonSQL)) {
+            salesPersonStmt.setInt(1, personID);
+            salesPersonStmt.setString(2, username);
+            salesPersonStmt.setString(3, password);
+            salesPersonStmt.executeUpdate();
+        }
+    }
+
+    private void insertManager(Connection conn, int personID) throws SQLException {
+        String insertManagerSQL = "INSERT INTO manager (personID) VALUES (?)";
+        try (PreparedStatement managerStmt = conn.prepareStatement(insertManagerSQL)) {
+            managerStmt.setInt(1, personID);
+            managerStmt.executeUpdate();
+        }
+    }
+
+    @FXML
+    private void handleClearEmployeeForm(ActionEvent actionEvent){
+        employeeNameField.clear();
+        employeeEmailField.clear();
+        employeePhoneField.clear();
+        employeeAddressField.clear();
+        employeeCityField.clear();
+        employeeStateField.clear();
+        employeeZipCodeField.clear();
+    }
+
+    private void clearEmployeeForm() {
+        employeeNameField.clear();
+        employeeEmailField.clear();
+        employeePhoneField.clear();
+        employeeAddressField.clear();
+        employeeCityField.clear();
+        employeeStateField.clear();
+        employeeZipCodeField.clear();
+        employeeRoleField.clear();
+    }
+
+    @FXML
+    private void handleDeleteEmployee(){
+        String personID = employeeIDField.getText().trim();
+        String role = employeeRoleField.getText().trim();
+        if(personID.isEmpty()){
+            showAlert("ERROR", "Please fill in all fields correctly!", "");
+            return;
+        }
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            conn.setAutoCommit(false); // Begin transaction
+
+            deletePerson(conn, personID);
+
+            conn.commit(); // Commit transaction
+            showAlert("SUCCESS", "Employee deleted successfully!", personID + " deleted!");
+            clearEmployeeForm();
+        } catch (SQLException e) {
+            showAlert("ERROR", "Error deleting employee", e.getMessage());
+        }
+    }
+
+    private void deletePerson(Connection conn, String personID) throws SQLException {
+        String deletePersonSQL = "DELETE FROM person WHERE personID = ?";
+        try (PreparedStatement personStmt = conn.prepareStatement(deletePersonSQL)) {
+            personStmt.setString(1, personID);
+            personStmt.executeUpdate();
+        }
+    }
+
+    private void deleteEmployee(Connection conn, String personID) throws SQLException {
+        String deleteEmployeeSQL = "DELETE FROM employee WHERE personID = ?";
+        try (PreparedStatement employeeStmt = conn.prepareStatement(deleteEmployeeSQL)) {
+            employeeStmt.setString(1, personID);
+            employeeStmt.executeUpdate();
+        }
+    }
+
+    private void deleteManager(Connection conn, String personID) throws SQLException {
+        String deleteManagerSQL = "DELETE FROM manager WHERE personID = ?";
+        try (PreparedStatement managerStmt = conn.prepareStatement(deleteManagerSQL)) {
+            managerStmt.setString(1, personID);
+            managerStmt.executeUpdate();
+        }
     }
 
 }// End Class

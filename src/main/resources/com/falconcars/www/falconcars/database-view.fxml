@@ -245,6 +245,87 @@
                             </content>
                         </Tab>
 
+                        <Tab fx:id="manageEmployeeTab" closable="false" text="Add/Update Employees">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 3px; -fx-border-radius: 5;">
+                                    <children>
+                                        <!-- Main Section -->
+                                        <HBox alignment="CENTER" layoutX="19.0" layoutY="14.0" prefHeight="405.0" prefWidth="759.0" spacing="10.0" style="-fx-padding: 10;" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="11.0">
+                                            <children>
+                                                <!-- TableView -->
+                                                <TableView fx:id="employeeLookUpTableView" maxWidth="Infinity" prefHeight="369.0" prefWidth="369.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+
+                                                <!-- Vertical Separator -->
+                                                <Separator orientation="VERTICAL" prefHeight="400.0" prefWidth="10.0" visible="false" />
+
+                                                <!-- Vertical Form -->
+                                                <VBox alignment="CENTER" maxWidth="Infinity" prefHeight="423.0" prefWidth="343.0" spacing="5.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 3; -fx-padding: 5; -fx-border-radius: 5px;" HBox.hgrow="ALWAYS">
+                                                    <children>
+                                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="289.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;" text="Search by Name, Role, or Email" HBox.hgrow="ALWAYS">
+                                                        </Label>
+                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="ID:" />
+                                                            <TextField fx:id="employeeIDField" editable="false" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                            <Label alignment="CENTER" prefHeight="28.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Name:" />
+                                                            <TextField fx:id="employeeNameField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                            <Label alignment="CENTER" prefHeight="28.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Email:" />
+                                                            <TextField fx:id="employeeEmailField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                            <Label alignment="CENTER" prefHeight="25.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Phone:" />
+                                                            <TextField fx:id="employeePhoneField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                            <Label alignment="CENTER" prefHeight="28.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Role:" />
+                                                            <TextField fx:id="employeeRoleField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                            <Label alignment="CENTER" prefHeight="28.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Address:" />
+                                                            <TextField fx:id="employeeAddressField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                            <Label alignment="CENTER" prefHeight="28.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="City:" />
+                                                            <TextField fx:id="employeeCityField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                            <Label alignment="CENTER" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="State:" />
+                                                            <TextField fx:id="employeeStateField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Zipcode:" />
+                                                            <TextField fx:id="employeeZipCodeField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                                                        </HBox>
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </HBox>
+
+                                        <!-- Horizontal Separator -->
+                                        <Separator layoutX="16.0" orientation="HORIZONTAL" prefHeight="24.0" prefWidth="765.0" visible="false" AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" />
+
+                                        <!-- Action Buttons -->
+                                        <HBox alignment="CENTER" layoutX="16.0" prefHeight="47.0" prefWidth="765.0" spacing="20.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                            <children>
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <Button fx:id="addEmployeeButton" onAction="#handleAddEmployee" prefWidth="150.0" text="Add Employee" />
+                                                <Region HBox.hgrow="SOMETIMES" />
+                                                <Button fx:id="deletemployeeButton" onAction="#handleDeleteEmployee" prefWidth="150.0" text=" Delete Employee" />
+                                                <Region HBox.hgrow="SOMETIMES" />
+                                                <Button fx:id="employeeLookUpButton" onAction="#handleEmployeeLookUp" prefWidth="150.0" text="Search" />
+                                                <Region HBox.hgrow="SOMETIMES" />
+                                                <Button fx:id="clearEmployeeFormButton" onAction="#handleClearEmployeeForm" prefWidth="150.0" text="Clear" />
+                                                <Region HBox.hgrow="ALWAYS" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+
 
                         <Tab fx:id="addVehicleTab" closable="false" text="Add Vehicle">
                             <content>
