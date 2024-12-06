@@ -1,6 +1,5 @@
 package com.falconcars.www.falconcars;
 
-import com.almasb.fxgl.entity.action.Action;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -16,13 +15,13 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
 
 public class DatabaseController {
     private final String styleSheet = "styles.css";
@@ -1459,15 +1458,15 @@ public class DatabaseController {
                 if (event.getClickCount() == 2) {
                     Map<String, Object> selectedItem = employeeLookUpTableView.getSelectionModel().getSelectedItem();
                     if (selectedItem != null) {
-                        employeeIDField.setText(selectedItem.get("PERSONID").toString());
-                        employeeNameField.setText(selectedItem.get("NAME").toString());
-                        employeeEmailField.setText(selectedItem.get("EMAIL").toString());
-                        employeePhoneField.setText(selectedItem.get("PHONENUM").toString());
-                        employeeAddressField.setText(selectedItem.get("ADDRESS").toString());
-                        employeeCityField.setText(selectedItem.get("CITY").toString());
-                        employeeStateField.setText(selectedItem.get("STATE").toString());
-                        employeeZipCodeField.setText(selectedItem.get("ZIPCODE").toString());
-                        employeeRoleField.setText(selectedItem.get("ROLE").toString());
+                        employeeIDField.setText(selectedItem.get("personID").toString());
+                        employeeNameField.setText(selectedItem.get("name").toString());
+                        employeeEmailField.setText(selectedItem.get("email").toString());
+                        employeePhoneField.setText(selectedItem.get("phoneNum").toString());
+                        employeeAddressField.setText(selectedItem.get("address").toString());
+                        employeeCityField.setText(selectedItem.get("city").toString());
+                        employeeStateField.setText(selectedItem.get("state").toString());
+                        employeeZipCodeField.setText(selectedItem.get("zipcode").toString());
+                        employeeRoleField.setText(selectedItem.get("role").toString());
                     }
                 }
             });
@@ -1569,6 +1568,7 @@ public class DatabaseController {
     }
 
     private void clearEmployeeForm() {
+        employeeIDField.clear();
         employeeNameField.clear();
         employeeEmailField.clear();
         employeePhoneField.clear();
