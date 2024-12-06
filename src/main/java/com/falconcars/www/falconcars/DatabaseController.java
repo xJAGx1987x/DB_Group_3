@@ -177,6 +177,8 @@ public class DatabaseController {
     private Button asSearchVehicleButton;
     @FXML
     private Button asClearVehicleButton;
+    @FXML
+    private TableView<Map<String, Object>> asTableView;
 
     @FXML
     private TextField sellVehicleIDField ;
@@ -215,7 +217,6 @@ public class DatabaseController {
     @FXML
     private TableView<Map<String, Object>> employeeLookUpTableView ;
 
-    private TableView<Map<String, Object>> asTableView;
     private ToggleGroup vehicleTypeToggleGroup;
     private ToggleGroup newUsedToggleGroup;
 
