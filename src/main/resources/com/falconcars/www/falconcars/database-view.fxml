@@ -262,7 +262,8 @@
                                                 <!-- Vertical Form -->
                                                 <VBox alignment="CENTER" maxWidth="Infinity" spacing="7.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 3; -fx-padding: 10; -fx-border-radius: 5px;" HBox.hgrow="ALWAYS">
                                                     <children>
-                                                        <Label alignment="CENTER" prefHeight="36.0" prefWidth="290.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;" text="Add: Requires all fields. \n Search: Vehicle to sell." HBox.hgrow="ALWAYS" />
+                                                        <Label alignment="CENTER" prefHeight="36.0" prefWidth="290.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;" text="Add: Requires all fields. " HBox.hgrow="ALWAYS" />
+                                                        <Label alignment="CENTER" prefHeight="36.0" prefWidth="290.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;" text="Search: Any Field (No Image)" HBox.hgrow="ALWAYS" />
                                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                                                             <Label alignment="CENTER" prefHeight="26.0" prefWidth="75.0" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Make:" />
                                                             <TextField fx:id="asMakeField" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
