@@ -1363,7 +1363,7 @@ public class DatabaseController {
 
     @FXML
     private void handleEmployeeLookUp(ActionEvent actionEvent) {
-        String query = "SELECT * FROM employee e JOIN person p ON e.personID = p.personID";
+        String query = "SELECT * FROM sales_person s, manager m JOIN person p WHERE s.personID = p.personID OR m.personID = p.personID";
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
