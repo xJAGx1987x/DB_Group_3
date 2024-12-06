@@ -1,0 +1,66 @@
+Queries-
+
+Vehicle Trends: (A Tab used for both Top 5 by past 3 Years and Month Sale Trends Overall. A car can be selected by inputting it's make and model)
+	Example: Bentley | Continental GT
+	Example: Jeep | Wrangler
+
+Top Seller: (Top selling cars by month)
+	Comment: See the Bentley Continental GT, it shows 2 vehicles were sold in the last year
+
+Customer: (Customer Search to find Customers by purchases)
+	Example: Bentley | Continental GT
+	Example: Cadillac | XT5
+
+Location: (Locations by profits)
+	Show Off
+
+Employees: (Employees by Commissions)
+	Show Off
+
+Transactions-
+
+Add/Update Customer:
+	Search: "Sam" shows 2 results Sam and Samantha
+	Edit: Click on Samantha and Edit Last Name, Show update by researching
+	Add: Create a fake Character
+
+Sell Vehicle:
+	Sell: Do StockID 301, CustomerID 65, and SalesPersonID 56. Then show that Victoria Morgan Now has a sale in the Employee tab as well as in Add Vehicle having the 1967 Impala being marked as sold.
+
+Salespeople Add-Remove:
+	Add: (Manager)
+		Name: Hossain Mahmood
+		Email: mhossain@fairmontstate.edu
+		Phone: 3043674967
+		Role: manager
+		Address: 852 Street Road
+		City: Fairmont
+		State: WV
+		Zipcode: 25669
+		Username: hmahmood
+		Password: CompSci!
+
+	Add: (Salesperson)
+		Name: Steve Harvey
+		Email: sharvey@example.com
+		Phone: 2405556523
+		Role: salesperson
+		Address: 895 Road Street
+		City: Grafton
+		State: WV
+		Zipcode: 23515
+		Username: sharvey
+		Password: family
+	Login: Close program and show that you can log into Mahmood and Harvey.
+	Delete: Delete (Hossain Mahmood) show that he is gone, then do the same for (Steve Harvey)
+
+Add Vehicle:
+	Addition: Input below settings and show that it worked by searching a Black Jeep Wrangler
+		Make - Jeep
+		Model - Wrangler
+		Year - 2021
+		Color - Black
+		Image - First Image
+		Condition - New
+		Price - 56000
+		Status - Available
