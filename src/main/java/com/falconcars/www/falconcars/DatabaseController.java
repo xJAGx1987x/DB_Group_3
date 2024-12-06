@@ -39,6 +39,8 @@ public class DatabaseController {
     private Tab addVehicleTab;
     @FXML
     private Tab sellVehicleTab;
+    @FXML
+    private Tab manageEmployeeTab;
 
     // Fields for Vehicle Trends tab
     @FXML
@@ -756,7 +758,6 @@ public class DatabaseController {
         }
     }
 
-
     // Wrapper to streamline insert person-customer
     @FXML
     private void handleAddCustomer() {
@@ -1035,6 +1036,10 @@ public class DatabaseController {
 
                 if(dbTabPane.getTabs().contains(sellVehicleTab)){
                     dbTabPane.getTabs().remove(sellVehicleTab);
+                }
+
+                if(dbTabPane.getTabs().contains(manageEmployeeTab)){
+                    dbTabPane.getTabs().remove(manageEmployeeTab);
                 }
             }
         }
