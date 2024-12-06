@@ -250,10 +250,10 @@
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 3px; -fx-border-radius: 5;">
                                     <children>
                                         <!-- Main Section -->
-                                        <HBox alignment="CENTER" layoutX="19.0" layoutY="14.0" prefHeight="405.0" prefWidth="759.0" spacing="10.0" style="-fx-padding: 10;" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="11.0">
+                                        <HBox alignment="CENTER" layoutX="19.0" layoutY="14.0" prefHeight="405.0" prefWidth="759.0" spacing="10.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
                                             <children>
                                                 <!-- TableView -->
-                                                <TableView fx:id="employeeLookUpTableView" maxWidth="Infinity" prefHeight="369.0" prefWidth="369.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                                                <TableView fx:id="employeeLookUpTableView" maxWidth="Infinity" prefHeight="405.0" prefWidth="402.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
 
                                                 <!-- Vertical Separator -->
                                                 <Separator orientation="VERTICAL" prefHeight="400.0" prefWidth="10.0" visible="false" />
@@ -305,10 +305,10 @@
                                         </HBox>
 
                                         <!-- Horizontal Separator -->
-                                        <Separator layoutX="16.0" orientation="HORIZONTAL" prefHeight="24.0" prefWidth="765.0" visible="false" AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" />
+                                        <Separator layoutX="19.0" orientation="HORIZONTAL" prefHeight="3.0" prefWidth="759.0" visible="false" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
 
                                         <!-- Action Buttons -->
-                                        <HBox alignment="CENTER" layoutX="16.0" prefHeight="47.0" prefWidth="765.0" spacing="20.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                        <HBox alignment="CENTER" layoutX="16.0" prefHeight="47.0" prefWidth="765.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                                             <children>
                                                 <Region HBox.hgrow="ALWAYS" />
                                                 <Button fx:id="addEmployeeButton" onAction="#handleAddEmployee" prefWidth="150.0" text="Add Employee" />
